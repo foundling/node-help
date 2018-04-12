@@ -4,9 +4,11 @@
   "description": "offline Node.js and JavaScript documentation for the Node Repl",
   "main": "bin/node-help",
   "dependencies": {
+    "chalk": "^2.3.2",
     "cheerio": "^1.0.0-rc.2",
     "request": "^2.85.0",
-    "request-promise-native": "^1.0.5"
+    "request-promise-native": "^1.0.5",
+    "striptags": "^3.1.1"
   },
   "devDependencies": {},
   "scripts": {

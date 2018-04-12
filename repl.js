@@ -8,7 +8,7 @@ function helpFilter(cmd, context, filename, callback) {
     // otherwise, just eval the line
     let tokens = cmd.trim().split(' ');
     let helpTokens = tokens.filter(t => t.endsWith('?'));
-    let output = null;
+    let output;
 
     if (helpTokens.length)
         console.log(helpTokens.map(t => help(t.slice(0,-1))).join('\n'));
@@ -18,4 +18,4 @@ function helpFilter(cmd, context, filename, callback) {
     callback(null, output);
 }
 
-r.start({ prompt: PROMPT, eval: helpFilter });
+r.start({ prompt: PROMPT, eval: helpFilter, ignoreUndefined: true });
