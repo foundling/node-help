@@ -15,6 +15,7 @@ const {
 const moduleProps = ['name','desc','modules','methods','type'];
 const isArray = x => x.constructor && x.constructor === Array;
 const isObject = x => x.constructor && x.constructor === Object;
+const equals = x => y => (x === y);
 
 function processNode(node, target) {
     if (node.name === target) {
@@ -34,7 +35,6 @@ function traverse(node) {
     }
 }; 
 
-
 function formatDocs(node, containsModules=false) {
 
     if (!node)
@@ -51,37 +51,41 @@ function formatDocs(node, containsModules=false) {
 
 // can this function be used for classes, modules, etc?
 function find(tree, segments) {
+
     let si = 0;
     let node = tree; 
     let matches;
 
     while (node) {
-        console.log(`segment: ${ segments[si] }, segmentIndex: ${ si }`);
         matches = node.filter(child => child.name === segments[si]);
+        console.log(matches);
         si++;
 
         // no match, we're done
         if (!matches.length) 
             return;
 
-        // if we're at last segment path
+        // if we're at last segment path, return first match
         // return matches[0]
         if (si >= segments.length) 
             return matches[0];
 
-        // no more paths to investigate. not a match
+        // no modules and we're not done with the paths, so we're done
         if (!matches[0].modules || !matches[0].modules.length)
             return;
-        else
-            // more paths to match against modules
-            node = matches[0].modules;
-     }
+
+        // more paths to match against modules
+        node = matches[0].modules;
+    }
+
+    return matches[0]; 
+
 }
 
 function help(token) {
 
     const segments = token.split('.');
-    const node = find(globals, segments) || find(methods, segments) || find(classes, segments) || find(modules, segments);
+    const node = find(modules, segments);
     const containsModules = node && node.modules && node.modules.length;
 
     return formatDocs(node, containsModules);
