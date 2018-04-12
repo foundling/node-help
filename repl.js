@@ -1,10 +1,7 @@
 const r = require('repl');
+const help = require('./help');
 const vm = require('vm');
 const PROMPT = 'node-help > ';
-
-function help(token) {
-    return `help(${token})`;
-}
 
 function helpFilter(cmd, context, filename, callback) {
     let token = cmd.trim();

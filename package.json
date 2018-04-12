@@ -1,0 +1,23 @@
+{
+  "name": "node-help",
+  "version": "1.0.0",
+  "description": "offline Node.js and JavaScript documentation for the Node Repl",
+  "main": "bin/node-help",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo 'where are the tests?' && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/foundling/node-help"
+  },
+  "keywords": [
+    "node.js",
+    "documentation",
+    "repl"
+  ],
+  "author": "Alex Ramsdell",
+  "license": "MIT"
+}
