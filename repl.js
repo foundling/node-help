@@ -8,10 +8,10 @@ function help(token) {
 
 function helpFilter(cmd, context, filename, callback) {
 
-    if (cmd.trim().endsWith('?'))
-        return callback(null, help(cmd.trim().slice(0,-1)));
+    let token = cmd.trim();
+    let output = token.endsWith('?') ? help(token.slice(0,-1)) : vm.runInThisContext(token) 
 
-    callback(null, vm.runInThisContext(cmd));
+    callback(null, output);
 }
 
 function writer(token) {
