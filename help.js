@@ -22,9 +22,16 @@ function formatDocs(node, containsModules=false) {
         return `${chalk.bgBlue('No documentation found!')}`;
 
     const {name, type, desc} = node;
+    let signatures=[''];
+
+    if (node.signatures) {
+        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
+        console.log(signatures);
+    }
     const sections = [
         `${chalk.bgBlue('Name:')} ${chalk.red(name)}`,
         `${chalk.bgBlue('Type:')} ${chalk.red(type)}`,
+        `${chalk.bgBlue('Signature(s):\n')}${chalk.red(node.textRaw + '\n' + signatures.join('\n'))}`,
         `${chalk.bgBlue('Description:\n')}${chalk.red(striptags(desc))}`,
     ];
     return sections.join('\n');
