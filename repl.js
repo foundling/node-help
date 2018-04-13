@@ -16,7 +16,6 @@ function helpFilter(cmd, context, filename, callback) {
 
     if (helpTokens.length) 
         console.log(helpTokens.map(buildHelp).join('\n'));
-        //helpTokens.map(buildHelp).join('\n');
     else
         output = vm.runInThisContext(cmd);
 
