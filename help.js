@@ -3,8 +3,8 @@ const chalk = require('chalk');
 const striptags = require('striptags');
 
 const keys = Object.keys;
-//const docTree = JSON.parse(fs.readFileSync('./docs/node/node-docs.json', 'utf8'));
-const docTree = JSON.parse(fs.readFileSync('./test.json', 'utf8'));
+const docTree = JSON.parse(fs.readFileSync('./docs/node/node-docs.json', 'utf8'));
+//const docTree = JSON.parse(fs.readFileSync('./test.json', 'utf8'));
 
 const { classes, globals, modules, methods } = docTree;
 
@@ -12,6 +12,9 @@ const moduleProps = ['name','desc','modules','methods','type'];
 const isArray = x => x.constructor && x.constructor === Array;
 const isObject = x => x.constructor && x.constructor === Object;
 const equals = x => y => (x === y);
+
+function formatModule(){
+}
 
 function formatDocs(node, containsModules=false) {
 
@@ -32,7 +35,6 @@ function capitalize(s) {
 } 
 
 const flatten = a => a.reduce((acc, val) => acc.concat(val), []);
-const exists = a => Boolean(a);
 
 function find(children, segments) {
 
@@ -72,21 +74,18 @@ function help(token) {
     const node = traverse(docTree, segments, 0);
     const containsModules = node && node.modules && node.modules.length;
 
+    console.log(node);
+
     return formatDocs(node, containsModules);
 }
 
 
 
 
-const segments = ['buffer','transcode'];
-const props = ['globals','methods','properties','modules','classes']; 
-let si = 0;
 
 function traverse(root, segments, index) {
 
-    if (index >= segments.length) {
-        return root;
-    }
+    const props = ['globals','methods','properties','modules','classes']; 
 
     // get current segment
     let segment = segments[index];
@@ -95,14 +94,14 @@ function traverse(root, segments, index) {
     let children = flatten(props.map(key => root[key]).filter(Boolean));
 
     // keep children whose name property fuzzy matches the current segment
-    let targets = children.filter(c => c.name.toLowerCase() === segment);
+    let targets = children.filter(c => c.name === segment || c.textRaw === segment || c.displayName === segment);
 
-    return traverse(targets[0], segments, index + 1);
+    if (index + 1 >= segments.length)
+        return targets[0];
+    else
+        return traverse(targets[0], segments, index + 1);
 
 }
-
-let target = traverse(docTree, segments, si);
-console.log(target);
 
 
 module.exports = exports = help;
