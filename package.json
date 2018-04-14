@@ -6,17 +6,16 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "cheerio": "^1.0.0-rc.2",
-    "concat-map": "0.0.1",
     "html-entities": "^1.2.1",
-    "i": "^0.3.6",
     "request": "^2.85.0",
-    "request-promise-native": "^1.0.5",
-    "striptags": "^3.1.1",
+    "striptags": "^3.1.1"
+  },
+  "devDependencies": {
+    "colortape": "^0.1.2",
     "tape": "^4.9.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo 'where are the tests?' && exit 1",
+    "test": "tape ./test/*test.js",
     "start": "node server.js"
   },
   "repository": {

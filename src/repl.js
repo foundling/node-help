@@ -1,5 +1,5 @@
 const repl = require('repl');
-const help = require('./help');
+const { help } = require('./help');
 const vm = require('vm');
 const prompt = 'node-help > ';
 
