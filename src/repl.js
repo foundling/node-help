@@ -23,11 +23,15 @@ function helpFilter(cmd, context, filename, callback) {
 
 }
 
-r.start({ 
+function start() {
 
-    prompt, 
-    eval: helpFilter, 
-    ignoreUndefined: true, 
-    useGlobal: true,
+    r.start({ 
+        prompt, 
+        eval: helpFilter, 
+        ignoreUndefined: true, 
+        useGlobal: true,
+    });
 
-});
+}
+
+module.exports = exports = { start };
