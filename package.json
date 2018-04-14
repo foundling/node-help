@@ -15,7 +15,7 @@
     "tape": "^4.9.0"
   },
   "scripts": {
-    "test": "tape ./test/*test.js",
+    "test": "tape ./test/*test.js | colortape",
     "start": "node server.js"
   },
   "repository": {
