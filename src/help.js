@@ -1,13 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
-const striptags = require('striptags');
-const Entities = require('html-entities');
-const { decode } = new Entities.AllHtmlEntities();
-const isArray = x => x.constructor && x.constructor === Array;
-const isObject = x => x.constructor && x.constructor === Object;
-const equals = x => y => (x === y);
-const keys = Object.keys;
+const { decodeHTML, flatten, keys, striptags  } = require(path.resolve(__dirname, 'utils'));
 
 function formatDocs(node, containsModules=false) {
 
@@ -24,7 +18,7 @@ function formatDocs(node, containsModules=false) {
         `${chalk.bgBlue('Name:')} ${chalk.red(name)}`,
         `${chalk.bgBlue('Type:')} ${chalk.red(type)}`,
         `${chalk.bgBlue('Signature(s):\n')}${chalk.red(node.textRaw + '\n' + signatures.join('\n'))}`,
-        `${chalk.bgBlue('Description:\n')}${chalk.red(striptags(decode(desc)))}`,
+        `${chalk.bgBlue('Description:\n')}${chalk.red(striptags(decodeHTML(desc)))}`,
     ];
     return sections.join('\n');
 }
@@ -32,8 +26,6 @@ function formatDocs(node, containsModules=false) {
 function capitalize(s) {
     return s[0].toUpperCase() + s.slice(1).toLowerCase()
 } 
-
-const flatten = a => a.reduce((acc, val) => acc.concat(val), []);
 
 function help(token, docTree) {
 
@@ -59,8 +51,6 @@ function traverse(root, segments, index) {
     // keep children whose name property fuzzy matches the current segment
     // NOTE: modules with classes have moduleName.className value for name property
     let targets = children.filter(c => c.name === segment || c.textRaw === segment || c.displayName === segment || c.name.endsWith(`.${segment}`));
-
-    if (index == 1) console.log(children);
 
     if (index + 1 >= segments.length)
         // for now, return first match.

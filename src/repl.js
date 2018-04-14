@@ -1,7 +1,9 @@
 const repl = require('repl');
-const { help } = require('./help');
+const path = require('path');
 const vm = require('vm');
-const prompt = 'node-help > ';
+
+const { help } = require('./help');
+const { striptags, rmLastChar  } = require(path.resolve(__dirname, 'utils'));
 
 function makeHelpFilter(docTree) {
 
@@ -12,7 +14,6 @@ function makeHelpFilter(docTree) {
 
         let tokens = cmd.trim().split(' ');
         let helpTokens = tokens.filter(t => t.endsWith('?'));
-        let rmLastChar = s => s.slice(0,-1);
         let buildHelp = token => help(rmLastChar(token), docTree);
         let output;
 
@@ -30,7 +31,7 @@ function makeHelpFilter(docTree) {
 function start(docs) {
 
     repl.start({ 
-        prompt, 
+        prompt: 'node-help > ', 
         eval: makeHelpFilter(docs), 
         ignoreUndefined: true, 
         useGlobal: true,
