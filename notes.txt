@@ -1,5 +1,0 @@
-Usage:
-
-look up object with ? appended
-list apis and get markdown in terminal for a given API
-

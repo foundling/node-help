@@ -3,8 +3,7 @@ const chalk = require('chalk');
 const striptags = require('striptags');
 
 const keys = Object.keys;
-const docTree = JSON.parse(fs.readFileSync('./docs/node/node-docs.json', 'utf8'));
-//const docTree = JSON.parse(fs.readFileSync('./test.json', 'utf8'));
+const docTree = JSON.parse(fs.readFileSync('./docs/node/node-all.json', 'utf8'));
 
 const { classes, globals, modules, methods } = docTree;
 
@@ -12,9 +11,6 @@ const props = ['classes','events','globals','methods','modules'];
 const isArray = x => x.constructor && x.constructor === Array;
 const isObject = x => x.constructor && x.constructor === Object;
 const equals = x => y => (x === y);
-
-function formatModule(){
-}
 
 function formatDocs(node, containsModules=false) {
 
