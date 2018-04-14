@@ -4,10 +4,11 @@ const util = require('util');
 const chalk = require('chalk');
 const repl = require('./repl'); 
 const progInfo = require('./progInfo');
-const bannerPath = path.resolve(path.join(__dirname,'banner.txt')); 
-const packageJSON = path.resolve(path.join(__dirname,'..','package.json'));
 const readFilePromise = util.promisify(fs.readFile);
 
+const packageJSON = path.resolve(path.join(__dirname,'..','package.json'));
+const bannerPath = path.resolve(path.join(__dirname, 'banner.txt')); 
+const nodeDocsJSON = path.resolve(path.join(__dirname,'..','docs','node','node-all.json'));
 
 /*
  * check for internet connection
@@ -16,18 +17,21 @@ const readFilePromise = util.promisify(fs.readFile);
  *
  */
 
-function startProg(resolved) {
-    const [ pkgText, bannerText ] = resolved;
+function startProg([pkgText, bannerText, nodeDocs]) {
     console.log(chalk.blue(bannerText));
     console.log(progInfo(JSON.parse(pkgText)));
-    repl.start();
+    repl.start(JSON.parse(nodeDocs));
 }
 
 function init (options) {
 
-    const initData = [readFilePromise(packageJSON, 'utf8'), readFilePromise(bannerPath, 'utf8')]; 
-    Promise.all(initData)
-        .then(startProg)
+    const initData = [ 
+        packageJSON, 
+        bannerPath, 
+        nodeDocsJSON 
+    ].map(fpath => readFilePromise(fpath, 'utf8'));
+
+    Promise.all(initData).then(startProg)
 
 }
 

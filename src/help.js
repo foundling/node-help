@@ -6,9 +6,9 @@ const Entities = require('html-entities');
 const { decode } = new Entities.AllHtmlEntities();
 
 const keys = Object.keys;
-const docTree = JSON.parse(fs.readFileSync('./docs/node/node-all.json', 'utf8'));
+//const docTree = JSON.parse(fs.readFileSync('./docs/node/node-all.json', 'utf8'));
 
-const { classes, globals, modules, methods } = docTree;
+//const { classes, globals, modules, methods } = docTree;
 
 const props = ['classes','events','globals','methods','modules']; 
 const isArray = x => x.constructor && x.constructor === Array;
@@ -41,7 +41,7 @@ function capitalize(s) {
 
 const flatten = a => a.reduce((acc, val) => acc.concat(val), []);
 
-function help(token) {
+function help(token, docTree) {
 
     const containsModules = node => node && node.modules && node.modules.length;
     const segments = token.split('.');

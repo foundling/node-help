@@ -1,33 +1,37 @@
-const r = require('repl');
+const repl = require('repl');
 const help = require('./help');
 const vm = require('vm');
 const prompt = 'node-help > ';
 
-function helpFilter(cmd, context, filename, callback) {
+function makeHelpFilter(docTree) {
 
-    // if there are 1 or more tokens that end with '?', concat all their helptexts
-    // otherwise, just eval the line
+    return function(cmd, context, filename, callback) {
 
-    let tokens = cmd.trim().split(' ');
-    let helpTokens = tokens.filter(t => t.endsWith('?'));
-    let rmLastChar = s => s.slice(0,-1);
-    let buildHelp = token => help(rmLastChar(token));
-    let output;
+        // if there are 1 or more tokens that end with '?', concat all their helptexts
+        // otherwise, just eval the line
 
-    if (helpTokens.length) 
-        console.log(helpTokens.map(buildHelp).join('\n'));
-    else
-        output = vm.runInThisContext(cmd);
+        let tokens = cmd.trim().split(' ');
+        let helpTokens = tokens.filter(t => t.endsWith('?'));
+        let rmLastChar = s => s.slice(0,-1);
+        let buildHelp = token => help(rmLastChar(token), docTree);
+        let output;
 
-    callback(null, output);
+        if (helpTokens.length) 
+            console.log(helpTokens.map(buildHelp).join('\n'));
+        else
+            output = vm.runInThisContext(cmd);
+
+        callback(null, output);
+
+    };
 
 }
 
-function start() {
+function start(docs) {
 
-    r.start({ 
+    repl.start({ 
         prompt, 
-        eval: helpFilter, 
+        eval: makeHelpFilter(docs), 
         ignoreUndefined: true, 
         useGlobal: true,
     });
