@@ -1,6 +1,9 @@
 const fs = require('fs');
 const chalk = require('chalk');
+const path = require('path');
 const striptags = require('striptags');
+const Entities = require('html-entities');
+const { decode } = new Entities.AllHtmlEntities();
 
 const keys = Object.keys;
 const docTree = JSON.parse(fs.readFileSync('./docs/node/node-all.json', 'utf8'));
@@ -27,7 +30,7 @@ function formatDocs(node, containsModules=false) {
         `${chalk.bgBlue('Name:')} ${chalk.red(name)}`,
         `${chalk.bgBlue('Type:')} ${chalk.red(type)}`,
         `${chalk.bgBlue('Signature(s):\n')}${chalk.red(node.textRaw + '\n' + signatures.join('\n'))}`,
-        `${chalk.bgBlue('Description:\n')}${chalk.red(striptags(desc))}`,
+        `${chalk.bgBlue('Description:\n')}${chalk.red(striptags(decode(desc)))}`,
     ];
     return sections.join('\n');
 }
