@@ -1,4 +1,5 @@
-Buffer is a case where the constructor is a global, but it's really under the buffer.Buffer namespace 
-a user should be able to type 'Buffer' and get it, but this means, detecting that it is a global property of some module. ugh.
+Usage:
 
-solution: check paths against  
+look up object with ? appended
+list apis and get markdown in terminal for a given API
+
