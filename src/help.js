@@ -1,7 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
-const { decodeHTML, flatten, keys, striptags  } = require(path.resolve(__dirname, 'utils'));
+const { capitalize, decodeHTML, flatten, keys, striptags  } = require(path.resolve(__dirname, 'utils'));
 
 function formatDocs(node, containsModules=false) {
 
@@ -22,10 +22,6 @@ function formatDocs(node, containsModules=false) {
     ];
     return sections.join('\n');
 }
-
-function capitalize(s) {
-    return s[0].toUpperCase() + s.slice(1).toLowerCase()
-} 
 
 function help(token, docTree) {
 
