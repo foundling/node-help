@@ -8,7 +8,7 @@ const { homedir } = require('os');
 const { help } = require('./help');
 const { striptags, rmLastChar  } = require(path.resolve(__dirname, 'utils'));
 
-function makeHelpFilter(docTree) {
+function mkEval(dataTree) {
 
     return function(cmd, context, filename, callback) {
 
@@ -17,7 +17,7 @@ function makeHelpFilter(docTree) {
 
         let tokens = cmd.trim().split(' ');
         let helpTokens = tokens.filter(t => t.endsWith('?'));
-        let buildHelp = token => help(rmLastChar(token), docTree);
+        let buildHelp = token => help(rmLastChar(token), dataTree);
         let output;
 
         if (helpTokens.length) 
@@ -31,13 +31,13 @@ function makeHelpFilter(docTree) {
 
 }
 
-function start(docs) {
+function start(dataTree) {
 
     const historyFile = path.join(homedir(),'.node_repl_history');
 
     const nr = repl.start({ 
         prompt: 'node-help > ', 
-        eval: makeHelpFilter(docs), 
+        eval: mkEval(dataTree), 
         ignoreUndefined: true, 
         useGlobal: true,
     });
