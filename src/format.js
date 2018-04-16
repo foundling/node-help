@@ -6,7 +6,10 @@ const { keys, flatten, decodeHTML } = require(path.resolve(__dirname, './utils')
 
 function getMethods(o) {
     const methods = keys(o)
-        .filter(k => o[k].constructor.name === 'Function');
+        .map(k => o[k])
+        .filter(Boolean)
+        .filter(o => o.constructor && o.constructor.name === 'Function');
+
     return methods.length ? '\n' + methods.join('\n') : 'none';
 }
 
