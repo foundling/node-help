@@ -1,14 +1,15 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
+const util = require('util');
 const { nodeToDocString } = require(path.resolve(__dirname, 'format'));
 const { flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
 
 function help(token, docs) {
 
-    const docTrees = findDocTrees(docs);
     const segments = token.split('.');
+    const docTrees = findDocTrees(docs);
     const treeResults = docTrees
         .map(tree => find(tree, segments, 0))
     const docString = flatten(treeResults, depth=2).map(node => nodeToDocString(node)).join('\n');
@@ -18,7 +19,7 @@ function help(token, docs) {
 }
 
 function adjustSearchToken(token) {
-    // to account for inconsistency with globals in in api docs
+    // to account for globals edge-case in api docs
 
     const toAdjust = ['process'];
 
@@ -35,6 +36,8 @@ function nameFilter(segment) {
 }
 
 function findDocTrees(docs) {
+
+    // adjust docs object to make it easier to search
 
     let mainTree = {
         methods: docs.methods, 
@@ -58,15 +61,22 @@ function find(root, segments, index) {
 
     // map root to target props values and flatten array
     let children = flatten(props.map(key => root[key]).filter(Boolean));
+    let matchesSegment = nameFilter(segment);
+    let matches = children.filter(matchesSegment);
 
-    let matches = children.filter(nameFilter(segment));
+    if (index === 1) 
+        util.inspect(matches);
+
+    // thought: make this work correctly with matches, i.e., not indexing into [0].  
+
 
     // if no matches or we've processed the last segment, we're done
     if (!matches.length || index + 1 >= segments.length)
-        return matches;
+        return matches[0];
+
 
     // todo:return matches, not matches[0]
-    return find(matches, segments, index + 1);
+    return find(matches[0], segments, index + 1);
 
 }
 
