@@ -1,0 +1,32 @@
+Usage:
+
+look up object with ? appended
+list apis and get markdown in terminal for a given API
+
+Bugs:
+
+certain globals lead you to a simple definition with no docs on submodules, methods etc.
+
+e.g.: finding process.setuid
+    'process?' takes you to a node w/ no child methods, etc. because those are under 'Process', which is in miscs['Global Objects'][5] ;   
+
+solution to issue 1: 
+    - In addition to recursing from doctree, also recurse from docTree.miscs[4] and docTree.miscs[5] (Errors and Process). 
+    - develop a system to conditionally capitalize certain tokens (when there is just one token, in the case of a global name where the docs have it capitalized, but in node, it's lower case).
+    'process' should be looked up in docs as 'Process'.examine docs further and 
+-   
+
+
+parse procedure:
+
+possible tokens:
+
+single segment:
+    a (user binding)
+    dns (built-in)
+
+multiple segments:
+    a.b (user binding)
+    dns.setServers (built-in)
+
+token has dot? 
