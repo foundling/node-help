@@ -5,14 +5,16 @@ const util = require('util');
 const { nodeToDocString } = require(path.resolve(__dirname, 'format'));
 const { flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
-
 function help(token, docs) {
 
     const segments = token.split('.');
     const docTrees = findDocTrees(docs);
     const treeResults = docTrees
-        .map(tree => find(tree, segments, 0))
-    const docString = flatten(treeResults, depth=2).map(node => nodeToDocString(node, query=token)).join('\n');
+                        .map(tree => find(tree, segments, 0))
+    const docString = flatten(treeResults, depth=2)
+                        .filter(Boolean)
+                        .map(node => nodeToDocString(node, query=token))
+                        .join('\n');
 
     return docString;
 
