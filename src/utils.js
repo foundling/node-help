@@ -17,12 +17,17 @@ function clear() {
     process.stdout.write('\x1Bc');
 }
 
+function dedupe(arr) {
+    return Array.from(new Set(arr));
+}
+
 
 
 module.exports = exports = {
     clear,
     capitalize,
     decodeHTML: decode,
+    dedupe,
     flatten,
     keys: Object.keys,
     rmLastChar,
