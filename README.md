@@ -77,14 +77,6 @@ node-help > :w
 evalmachine.<anonymous>:1
 :w
 ^
-
-SyntaxError: Unexpected token :
-
-node-help > node?
-No documentation found!
-No documentation found!
-No documentation found!
-
 ````
 
 
