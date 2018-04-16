@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const vm = require('vm');
 const path = require('path');
 const util = require('util');
-const { formatES, formatNodeJS } = require(path.resolve(__dirname, 'format'));
+const { formatES, formatNodeJS, summary } = require(path.resolve(__dirname, 'format'));
 const { dedupe, flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
 function help(searchToken, docs) {
@@ -15,16 +15,13 @@ function help(searchToken, docs) {
                                 .map(result => formatNodeJS(result, searchToken)));
 
     const ESDocString = formatES(vm.runInThisContext(searchToken), searchToken);
-    const resultsSummary = summary(results.length) 
-    const mergedDocStrings = [resultsSummary, nodeJSDocStrings, ESDocString].join('\n\n');
+    const resultsSummary = summary(nodeJSDocStrings.length) 
+    const mergedDocStrings = [resultsSummary, nodeJSDocStrings.join('\n\n'), ESDocString].join('\n\n');
 
     return mergedDocStrings;
 
 }
 
-function summary(docsCount) {
-    return `\n${chalk.white(`[ ${docsCount} Result(s) for Node.js. ]`)}`;
-}
 
 function findDocTrees(docs) {
 
