@@ -6,28 +6,27 @@ const { keys, flatten, decodeHTML } = require(path.resolve(__dirname, './utils')
 
 function getMethods(o) {
     const methods = keys(o)
-        .map(k => o[k])
-        .filter(Boolean)
-        .filter(o => o.constructor && o.constructor.name === 'Function');
+        .filter(k => o[k] && o.hasOwnProperty(k) && typeof o[k] === 'function');
 
     return methods.length ? '\n' + methods.join('\n') : 'none';
 }
 
 function getOwnProperties(o) {
-    const ownProps = Object.getOwnPropertyNames(o);
+    const ownProps = Object.getOwnPropertyNames(o)
+                        .filter(name => typeof o[name] !== 'function');
     return ownProps.length ? '\n' + ownProps.join('\n') : 'none';
 }
 
 function formatES(node, query) {
 
     return [
-        `${chalk.bgWhite.black('Object Information')}`,
-        `${chalk.green('toString:')} '${node.toString()}'`,
-        `${chalk.green('valueOf:')} '${node.valueOf()}'`,
-        `${chalk.green('Constructor:')} ${node.constructor.name}`,
-        `${chalk.green('Own Properties:')} ${getOwnProperties(node)}`,
-        `${chalk.green('Methods:')} ${getMethods(node)}`,
-    ].join('\n');
+        `[ JS Object Summary ]\n`,
+        `${chalk.green.underline('toString:')} '${node.toString()}'`,
+        `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
+        `${chalk.green.underline('Constructor:')} ${node.constructor.name}`,
+        `${chalk.green.underline('Own Properties (non-methods):')} ${getOwnProperties(node)}`,
+        `${chalk.green.underline('Methods:')} ${getMethods(node)}\n`,
+    ].join('\n'); 
 }
 
 function formatSignatures(signatures=[]) {
@@ -38,15 +37,15 @@ function formatDescription(desc) {
     return desc.trim().length ? '\n' + striptags(decodeHTML(desc)).trim() : '';
 }
 
-function formatNodeJS(node) {
+function formatNodeJS(node, searchToken) {
 
     const {name, textRaw, type, desc, signatures} = node;
     const sections = [
-        `${chalk.bgWhite.black('Node.js Documentation')}`,
-        `${chalk.green('Name:')} ${name}`,
-        `${chalk.green('Node.js Object Type:')} ${type}`,
-        `${chalk.green('Signature(s):')} ${textRaw} ${formatSignatures(signatures)}`,
-        `${chalk.green('Description:')} ${formatDescription(desc)}`,
+        `${node.type} | ${searchToken}`,
+        `${chalk.green.underline('Name:')} ${name}`,
+        `${chalk.green.underline('Node.js Object Type:')} ${type}`,
+        `${chalk.green.underline('Signature(s):')} ${textRaw} ${formatSignatures(signatures)}`,
+        `${chalk.green.underline('Description:')} ${formatDescription(desc)}`,
     ];
 
     return sections.join('\n');

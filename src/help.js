@@ -6,19 +6,24 @@ const util = require('util');
 const { formatES, formatNodeJS } = require(path.resolve(__dirname, 'format'));
 const { dedupe, flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
-function help(token, docs) {
+function help(searchToken, docs) {
 
-    const segments = token.split('.');
+    const segments = searchToken.split('.');
     const lastSegment = segments.slice(-1)[0];
-    const treeResults = find(docs, lastSegment);
-    const nodeJSDocStrings = flatten(treeResults)
-                                .map(node => formatNodeJS(node, token)).join('\n\n');
+    const results = flatten(find(docs, lastSegment));
+    const nodeJSDocStrings = dedupe(results
+                                .map(result => formatNodeJS(result, searchToken)));
 
-    const ESDocString = formatES(vm.runInThisContext(token), token);
-    const mergedDocStrings = [nodeJSDocStrings, ESDocString].join('\n\n');
+    const ESDocString = formatES(vm.runInThisContext(searchToken), searchToken);
+    const resultsSummary = summary(results.length) 
+    const mergedDocStrings = [resultsSummary, nodeJSDocStrings, ESDocString].join('\n\n');
 
     return mergedDocStrings;
 
+}
+
+function summary(docsCount) {
+    return `\n${chalk.white(`[ ${docsCount} Result(s) for Node.js. ]`)}`;
 }
 
 function findDocTrees(docs) {
