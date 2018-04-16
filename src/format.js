@@ -1,7 +1,8 @@
 const chalk = require('chalk');
 const path = require('path');
+const util = require('util');
 const striptags = require('striptags');
-const { flatten, decodeHTML } = require(path.resolve(__dirname, './utils'));
+const { keys, flatten, decodeHTML } = require(path.resolve(__dirname, './utils'));
 const formatters = {
 
     module: formatModule,
@@ -13,34 +14,33 @@ const formatters = {
 
 };
 
+function getMethods(o) {
+    return keys(o)
+        .filter(k => o[k].constructor.name === 'Function')
+        .join('\n');
+}
+function getOwnProperties(o) {
+    return Object.getOwnPropertyNames(o).join('\n');
+}
+
 function nodeToDocString(node, query) {
 
-    if (!node)
-        return notFound(node);
-
     if (node.type in formatters)
-        return formatters[node.type](node);
+        return formatters[node.type](node, query);
     else
-        return formatters['default'](node);
+        return formatters['default'](node, query);
 
 }
 
-function formatDefault(node) {
+function formatDefault(node, query) {
 
-    let signatures = [''];
-    const {name, type, desc} = node;
-
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
-    const sections = [
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
-    ];
-
-    return sections.join('\n');
+    return [
+        `${chalk.red('Query:')} '${query}'`,
+        `${chalk.red('toString:')} '${node.toString()}'`,
+        `${chalk.red('Constructor:')} ${node.constructor.name}`,
+        `${chalk.red('Properties:')} \n${getOwnProperties(node)}`,
+        `${chalk.red('Methods:')} \n${getMethods(node)}`,
+    ].join('\n');
 }
 
 function formatModule(node) {
@@ -52,6 +52,7 @@ function formatModule(node) {
         signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
 
     const sections = [
+        `${chalk.red('Query:')} '${query}'`,
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
@@ -71,6 +72,7 @@ function formatMethod(node) {
         signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
 
     const sections = [
+        `${chalk.red('Query:')} '${query}'`,
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
@@ -90,6 +92,7 @@ function formatProperty(node) {
         signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
 
     const sections = [
+        `${chalk.red('Query:')} '${query}'`,
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
@@ -109,6 +112,7 @@ function formatClass(node) {
         signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
 
     const sections = [
+        `${chalk.red('Query:')} '${query}'`,
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
@@ -128,6 +132,7 @@ function formatGlobal(node) {
         signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
 
     const sections = [
+        `${chalk.red('Query:')} '${query}'`,
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
@@ -139,17 +144,13 @@ function formatGlobal(node) {
 
 }
 
-function notFound(node) {
+function notFound(token) {
     return 'No documentation found!';
 }
 
 module.exports = exports = { 
 
     nodeToDocString,
-    formatMethod,
-    formatProperty,
-    formatClass,
-    formatGlobal,
-    notFound,
+    formatters,
 
 };
