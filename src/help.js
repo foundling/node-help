@@ -1,9 +1,10 @@
 const fs = require('fs');
 const chalk = require('chalk');
+const vm = require('vm');
 const path = require('path');
 const util = require('util');
-const { nodeToDocString } = require(path.resolve(__dirname, 'format'));
-const { flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
+const { nodeToDocString, formatters } = require(path.resolve(__dirname, 'format'));
+const { dedupe, flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
 function help(token, docs) {
 
@@ -11,30 +12,14 @@ function help(token, docs) {
     const docTrees = findDocTrees(docs);
     const treeResults = docTrees
                         .map(tree => find(tree, segments, 0))
-    const docString = flatten(treeResults, depth=2)
+    const docStrings = flatten(treeResults, depth=2)
                         .filter(Boolean)
-                        .map(node => nodeToDocString(node, query=token))
-                        .join('\n');
+                        .map(node => nodeToDocString(node, query=token));
 
-    return docString;
+    const mergedDocStrings = dedupe(docStrings).join('\n');
 
-}
+    return mergedDocStrings.length ? mergedDocStrings : formatters.default(vm.runInThisContext(token), token);
 
-function adjustSearchToken(token) {
-    // to account for globals edge-case in api docs
-
-    const toAdjust = ['process'];
-
-    if (toAdjust.includes(token))
-        return capitalize(token);
-
-    return token;
-}
-
-function nameFilter(segment) {
-    return function(node) {
-        return node.name === segment || node.textRaw === segment || node.displayName === segment || node.name.endsWith(`.${segment}`);
-    }
 }
 
 function findDocTrees(docs) {
@@ -54,16 +39,36 @@ function findDocTrees(docs) {
     return [mainTree, errorsTree, globalObjectsTree].filter(Boolean);
 }
 
+function adjustSearchToken(token) {
+    // to account for globals edge-case in api docs
+
+    const toAdjust = ['process'];
+
+    if (toAdjust.includes(token))
+        return capitalize(token);
+
+    return token;
+}
+
+function nameFilter(segment) {
+    return function(node) {
+        return node.name === segment || 
+               node.textRaw === segment || 
+               node.displayName === segment || 
+               node.name.endsWith(`.${segment}`);
+    }
+}
+
 function find(root, segments, index) {
 
     const props = ['classes','events','globals','methods','miscs','modules','properties']; 
 
     // get current segment
     let segment = adjustSearchToken(segments[index]);
+    let matchesSegment = nameFilter(segment);
 
     // map root to target props values and flatten array
     let children = flatten(props.map(key => root[key]).filter(Boolean));
-    let matchesSegment = nameFilter(segment);
     let matches = children.filter(matchesSegment);
 
     if (index === 1) 
