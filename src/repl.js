@@ -1,6 +1,9 @@
-const repl = require('repl');
 const path = require('path');
+const repl = require('repl');
+const replHistory = require('repl.history');
+const touch = require('touch');
 const vm = require('vm');
+const { homedir } = require('os');
 
 const { help } = require('./help');
 const { striptags, rmLastChar  } = require(path.resolve(__dirname, 'utils'));
@@ -30,12 +33,18 @@ function makeHelpFilter(docTree) {
 
 function start(docs) {
 
-    repl.start({ 
+    const historyFile = path.join(homedir(),'.node_repl_history');
+
+    const nr = repl.start({ 
         prompt: 'node-help > ', 
         eval: makeHelpFilter(docs), 
         ignoreUndefined: true, 
         useGlobal: true,
     });
+
+    replHistory(nr, historyFile);
+
+
 
 }
 
