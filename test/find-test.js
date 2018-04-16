@@ -2,10 +2,11 @@ const fs = require('fs');
 const test = require('tape');
 const path = require('path'); 
 const { traverse } = require(path.resolve(path.join(__dirname,'..','src','help')));
-const docsPath = path.resolve(__dirname, '..', 'docs','node','node-all.json');
+const docsPath = path.resolve(__dirname,'..','docs','node','node-all.json');
 
+const globals = [
 
-const keys = ['crypto','buffer','dns','net'];
+]; 
 
 test('lookup', function(t) {
 
