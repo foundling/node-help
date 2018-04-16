@@ -5,7 +5,8 @@ function progInfo(packageInfo) {
 
     const info = {
         ' node version ': process.version,
-        ' node-help version ': packageInfo.version
+        ' node-help version ': packageInfo.version,
+        ' github ': chalk.green(packageInfo.repository.url)
     };
 
 

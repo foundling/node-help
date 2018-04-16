@@ -3,22 +3,21 @@ const chalk = require('chalk');
 const vm = require('vm');
 const path = require('path');
 const util = require('util');
-const { nodeToDocString, formatters } = require(path.resolve(__dirname, 'format'));
+const { formatES, formatNodeJS } = require(path.resolve(__dirname, 'format'));
 const { dedupe, flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
 
 function help(token, docs) {
 
     const segments = token.split('.');
-    const docTrees = findDocTrees(docs);
-    const treeResults = docTrees
-                        .map(tree => find(tree, segments, 0))
-    const docStrings = flatten(treeResults, depth=2)
-                        .filter(Boolean)
-                        .map(node => nodeToDocString(node, query=token));
+    const lastSegment = segments.slice(-1)[0];
+    const treeResults = find(docs, lastSegment);
+    const nodeJSDocStrings = flatten(treeResults)
+                                .map(node => formatNodeJS(node, token)).join('\n\n');
 
-    const mergedDocStrings = dedupe(docStrings).join('\n');
+    const ESDocString = formatES(vm.runInThisContext(token), token);
+    const mergedDocStrings = [nodeJSDocStrings, ESDocString].join('\n\n');
 
-    return mergedDocStrings.length ? mergedDocStrings : formatters.default(vm.runInThisContext(token), token);
+    return mergedDocStrings;
 
 }
 
@@ -59,32 +58,16 @@ function nameFilter(segment) {
     }
 }
 
-function find(root, segments, index) {
-
+function find(root, segment) {
+     
     const props = ['classes','events','globals','methods','miscs','modules','properties']; 
 
-    // get current segment
-    let segment = adjustSearchToken(segments[index]);
-    let matchesSegment = nameFilter(segment);
+    if (root.name === segment)
+        return root;
 
-    // map root to target props values and flatten array
-    let children = flatten(props.map(key => root[key]).filter(Boolean));
-    let matches = children.filter(matchesSegment);
-
-    if (index === 1) 
-        util.inspect(matches);
-
-    // thought: make this work correctly with matches, i.e., not indexing into [0].  
-
-
-    // if no matches or we've processed the last segment, we're done
-    if (!matches.length || index + 1 >= segments.length)
-        return matches[0];
-
-
-    // todo:return matches, not matches[0]
-    return find(matches[0], segments, index + 1);
-
+    let children = flatten(props.map(key => root[key])).filter(Boolean);
+    return flatten(children.map(child => find(child, segment)));
+    
 }
 
 module.exports = exports = { help, find };

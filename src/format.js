@@ -3,154 +3,54 @@ const path = require('path');
 const util = require('util');
 const striptags = require('striptags');
 const { keys, flatten, decodeHTML } = require(path.resolve(__dirname, './utils'));
-const formatters = {
-
-    module: formatModule,
-    method: formatMethod,
-    property: formatProperty,
-    class: formatClass,
-    global: formatGlobal,
-    default: formatDefault
-
-};
 
 function getMethods(o) {
-    return keys(o)
-        .filter(k => o[k].constructor.name === 'Function')
-        .join('\n');
+    const methods = keys(o)
+        .filter(k => o[k].constructor.name === 'Function');
+    return methods.length ? '\n' + methods.join('\n') : 'none';
 }
+
 function getOwnProperties(o) {
-    return Object.getOwnPropertyNames(o).join('\n');
+    const ownProps = Object.getOwnPropertyNames(o);
+    return ownProps.length ? '\n' + ownProps.join('\n') : 'none';
 }
 
-function nodeToDocString(node, query) {
-
-    if (node.type in formatters)
-        return formatters[node.type](node, query);
-    else
-        return formatters['default'](node, query);
-
-}
-
-function formatDefault(node, query) {
+function formatES(node, query) {
 
     return [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('toString:')} '${node.toString()}'`,
-        `${chalk.red('Constructor:')} ${node.constructor.name}`,
-        `${chalk.red('Properties:')} \n${getOwnProperties(node)}`,
-        `${chalk.red('Methods:')} \n${getMethods(node)}`,
+        `${chalk.bgWhite.black('Object Information')}`,
+        `${chalk.green('toString:')} '${node.toString()}'`,
+        `${chalk.green('valueOf:')} '${node.valueOf()}'`,
+        `${chalk.green('Constructor:')} ${node.constructor.name}`,
+        `${chalk.green('Own Properties:')} ${getOwnProperties(node)}`,
+        `${chalk.green('Methods:')} ${getMethods(node)}`,
     ].join('\n');
 }
 
-function formatModule(node) {
+function formatSignatures(signatures=[]) {
+    const signatureArray = flatten(signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
+    return signatureArray.length ? '\n' + signatureArray.join('\n') : '';
+}
+function formatDescription(desc) {
+    return desc.trim().length ? '\n' + striptags(decodeHTML(desc)).trim() : '';
+}
 
-    let signatures = [''];
-    const {name, type, desc} = node;
+function formatNodeJS(node) {
 
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
+    const {name, textRaw, type, desc, signatures} = node;
     const sections = [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))})}`,
+        `${chalk.bgWhite.black('Node.js Documentation')}`,
+        `${chalk.green('Name:')} ${name}`,
+        `${chalk.green('Node.js Object Type:')} ${type}`,
+        `${chalk.green('Signature(s):')} ${textRaw} ${formatSignatures(signatures)}`,
+        `${chalk.green('Description:')} ${formatDescription(desc)}`,
     ];
 
     return sections.join('\n');
 
 }
 
-function formatMethod(node) {
-
-    let signatures = [''];
-    const {name, type, desc} = node;
-
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
-    const sections = [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
-    ];
-
-    return sections.join('\n');
-
-}
-
-function formatProperty(node) {
-
-    let signatures = [''];
-    const {name, type, desc} = node;
-
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
-    const sections = [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`
-    ];
-
-    return sections.join('\n');
-
-}
-
-function formatClass(node) {
-
-    let signatures = [''];
-    const {name, type, desc} = node;
-
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
-    const sections = [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
-    ];
-
-    return sections.join('\n');
-
-}
-
-function formatGlobal(node) {
-
-    let signatures = [''];
-    const {name, type, desc} = node;
-
-    if (node.signatures)
-        signatures = flatten(node.signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
-
-    const sections = [
-        `${chalk.red('Query:')} '${query}'`,
-        `${chalk.red('Name:')} ${name}`,
-        `${chalk.red('Type:')} ${type}`,
-        `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
-    ];
-
-    return sections.join('\n');
-
-
-}
-
-function notFound(token) {
-    return 'No documentation found!';
-}
-
-module.exports = exports = { 
-
-    nodeToDocString,
-    formatters,
-
+module.exports = exports = {
+    formatNodeJS,
+    formatES
 };

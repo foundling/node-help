@@ -4,6 +4,7 @@ const util = require('util');
 const chalk = require('chalk');
 const repl = require('./repl'); 
 const progInfo = require('./progInfo');
+const { clear } = require('./utils');
 const readFilePromise = util.promisify(fs.readFile);
 
 const packageJSON = path.resolve(path.join(__dirname,'..','package.json'));
@@ -18,8 +19,9 @@ const nodeDocsJSON = path.resolve(path.join(__dirname,'..','docs','node','node-a
  */
 
 function startProg([pkgText, bannerText, nodeDocs]) {
+    clear();
     console.log(chalk.blue(bannerText));
-    console.log(progInfo(JSON.parse(pkgText)));
+    console.log(progInfo(JSON.parse(pkgText)),'\n');
     repl.start(JSON.parse(nodeDocs));
 }
 
