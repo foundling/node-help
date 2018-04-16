@@ -13,7 +13,8 @@ const formatters = {
 
 };
 
-function nodeToDocString(node) {
+function nodeToDocString(node, query) {
+
     if (!node)
         return notFound(node);
 
@@ -21,6 +22,7 @@ function nodeToDocString(node) {
         return formatters[node.type](node);
     else
         return formatters['default'](node);
+
 }
 
 function formatDefault(node) {
@@ -35,7 +37,7 @@ function formatDefault(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`,
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
     ];
 
     return sections.join('\n');
@@ -53,7 +55,7 @@ function formatModule(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`,
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))})}`,
     ];
 
     return sections.join('\n');
@@ -72,7 +74,7 @@ function formatMethod(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`,
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
     ];
 
     return sections.join('\n');
@@ -91,7 +93,7 @@ function formatProperty(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`
     ];
 
     return sections.join('\n');
@@ -110,7 +112,7 @@ function formatClass(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`,
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
     ];
 
     return sections.join('\n');
@@ -129,7 +131,7 @@ function formatGlobal(node) {
         `${chalk.red('Name:')} ${name}`,
         `${chalk.red('Type:')} ${type}`,
         `${chalk.red('Signature(s):\n')}${node.textRaw + '\n' + signatures.join('\n')}`,
-        `${chalk.red('Description:\n')}${chalk.bgWhite.black(striptags(decodeHTML(desc)))}`,
+        `${chalk.red('Description:\n')}${striptags(decodeHTML(desc))}`,
     ];
 
     return sections.join('\n');
@@ -138,7 +140,7 @@ function formatGlobal(node) {
 }
 
 function notFound(node) {
-    return `${chalk.bgBlue('No documentation found!')}`;
+    return 'No documentation found!';
 }
 
 module.exports = exports = { 

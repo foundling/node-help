@@ -12,7 +12,7 @@ function help(token, docs) {
     const docTrees = findDocTrees(docs);
     const treeResults = docTrees
         .map(tree => find(tree, segments, 0))
-    const docString = flatten(treeResults, depth=2).map(node => nodeToDocString(node)).join('\n');
+    const docString = flatten(treeResults, depth=2).map(node => nodeToDocString(node, query=token)).join('\n');
 
     return docString;
 
