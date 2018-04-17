@@ -1,12 +1,87 @@
 # node-help
 
-### The offline documentation module for the Node REPL 
+## The offline documentation module for the Node REPL 
 
 `node-help` is a standalone command-line REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
 
+#### Level of Support
+
 At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
 
-With `node-help`, you can do this
+#### Features
+
+- Documentation for un-aliased built-in lookups, e.g. `node-help > process.env?`.
+- Basic Native JavaScript introspection support displaying objects' valueOf(), toString(), method and property values.
+- Colorized short-and-longform documentation
+    + short-form docs are accessed with an appended `?` and are rendered in colorized plain text 
+    + long-form docs are accessed via the `.docs <topic_name>` command and are rendered in colorized markdown in the terminal
+- Command history and `global` context are enabled.
+
+
+#### API
+
++ `?`: append to the end of a built-in Node object to get documentation on it
++ `.docs`: show a list of long-form markdown articles to read
++ `.docs <filename>`: render the article name in Markdown for the terminal 
+
+#### Usage 
+
+
+Using the `.docs` command, you can list the available longform docs like this:
+
+````
+available Node.js docs
++ addons
++ assert
++ async_hooks
++ buffer
++ child_process
++ cli
++ cluster
++ console
++ crypto
++ debugger
++ deprecations
++ dgram
++ dns
++ documentation
++ domain
++ errors
++ esm
++ events
++ fs
++ globals
++ http
++ http2
++ https
++ inspector
++ intl
++ modules
++ n-api
++ net
++ os
++ path
++ perf_hooks
++ process
++ punycode
++ querystring
++ readline
++ repl
++ stream
++ string_decoder
++ synopsis
++ timers
++ tls
++ tracing
++ tty
++ url
++ util
++ v8
++ vm
++ zlib
+````
+
+Using the `?`, you can do this
 
 ````javascript
 node-help > process.env?
