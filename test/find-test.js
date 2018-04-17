@@ -5,19 +5,17 @@ const { find } = require(path.resolve(path.join(__dirname,'..','src','help')));
 const { keys, flatten } = require(path.resolve(path.join(__dirname,'..','src','utils')));
 const docsPath = path.resolve(__dirname,'..','docs','node','node-all.json');
 
-allnames = [];
-const findAllNames = (root) => {
+let results = [];
+function findAllNames(root) {
 
     const props = ['modules','methods','classes','globals','properties','miscs'];    
     const children = flatten(props.map(key => root[key]).filter(Boolean));
     const names = children.map(child => child.name);
     
-    allnames = allnames.concat(names);
+    results = results.concat(names);
 
-    if (!children.length)
-        return allnames;
-
-    return flatten(children.map(findAllNames));
+    if (children.length)
+        return children.map(child => findAllNames(child));
 }
 
 test('lookup', function(t) {
@@ -28,8 +26,8 @@ test('lookup', function(t) {
         if (err) throw err;
 
         const docs = JSON.parse(data);
-        const names = findAllNames(docs);
-        console.log(Array.from(new Set(names)));
+        findAllNames(docs, []);
+        const deduped = Array.from(new Set(results)); 
         t.equal(typeof docs, 'object'); 
         t.end();
 
