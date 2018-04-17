@@ -6,6 +6,7 @@ const vm = require('vm');
 const { homedir } = require('os');
 
 const { help } = require('./help');
+const { listArticles, renderArticle } = require('./longform');
 const { striptags, rmLastChar  } = require(path.resolve(__dirname, 'utils'));
 
 function mkEval(dataTree) {
@@ -40,6 +41,18 @@ function start(dataTree) {
         eval: mkEval(dataTree), 
         ignoreUndefined: true, 
         useGlobal: true,
+    });
+
+    nr.defineCommand('docs',  {
+        help: 'list available longform Node docs with `.longform` or read one with `.longform <topic>`.',
+        action(topic) {
+            this.clearBufferedCommand();
+            if (!topic)
+                console.log(listArticles())
+            else
+                renderArticle(topic);
+            this.displayPrompt();
+        }
     });
 
     replHistory(nr, historyFile);

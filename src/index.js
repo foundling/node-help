@@ -11,13 +11,6 @@ const packageJSON = path.resolve(path.join(__dirname,'..','package.json'));
 const bannerPath = path.resolve(path.join(__dirname, 'banner.txt')); 
 const nodeDocsJSON = path.resolve(path.join(__dirname,'..','docs','node','node-all.json'));
 
-/*
- * check for internet connection
- * figure out if doc check is necessary
- * echo banner, start repl
- *
- */
-
 function startProg([pkgText, bannerText, nodeDocs]) {
     clear();
     console.log(chalk.blue(bannerText));

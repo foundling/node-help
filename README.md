@@ -1,10 +1,10 @@
 # node-help
 
-### The offline documentation module for your Node REPL 
+### The offline documentation module for the Node REPL 
 
-`node-help` is a standalone command-line REPL that lets you append a question mark to any valid JavaScript token to get information about it. It is inspired by iPython
+`node-help` is a standalone command-line REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
 
-Currently, only Node.js documentation is available with rudimentary introspection for Native JavaScript objects. JavaScript docs are coming soon !.
+At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
 
 With `node-help`, you can do this
 
@@ -15,12 +15,12 @@ node-help > process.env?
 
 and get this
 
-````
+````bash
 node-help > process?
 
 [ 2 Result(s) for Node.js. ]
 
- global | process 
+global | process 
 Name: process
 Node.js Object Type: global
 Signature(s): process 
@@ -29,7 +29,7 @@ Description:
 
 The process object. See the process object section.
 
- ChildProcess | process 
+ChildProcess | process 
 Name: process
 Node.js Object Type: ChildProcess
 Signature(s): `process` {ChildProcess}  
@@ -119,8 +119,3 @@ exit
 kill
 
 ````
-
-
-
-
-# temp
