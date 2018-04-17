@@ -1,14 +1,17 @@
 {
   "name": "node-help",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "offline Node.js and JavaScript documentation for the Node Repl",
   "main": "bin/node-help",
   "dependencies": {
     "chalk": "^2.3.2",
     "cheerio": "^1.0.0-rc.2",
     "html-entities": "^1.2.1",
+    "marked": "^0.3.19",
+    "marked-terminal": "^2.0.0",
     "repl.history": "^0.1.4",
     "request": "^2.85.0",
+    "strip-html-comments": "^1.0.0",
     "striptags": "^3.1.1",
     "touch": "^3.1.0"
   },
