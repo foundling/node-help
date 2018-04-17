@@ -1,6 +1,6 @@
 # node-help
 
-## The offline documentation module for the Node REPL 
+## The offline documentation module for the Node.js REPL 
 
 `node-help` is a standalone command-line REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
 
