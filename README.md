@@ -2,13 +2,18 @@
 
 ## The offline documentation module for the Node.js REPL 
 
++ [Features](#features)
++ [Level of Support](#level-of-support)
++ [API](#api)
++ [Usage](#usage)
+  - [The `.docs` command](#the--docs--command)
+  - [The `.docs <topic>` command](#the--docs--topic---command)
+  - [The `?` token](#the-----token)
++ [Contributions](#contributions)
+
+### Features
+
 `node-help` is a standalone command-line REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
-
-#### Level of Support
-
-At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
-
-#### Features
 
 - Documentation for un-aliased built-in lookups, e.g. `node-help > process.env?`.
 - Basic Native JavaScript introspection support displaying objects' valueOf(), toString(), method and property values.
@@ -17,20 +22,25 @@ At present documentation is only available for Node.js 8.11.1+. Native JavaScrip
     + long-form docs are accessed via the `.docs <topic_name>` command and are rendered in colorized markdown in the terminal
 - Command history and `global` context are enabled.
 
+### Level of Support
 
-#### API
+At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
+
+### API
 
 + `?`: append to the end of a built-in Node object to get documentation on it
 + `.docs`: show a list of long-form markdown articles to read
 + `.docs <filename>`: render the article name in Markdown for the terminal 
 
-#### Usage 
+### Usage 
 
+
+#### The `.docs` command
 
 Using the `.docs` command, you can list the available longform docs like this:
 
 ````
-available Node.js docs
+available Node.js docs:
 + addons
 + assert
 + async_hooks
@@ -50,48 +60,54 @@ available Node.js docs
 + esm
 + events
 + fs
-+ globals
-+ http
-+ http2
-+ https
-+ inspector
-+ intl
-+ modules
-+ n-api
-+ net
-+ os
-+ path
-+ perf_hooks
-+ process
-+ punycode
-+ querystring
-+ readline
-+ repl
-+ stream
-+ string_decoder
-+ synopsis
-+ timers
-+ tls
-+ tracing
-+ tty
-+ url
-+ util
-+ v8
-+ vm
-+ zlib
+...
 ````
 
-Using the `?`, you can do this
+#### The `.docs <topic>` command
+
+By running `.docs http2`, for example, you can read longform documentation on the `http2` module from the Node.js website as colorized Markdown in your terminal.
+
+````javascript
+# HTTP/2
+
+    Stability: 1 - Experimental
+
+    The http2 module provides an implementation of the HTTP/2 (https://tools.ietf.org/html/rfc7540) protocol. It
+    can be accessed using:
+
+        const http2 = require('http2');
+
+        ## Core API
+
+        The Core API provides a low-level interface designed specifically around
+        support for HTTP/2 protocol features. It is specifically not designed for
+        compatibility with the existing HTTP/1 (http.html) module API. However,
+        the Compatibility API (#http2_compatibility_api) is.
+
+        The http2 Core API is much more symmetric between client and server than the
+        http API. For instance, most events, like error, connect and stream, can
+        be emitted either by client-side code or server-side code.
+
+        ### Server-side example
+
+        The following illustrates a simple HTTP/2 server using the Core API.
+        Since there are no browsers known that support
+        unencrypted HTTP/2 (https://http2.github.io/faq/#does-http2-require-encryption), the use of
+        http2.createSecureServer() (#http2_http2_createsecureserver_options_onrequesthandler) is necessary when communicating
+        with browser clients.
+
+            const http2 = require('http2');
+                const fs = require('fs');
+
+...
+````
+
+#### The `?` token
+
+By appending a `?` to a Node builtin object, you can do this:
 
 ````javascript
 node-help > process.env?
-
-````
-
-and get this
-
-````bash
-node-help > process?
 
 [ 2 Result(s) for Node.js. ]
 
@@ -194,3 +210,7 @@ exit
 kill
 
 ````
+
+### Contributions
+
+The search algorithm for `node-help` is not perfect so there will be bugs.  Please feel free to raise issues on the [github issues page](https://github.com/foundling/node-help/issues).

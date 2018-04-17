@@ -43,7 +43,7 @@ function renderArticle(topic) {
     const articlePath = path.join(mdDir, `${topic}.md`);
     fs.readFile(articlePath, 'utf8', (err, content) => {
         if (err) throw err;
-        console.log(marked(stripHTMLComments(content)));
+        console.log('\n\n' + marked(stripHTMLComments(content)));
     });
 }
 
