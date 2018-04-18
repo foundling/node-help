@@ -111,104 +111,79 @@ node-help > process.env?
 
 [ 2 Result(s) for Node.js. ]
 
-global | process 
-Name: process
-Node.js Object Type: global
-Signature(s): process 
+Stream | process.stdin 
+Name: stdin
+Node.js Object Type: Stream
+Signature(s): `stdin` {Stream}  
 Description: 
-{Object}
+The process.stdin property returns a stream connected to
+stdin (fd 0). It is a net.Socket (which is a Duplex
+stream) unless fd 0 refers to a file, in which case it is
+a Readable stream.
+process.stdin.setEncoding('utf8');
 
-The process object. See the process object section.
+process.stdin.on('readable', () => {
+  const chunk = process.stdin.read();
+  if (chunk !== null) {
+    process.stdout.write(`data: ${chunk}`);
+  }
+});
 
-ChildProcess | process 
-Name: process
-Node.js Object Type: ChildProcess
-Signature(s): `process` {ChildProcess}  
+process.stdin.on('end', () => {
+  process.stdout.write('end');
+});
+
+As a Duplex stream, process.stdin can also be used in "old" mode that
+is compatible with scripts written for Node.js prior to v0.10.
+For more information see Stream compatibility.
+In "old" streams mode the stdin stream is paused by default, so one
+must call process.stdin.resume() to read from it. Note also that calling
+process.stdin.resume() itself would switch stream to "old" mode.
+
+stream.Writable | process.stdin 
+Name: stdin
+Node.js Object Type: stream.Writable
+Signature(s): `stdin` {stream.Writable}  
 Description: 
-All workers are created using child_process.fork(), the returned object
-from this function is stored as .process. In a worker, the global process
-is stored.
-See: Child Process module
-Note that workers will call process.exit(0) if the 'disconnect' event occurs
-on process and .exitedAfterDisconnect is not true. This protects against
-accidental disconnection.
+A Writable Stream that represents the child process's stdin.
+Note that if a child process waits to read all of its input, the child will not
+continue until this stream has been closed via end().
+If the child was spawned with stdio[0] set to anything other than 'pipe',
+then this will be null.
+subprocess.stdin is an alias for subprocess.stdio[0]. Both properties will
+refer to the same value.
 
 [ Additional Information ]
 
-toString: '[object process]'
-valueOf: '[object process]'
-Constructor: process
+toString: '[object Object]'
+valueOf: '[object Object]'
+Constructor: ReadStream
 Own Properties (non-methods): 
-title
-version
-versions
-arch
-platform
-release
-argv
-execArgv
-env
-pid
-features
-ppid
-execPath
-debugPort
-moduleLoadList
+connecting
+_hadError
+_handle
+_parent
+_host
+_readableState
+readable
+domain
 _events
 _eventsCount
 _maxListeners
-domain
-_exiting
-config
-stdout
-stderr
-stdin
-argv0
-mainModule
-Methods: 
-_startProfilerIdleNotifier
-_stopProfilerIdleNotifier
-_getActiveRequests
-_getActiveHandles
-reallyExit
-abort
-chdir
-cwd
-umask
-getuid
-geteuid
-setuid
-seteuid
-setgid
-setegid
-getgid
-getegid
-getgroups
-setgroups
-initgroups
-_kill
-_debugProcess
-_debugPause
-_debugEnd
-hrtime
-cpuUsage
-dlopen
-uptime
-memoryUsage
-_rawDebug
-binding
-_linkedBinding
-_fatalException
-assert
-setUncaughtExceptionCaptureCallback
-hasUncaughtExceptionCaptureCallback
-emitWarning
-nextTick
-_tickCallback
-openStdin
-exit
-kill
-
+_writableState
+writable
+_bytesDispatched
+_sockname
+_writev
+_pendingData
+_pendingEncoding
+allowHalfOpen
+server
+_server
+isRaw
+isTTY
+fd
+Methods: none
 ````
 
 ### Contributions
