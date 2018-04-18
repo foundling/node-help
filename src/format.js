@@ -43,7 +43,8 @@ function sum(items) {
 }
 
 function wrap(props) {
-    const termWidth = process.stdout.columns;
+    const cols = process.stdout.columns;
+    const termWidth = cols < 80 ? cols : 80;
     const rows = [[]];
     let len = 0;
     let rowIndex = 0;
