@@ -3,8 +3,8 @@ const chalk = require('chalk');
 const vm = require('vm');
 const path = require('path');
 const util = require('util');
-const { formatES, formatNodeJS, summary } = require(path.resolve(__dirname, 'format'));
-const { dedupe, flatten, capitalize } = require(path.resolve(__dirname, 'utils'));
+const { formatES, formatNodeJS, summary } = require(path.join(__dirname, 'format'));
+const { dedupe, flatten, capitalize } = require(path.join(__dirname, 'utils'));
 
 function help(searchToken, docs) {
 
@@ -22,24 +22,6 @@ function help(searchToken, docs) {
 
 }
 
-
-function findDocTrees(docs) {
-
-    // adjust docs object to make it easier to search
-
-    let mainTree = {
-        methods: docs.methods, 
-        modules: docs.modules, 
-        globals: docs.globals,
-        classes: docs.classes,
-    };
-
-    let errorsTree = docs.miscs.filter(node => node.name === 'Errors')[0];
-    let globalObjectsTree = docs.miscs.filter(node => node.name === 'Global Objects')[0];
-    
-    return [mainTree, errorsTree, globalObjectsTree].filter(Boolean);
-}
-
 function adjustSearchToken(token) {
     // to account for globals edge-case in api docs
 
@@ -51,13 +33,16 @@ function adjustSearchToken(token) {
     return token;
 }
 
-function nameFilter(segment) {
-    return function(node) {
-        return node.name === segment || 
-               node.textRaw === segment || 
-               node.displayName === segment || 
-               node.name.endsWith(`.${segment}`);
-    }
+function findAllNames(tree) {
+
+    const props = ['modules','methods','classes','globals','properties','miscs'];    
+    const children = flatten(props.map(key => tree[key]).filter(Boolean));
+    const names = children.map(child => child.name);
+    
+    if (children.length)
+        return flatten(names.concat(children.map(findAllNames)));
+    else 
+        return names;
 }
 
 function find(root, segment) {
@@ -72,4 +57,4 @@ function find(root, segment) {
     
 }
 
-module.exports = exports = { help, find };
+module.exports = exports = { help, find, findAllNames };

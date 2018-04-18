@@ -2,7 +2,24 @@ const chalk = require('chalk');
 const path = require('path');
 const util = require('util');
 const striptags = require('striptags');
-const { keys, flatten, decodeHTML } = require(path.resolve(__dirname, './utils'));
+const { keys, flatten, decodeHTML } = require(path.join(__dirname, './utils'));
+
+function progInfo(packageInfo) {
+
+    const info = {
+        ' node version ': process.version,
+        ' node-help version ': packageInfo.version,
+        ' github ': chalk.green(packageInfo.repository.url)
+    };
+
+
+    return Object.keys(info).map(k => {
+        const prop = k;
+        const value = info[k];
+        return `${chalk.bgWhite.black(prop)} ${chalk.black(value)}`;
+    }).join('\n');
+
+}
 
 function summary(docsCount) {
     return `\n${chalk.red(`[ ${docsCount} Result(s) for Node.js. ]`)}`;
@@ -57,6 +74,7 @@ function formatNodeJS(node, searchToken) {
 }
 
 module.exports = exports = {
+    progInfo,
     formatNodeJS,
     formatES,
     summary

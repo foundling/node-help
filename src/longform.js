@@ -6,7 +6,7 @@ const fs = require('fs');
 const marked = require('marked');
 const TerminalRenderer = require('marked-terminal');
 const stripHTMLComments = require('strip-html-comments');
-const mdDir = path.resolve(path.join(__dirname,'..','docs','node','md')); 
+const mdDir = path.join(__dirname,'..','docs','node','md'); 
 const readFile = util.promisify(fs.readFile); 
 let articleNames;
 

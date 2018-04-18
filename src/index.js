@@ -2,14 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const chalk = require('chalk');
-const repl = require('./repl'); 
-const progInfo = require('./progInfo');
-const { clear } = require('./utils');
+const touch = require('touch');
+const { homedir } = require('os');
 const readFilePromise = util.promisify(fs.readFile);
 
-const packageJSON = path.resolve(path.join(__dirname,'..','package.json'));
-const bannerPath = path.resolve(path.join(__dirname, 'banner.txt')); 
-const nodeDocsJSON = path.resolve(path.join(__dirname,'..','docs','node','node-all.json'));
+const repl = require(path.join(__dirname,'repl')); 
+const { progInfo } = require(path.join(__dirname,'format'));
+const { clear } = require(path.join(__dirname,'utils'));
+
+const packageJSON = path.join(__dirname,'..','package.json');
+const bannerPath = path.join(__dirname, 'banner.txt'); 
+const nodeDocsJSON = path.join(__dirname,'..','docs','node','node-all.json');
 
 function startProg([pkgText, bannerText, nodeDocs]) {
     clear();
@@ -18,7 +21,7 @@ function startProg([pkgText, bannerText, nodeDocs]) {
     repl.start(JSON.parse(nodeDocs));
 }
 
-function init (options) {
+function init () {
 
     const initData = [ 
         packageJSON, 
@@ -26,7 +29,12 @@ function init (options) {
         nodeDocsJSON 
     ].map(fpath => readFilePromise(fpath, 'utf8'));
 
-    Promise.all(initData).then(startProg)
+    Promise
+        .all(initData)
+        .then(startProg, (e) => { console.log(`error: ${e}`) })
+        .catch(e => { 
+            throw e;
+        }) 
 
 }
 

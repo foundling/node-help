@@ -7,7 +7,7 @@ const { homedir } = require('os');
 
 const { help } = require('./help');
 const { listArticles, renderArticle } = require('./longform');
-const { striptags, rmLastChar  } = require(path.resolve(__dirname, 'utils'));
+const { striptags, rmLastChar  } = require(path.join(__dirname, 'utils'));
 
 function mkEval(dataTree) {
 
