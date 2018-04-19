@@ -7,7 +7,7 @@ const { homedir } = require('os');
 
 const { help } = require('./help');
 const { listArticles, renderArticle } = require('./longform');
-const { striptags, rmLastChar  } = require(path.join(__dirname, 'utils'));
+const { striptags, chop  } = require(path.join(__dirname, 'utils'));
 
 function mkEval(dataTree) {
 
@@ -18,7 +18,7 @@ function mkEval(dataTree) {
 
         let tokens = cmd.trim().split(' ');
         let helpTokens = tokens.filter(t => t.endsWith('?'));
-        let buildHelp = token => help(rmLastChar(token), dataTree);
+        let buildHelp = token => help(chop(token), dataTree);
         let output;
 
         if (helpTokens.length) 
