@@ -3,7 +3,7 @@ const test = require('tape');
 const path = require('path'); 
 const { find, findAllNames } = require(path.join(__dirname,'..','src','help'));
 const { keys, flatten } = require(path.join(__dirname,'..','src','utils'));
-const docsPath = path.join(__dirname,'..','docs','node','node-all.json');
+const docsPath = path.join(__dirname,'..','src','docs','node','node-all.json');
 
 
 test('lookup', function(t) {
@@ -16,8 +16,6 @@ test('lookup', function(t) {
         const docs = JSON.parse(data);
         const names = findAllNames(docs);
         const deduped = Array.from(new Set(names)); 
-
-        console.log(deduped);
 
         t.equal(Array.isArray(deduped), true); 
         t.end();
