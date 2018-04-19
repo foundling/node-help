@@ -101,12 +101,6 @@ By running `.docs http2`, for example, you can read long-form documentation on t
 
 ...
 ````
-
-#### The `?` token
-
-By appending a `?` to a Node builtin object, you can do this:
-
-````javascript
 node-help > process?
 
 [ 2 Result(s) for Node.js. ]
@@ -125,6 +119,20 @@ ChildProcess | process
 Name: process
 Node.js Object Type: ChildProcess
 Signature(s): `process` {ChildProcess}  
+
+node-help > process?
+
+[ 2 Result(s) for Node.js. ]
+
+ global | process 
+Name: process
+Node.js Object Type: global
+Signature(s): process 
+
+Description:
+{Object}
+
+The process object. See the process object section.
 
 node-help > process?
 
