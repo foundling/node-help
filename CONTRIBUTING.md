@@ -6,7 +6,7 @@
 If you would like to add a feature, please bring it up as an issue first. 
 
 ## Bug Fixes
-If you are fixing a bug, please make a pull request with the following:
+If you are fixing a bug, thank you. Please make a pull request with the following:
 
 + The expected behavior and the actual behavior.
 + The OS and version of node on which  you are able to replicate the bug.
