@@ -100,7 +100,6 @@ By running `.docs http2`, for example, you can read long-form documentation on t
                 const fs = require('fs');
 
 ...
-````
 node-help > process?
 
 [ 2 Result(s) for Node.js. ]
@@ -191,6 +190,7 @@ abort                               hasUncaughtExceptionCaptureCallback umask
 assert                              hrtime                              uptime                              
 
 node-help >
+
 ````
 
 ### Contributions
