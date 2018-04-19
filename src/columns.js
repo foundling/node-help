@@ -55,7 +55,7 @@ function columnize(items) {
 
     items.sort();
 
-    const longestWord = longest(items);
+    const longestWord = longest(items) + 1;
     const width = process.stdout.columns;
     const wordsPerLine = Math.floor(width/longestWord);
     const lineCount = Math.ceil(items.length/wordsPerLine);
