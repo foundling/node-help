@@ -65,7 +65,7 @@ available Node.js docs:
 
 #### The `.docs <topic>` command
 
-By running `.docs http2`, for example, you can read longform documentation on the `http2` module from the Node.js website as colorized Markdown in your terminal.
+By running `.docs http2`, for example, you can read long-form documentation on the `http2` module from the Node.js website as colorized Markdown in your terminal. Like, wee!
 
 ````javascript
 # HTTP/2
