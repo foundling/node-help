@@ -30,7 +30,7 @@ At present documentation is only available for Node.js 8.11.1+. Native JavaScrip
 
 + `?`: append to the end of a built-in Node object to get documentation on it
 + `.docs`: show a list of long-form markdown articles to read
-+ `.docs <filename>`: render the article name in Markdown for the terminal 
++ `.docs <topic>`: render the article name in Markdown for the terminal 
 
 ### Usage 
 
