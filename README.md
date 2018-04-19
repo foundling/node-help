@@ -126,6 +126,25 @@ Name: process
 Node.js Object Type: ChildProcess
 Signature(s): `process` {ChildProcess}  
 
+node-help > process?
+
+[ 2 Result(s) for Node.js. ]
+
+ global | process 
+Name: process
+Node.js Object Type: global
+Signature(s): process 
+
+Description:
+{Object}
+
+The process object. See the process object section.
+
+ ChildProcess | process 
+Name: process
+Node.js Object Type: ChildProcess
+Signature(s): `process` {ChildProcess}  
+
 Description:
 All workers are created using child_process.fork(), the returned object
 from this function is stored as .process. In a worker, the global process
@@ -142,21 +161,28 @@ valueOf: '[object process]'
 Constructor: process
 local properties (non-methods):
 
-_events        _maxListeners  argv0          domain         execPath       moduleLoadList ppid           stdin          version        
-_eventsCount   arch           config         env            features       pid            release        stdout         versions       
-_exiting       argv           debugPort      execArgv       mainModule     platform       stderr         title          
+_events        arch           debugPort      execPath       pid            stderr         version        
+_eventsCount   argv           domain         features       platform       stdin          versions       
+_exiting       argv0          env            mainModule     ppid           stdout         
+_maxListeners  config         execArgv       moduleLoadList release        title          
 
 local methods:
-_debugEnd                           _startProfilerIdleNotifier          dlopen                              hrtime                              seteuid                             
-_debugPause                         _stopProfilerIdleNotifier           emitWarning                         initgroups                          setgid                              
-_debugProcess                       _tickCallback                       exit                                kill                                setgroups                           
-_fatalException                     abort                               getegid                             memoryUsage                         setuid                              
-_getActiveHandles                   assert                              geteuid                             nextTick                            umask                               
-_getActiveRequests                  binding                             getgid                              openStdin                           uptime                              
-_kill                               chdir                               getgroups                           reallyExit                          
-_linkedBinding                      cpuUsage                            getuid                              setUncaughtExceptionCaptureCallback 
-_rawDebug                           cwd                                 hasUncaughtExceptionCaptureCallback setegid                             
+_debugEnd                           binding                             initgroups                          
+_debugPause                         chdir                               kill                                
+_debugProcess                       cpuUsage                            memoryUsage                         
+_fatalException                     cwd                                 nextTick                            
+_getActiveHandles                   dlopen                              openStdin                           
+_getActiveRequests                  emitWarning                         reallyExit                          
+_kill                               exit                                setUncaughtExceptionCaptureCallback 
+_linkedBinding                      getegid                             setegid                             
+_rawDebug                           geteuid                             seteuid                             
+_startProfilerIdleNotifier          getgid                              setgid                              
+_stopProfilerIdleNotifier           getgroups                           setgroups                           
+_tickCallback                       getuid                              setuid                              
+abort                               hasUncaughtExceptionCaptureCallback umask                               
+assert                              hrtime                              uptime                              
 
+node-help >
 ````
 
 ### Contributions
