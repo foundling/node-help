@@ -12,7 +12,7 @@ const { clear } = require(path.join(__dirname,'utils'));
 
 const packageJSON = path.join(__dirname,'..','package.json');
 const bannerPath = path.join(__dirname, 'banner.txt'); 
-const nodeDocsJSON = path.join(__dirname,'..','docs','node','node-all.json');
+const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json');
 
 function startProg([pkgText, bannerText, nodeDocs]) {
     clear();

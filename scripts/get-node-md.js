@@ -1,37 +1,41 @@
+const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
 const cheerio = require('cheerio');
-const re = new RegExp("https://nodejs.org/api/.*\.html$");
-const url = require('url');
+const { promisify } = require('util');
 const baseUrl = 'https://nodejs.org/api';
-const outputPath = path.resolve(path.join(__dirname, '..','docs','node','md'));
+const outputPath = path.resolve(path.join(__dirname, '..','src','docs','node','md'));
 
-// maybe we should keep all api listings ?
-const excludeList = [];// 'documentation', 'deprecation', 'synopsis' ];
+function getNodeMd(callback) {
 
-request('https://nodejs.org/api/', (err, resp, body) => {
+    request('https://nodejs.org/api/', (err, resp, body) => {
 
-    const $ = cheerio.load(body);
+        const $ = cheerio.load(body);
 
-    const docPaths = $('a[class*="nav-"]')
-        .map(function(index, node) {
-            return $(node).attr('href');
-        }).filter(function(index, href) {
-            return href.endsWith('.html');
-        }).filter(function(index, href) {
-            return !excludeList.some(excl => href.startsWith(excl));
-        }).map(function(index, href) {
-            return href.replace('.html','.md');
-        }).get();
+        const docPaths = $('a[class*="nav-"]')
+            .map((index, node) => $(node).attr('href'))
+            .filter((index, href) => href.endsWith('.html'))
+            .map((index, href) => href.replace('.html','.md'))
+            .get();
 
-    docPaths.forEach(p => {
-        request(`${baseUrl}/${p}`, (err, resp, body) => {
-            if (err) throw err;
-            console.log(`writing ${p} to ${outputPath}/${p} ... `); 
-            fs.writeFile(`${outputPath}/${p}`, body, (err) => {
-                if (err) throw err;
+        docPaths.forEach((p,i) => {
+            request(`${baseUrl}/${p}`, (err, resp, body) => {
+                if (err) 
+                    callback(err);
+                fs.writeFile(`${outputPath}/${p}`, body, (err) => {
+                    if (err) 
+                        callback(err);
+
+                    console.log(chalk.green(`writing ${outputPath}/${p}`)); 
+                    if (i === docPaths.length - 1) { 
+                        console.log(chalk.green('Node.js markdown files updated'));
+                        callback(null);
+                    }
+                });
             });
-        });
-    })
-});
+        })
+    });
+}
+
+module.exports = exports = promisify(getNodeMd);
