@@ -1,3 +1,0 @@
-query: process.stdin.isRaw [path]
-
-
