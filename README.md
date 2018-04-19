@@ -111,7 +111,7 @@ node-help > process?
 
 [ 2 Result(s) for Node.js. ]
 
- global | process 
+global | process 
 Name: process
 Node.js Object Type: global
 Signature(s): process 
@@ -121,7 +121,7 @@ Description:
 
 The process object. See the process object section.
 
- ChildProcess | process 
+ChildProcess | process 
 Name: process
 Node.js Object Type: ChildProcess
 Signature(s): `process` {ChildProcess}  
