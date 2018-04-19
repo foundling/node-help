@@ -1,5 +1,11 @@
 # node-help
 
+### API
+
++ `?`: append to the end of a built-in Node object to get documentation on it
++ `.docs`: show a list of long-form markdown articles to read
++ `.docs <topic>`: render the article name in Markdown for the terminal 
+
 ## The offline documentation module for the Node.js REPL 
 
 + [Features](#features)
@@ -25,12 +31,6 @@
 ### Level of Support
 
 At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
-
-### API
-
-+ `?`: append to the end of a built-in Node object to get documentation on it
-+ `.docs`: show a list of long-form markdown articles to read
-+ `.docs <topic>`: render the article name in Markdown for the terminal 
 
 ### Usage 
 
@@ -167,4 +167,4 @@ node-help >
 
 ### Contributions
 
-The search algorithm for `node-help` is not perfect so there will be bugs.  Please feel free to raise issues on the [github issues page](https://github.com/foundling/node-help/issues).
+See [Contributing](#contributing). The search algorithm for `node-help` is not perfect so there will be bugs.  Please feel free to raise issues on the [github issues page](https://github.com/foundling/node-help/issues).
