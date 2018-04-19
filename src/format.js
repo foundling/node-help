@@ -10,7 +10,9 @@ function progInfo(packageInfo) {
     const info = {
         ' node version ': process.version,
         ' node-help version ': packageInfo.version,
-        ' github ': chalk.green(packageInfo.repository.url)
+        ' github ': chalk.green(packageInfo.repository.url),
+        ' author ': chalk.green(packageInfo.author),
+        ' license ': chalk.green(packageInfo.license)
     };
 
     return Object.keys(info).map(k => {
