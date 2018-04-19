@@ -100,6 +100,11 @@ By running `.docs http2`, for example, you can read long-form documentation on t
                 const fs = require('fs');
 
 ...
+````
+
+### Use the `?` to search the Node API (shorter-form)
+
+````javascript
 node-help > process?
 
 [ 2 Result(s) for Node.js. ]
