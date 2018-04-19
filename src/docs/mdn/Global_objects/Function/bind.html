@@ -1,0 +1,1318 @@
+<html><!-- Mirrored from developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 31 Mar 2018 18:19:34 GMT --><!-- Added by HTTrack --><head><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <title>Function.prototype.bind()</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+
+  
+<link rel="preload" href="../../../../../../../../cdn.mdn.mozilla.net/static/fonts/locales/ZillaSlab-Bold.be1d6507cb98.woff" as="font" type="font/woff" crossorigin="">
+<link rel="preload" href="../../../../../../../../cdn.mdn.mozilla.net/static/fonts/locales/ZillaSlab-Bold.8d7f01331d2b.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="../../../../../../../../cdn.mdn.mozilla.net/static/fonts/locales/ZillaSlab-Regular.f7120c75de27.woff" as="font" type="font/woff" crossorigin="">
+<link rel="preload" href="../../../../../../../../cdn.mdn.mozilla.net/static/fonts/locales/ZillaSlab-Regular.f9de6143fdfa.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="home" href="https://developer.mozilla.org/en-US/">
+    <link rel="license" href="#license">
+  
+
+  
+    
+    
+
+    <link href="../../../../../../../../cdn.mdn.mozilla.net/static/build/styles/mdn.aba181e2e425.css" rel="stylesheet" type="text/css">
+
+    
+  
+
+    <link href="../../../../../../../../cdn.mdn.mozilla.net/static/build/styles/wiki.733560e8e110.css" rel="stylesheet" type="text/css">
+
+
+    
+
+  <link href="../../../../../../../../cdn.mdn.mozilla.net/static/build/styles/locale-en-US.a0d0521e251c.css" rel="stylesheet" type="text/css">
+
+  
+    <script async="" type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/mozilla-dnthelper.3936bd979b1d.js" charset="utf-8"></script>
+    
+
+
+
+  
+    <!-- common social tags -->
+    
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta property="og:site_name" content="MDN Web Docs">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/en-US/search/xml" title="MDN Web Docs">
+  
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon144.e7e21ca263ca.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon114.d526f38b09c5.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon72.cc65d1d762a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon57.de33179910ae.png">
+  <!-- basic favicon -->
+     <!-- basic favicon -->
+  
+    
+  
+  <link rel="shortcut icon" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon32.7f3da72dcea1.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src=".html5shiv.3948ccddab6f.js" charset="utf-8"></script>
+  <![endif]-->
+
+  
+  <link rel="dns-prefetch" href="../../../../../../../../interactive-examples.mdn.mozilla.net/index.html" pr="0.75">
+  <link rel="preconnect" href="../../../../../../../../interactive-examples.mdn.mozilla.net/index.html" pr="0.75">
+
+  <link rel="preload" href="../../../../../../../../interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script">
+  <link rel="preload" href="../../../../../../../../interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script">
+
+  <link rel="alternate" type="application/json" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$json">
+  <link rel="canonical" href="bind.html">
+
+  
+    
+      <link rel="alternate" hreflang="de" href="../../../../../../../de/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="es" href="../../../../../../../es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="fr" href="../../../../../../../fr/docs/Web/JavaScript/Reference/Objets_globaux/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ja" href="../../../../../../../ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ko" href="../../../../../../../ko/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="nl" href="../../../../../../../nl/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="pt-BR" href="../../../../../../../pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ru" href="../../../../../../../ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="uk" href="../../../../../../../uk/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="zh-CN" href="../../../../../../../zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="zh-TW" href="../../../../../../../zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+  
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="Function.prototype.bind()">
+  <meta property="og:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">
+  <meta name="twitter:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">
+  <meta name="twitter:title" content="Function.prototype.bind()">
+  
+  <meta property="og:description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  <meta name="description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  <meta name="twitter:description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  
+
+</head>
+<body data-slug="Web/JavaScript/Reference/Global_Objects/Function/bind" contextmenu="edit-history-menu" data-search-url="" class="document  ">
+
+  <script type="text/javascript">
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
+    (function(win) {
+        'use strict';
+
+        (function(){
+  var FLAGS = {
+    'compat_data': true,'kumaediting': false,'line_length': true,'page_move': false,'registration_disabled': false,'search_suggestions': false,'section_edit': false,'sg_task_completion': false,'spam_admin_override': false,'spam_checks_enabled': true,'spam_spammer_override': false,'spam_submissions_enabled': false,'spam_testing_mode': false,'wiki_samples': true,'wiki_spam_exempted': false,'wiki_spam_training': false
+    },
+    SWITCHES = {
+    'wiki_error_on_delete': false,'wiki_force_immediate_rendering': false,'enable_optimizely': false,'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'dumb_doc_urls': true,'newsletter': true,'newsletter_article': true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training': true
+    },
+    SAMPLES = {
+    
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+      
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+      
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+      
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = 'https://developer.mozilla.org/static/js/libs/ckeditor/build/ckeditor/';
+
+        // Site configuration
+        win.mdn.ckeditor = {};
+        win.mdn.features = {};
+        win.mdn.staticPath = 'https://cdn.mdn.mozilla.net/static/';
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '/en-US/docs/get-documents'
+        };
+        win.mdn.assets_disabled = {
+            css: {
+                'editor-content': ['https://cdn.mdn.mozilla.net/static/build/styles/editor-content.fc2e2a3d4883.css','../../../../../../../../cdn.mdn.mozilla.net/static/build/styles/editor-locale-en-US.a0d0521e251c.css',
+                ],
+
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/styles/wiki-compat-tables.aed4662ba49c.css',]
+            },
+            js: {
+                'syntax-prism': ['https://cdn.mdn.mozilla.net/static/build/js/syntax-prism.05dc5663d445.js',],
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/js/syntax-prism.js" charset="utf-8"></script><script type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/mozilla-dnthelper.3936bd979b1d.js" charset="utf-8"></script>
+    
+
+
+
+  
+    <!-- common social tags -->
+    
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta property="og:site_name" content="MDN Web Docs">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://cdn.mdn.mozilla.net/static/img/opengraph-logo.72382e605ce3.png">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/en-US/search/xml" title="MDN Web Docs">
+  
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon144.e7e21ca263ca.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon114.d526f38b09c5.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon72.cc65d1d762a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon57.de33179910ae.png">
+  <!-- basic favicon -->
+     <!-- basic favicon -->
+  
+    
+  
+  <link rel="shortcut icon" href="../../../../../../../../cdn.mdn.mozilla.net/static/img/favicon32.7f3da72dcea1.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src=".html5shiv.3948ccddab6f.js" charset="utf-8"></script>
+  <![endif]-->
+
+  
+  <link rel="dns-prefetch" href="../../../../../../../../interactive-examples.mdn.mozilla.net/index.html" pr="0.75">
+  <link rel="preconnect" href="../../../../../../../../interactive-examples.mdn.mozilla.net/index.html" pr="0.75">
+
+  <link rel="preload" href="../../../../../../../../interactive-examples.mdn.mozilla.net/js/codemirror-5-31-0.js" as="script">
+  <link rel="preload" href="../../../../../../../../interactive-examples.mdn.mozilla.net/js/editor-js.js" as="script">
+
+  <link rel="alternate" type="application/json" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$json">
+  <link rel="canonical" href="bind.html">
+
+  
+    
+      <link rel="alternate" hreflang="de" href="../../../../../../../de/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="es" href="../../../../../../../es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="fr" href="../../../../../../../fr/docs/Web/JavaScript/Reference/Objets_globaux/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ja" href="../../../../../../../ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ko" href="../../../../../../../ko/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="nl" href="../../../../../../../nl/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="pt-BR" href="../../../../../../../pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="ru" href="../../../../../../../ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="uk" href="../../../../../../../uk/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="zh-CN" href="../../../../../../../zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+      <link rel="alternate" hreflang="zh-TW" href="../../../../../../../zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" title="Function.prototype.bind()">
+    
+  
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="Function.prototype.bind()">
+  <meta property="og:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">
+  <meta name="twitter:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">
+  <meta name="twitter:title" content="Function.prototype.bind()">
+  
+  <meta property="og:description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  <meta name="description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  <meta name="twitter:description" content="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.">
+  
+
+
+
+
+  <script type="text/javascript">
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
+    (function(win) {
+        'use strict';
+
+        (function(){
+  var FLAGS = {
+    'compat_data': true,'kumaediting': false,'line_length': true,'page_move': false,'registration_disabled': false,'search_suggestions': false,'section_edit': false,'sg_task_completion': false,'spam_admin_override': false,'spam_checks_enabled': true,'spam_spammer_override': false,'spam_submissions_enabled': false,'spam_testing_mode': false,'wiki_samples': true,'wiki_spam_exempted': false,'wiki_spam_training': false
+    },
+    SWITCHES = {
+    'wiki_error_on_delete': false,'wiki_force_immediate_rendering': false,'enable_optimizely': false,'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'dumb_doc_urls': true,'newsletter': true,'newsletter_article': true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training': true
+    },
+    SAMPLES = {
+    
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+      
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+      
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+      
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = 'https://developer.mozilla.org/static/js/libs/ckeditor/build/ckeditor/';
+
+        // Site configuration
+        win.mdn.ckeditor = {};
+        win.mdn.features = {};
+        win.mdn.staticPath = 'https://cdn.mdn.mozilla.net/static/';
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '/en-US/docs/get-documents'
+        };
+        win.mdn.assets_disabled = {
+            css: {
+                'editor-content': ['https://cdn.mdn.mozilla.net/static/build/styles/editor-content.fc2e2a3d4883.css','../../../../../../../../cdn.mdn.mozilla.net/static/build/styles/editor-locale-en-US.a0d0521e251c.css',
+                ],
+
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/styles/wiki-compat-tables.aed4662ba49c.css',]
+            },
+            js: {
+                'syntax-prism': ['https://cdn.mdn.mozilla.net/static/build/js/syntax-prism.05dc5663d445.js',],
+                'wiki-compat-tables': ['https://cdn.mdn.mozilla.net/static/build/js/wiki-compat-tables.003f4acf76ea.js',]
+            }
+        };
+
+        win.mdn.notifications = [];
+
+        
+
+        // interactive editor config
+        win.mdn.interactiveEditor = {
+            siteUrl: "https://developer.mozilla.org",
+            editorUrl: "https://interactive-examples.mdn.mozilla.net"
+        };
+
+    })(this);
+</script>
+    
+    <ul id="nav-access">
+  <li><a href="#content" id="skip-main">Skip to main content</a></li>
+  <li><a id="skip-language" href="#language">Select language</a></li>
+  <li><a href="#q" id="skip-search">Skip to search</a></li>
+</ul>
+
+    <!-- Header -->
+    <header id="main-header" class="header-main">
+      <a href="https://developer.mozilla.org/en-US/" class="logo">MDN Web Docs</a>
+      <div class="nav-toolbox-wrapper">
+        <nav id="main-nav" class="nav-main" role="navigation">
+    <ul>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/en-US/docs/Web">Technologies
+                <i aria-hidden="true" class="icon-caret-down"></i>
+            </a>
+            <div class="submenu js-submenu" id="nav-tech-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Graphics">Graphics</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP</a></li>
+                    <li><a href="../../../../API.html">APIs / DOM</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">Browser Extensions</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/MathML">MathML</a></li>
+                  </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/en-US/docs/Learn">References &amp; Guides
+                <i aria-hidden="true" class="icon-caret-down"></i>
+            </a>
+            <div class="submenu js-submenu" id="nav-learn-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn">Learn web development</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials">Tutorials</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Reference">References</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide">Developer Guides</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">Accessibility</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Games">Game development</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web">...more docs</a></li>
+                  </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/en-US/docs/MDN/Feedback">Feedback
+                <i aria-hidden="true" class="icon-caret-down"></i>
+            </a>
+            <div class="submenu js-submenu" id="nav-contact-submenu">
+              <div class="submenu-column">
+                <ul>
+                  <li>
+                      <a href="https://support.mozilla.org/">Get Firefox help
+                          <i aria-hidden="true" class="icon-external-link"></i>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://stackoverflow.com/">Get web development help
+                          <i aria-hidden="true" class="icon-external-link"></i>
+                      </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                      <a href="https://developer.mozilla.org/en-US/docs/MDN/Community">Join the MDN community</a>
+                  </li>
+                  <li>
+                      <a target="_blank" href="https://bugzilla.mozilla.org/form.doc?bug_file_loc=https%3A//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">Report a content problem
+                          <i aria-hidden="true" class="icon-external-link"></i>
+                      </a>
+                  </li>
+                  <li>
+                      <a target="_blank" href="https://bugzilla.mozilla.org/form.mdn">Report a bug
+                          <i aria-hidden="true" class="icon-external-link"></i>
+                      </a>
+                  </li>
+                </ul>
+              </div>
+          </div>
+      </li>
+  </ul>
+</nav>
+        <div id="toolbox" class="toolbox">
+  <ul>
+  <li class="nav-login"><div class="login">
+    
+        
+        <a href="https://developer.mozilla.org/users/github/login/?next=%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FFunction%2Fbind" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
+            Sign in
+            <i class="icon-github" aria-hidden="true"></i>
+        </a>
+    
+</div></li>
+  </ul>
+</div>
+      </div>
+      <form id="nav-main-search" action="https://developer.mozilla.org/en-US/search" method="get" role="search" class="nav-main-search">
+  <div class="search-wrap">
+    <label for="main-q" class="offscreen">Search</label>
+    <input type="search" id="main-q" name="q" placeholder="Search" data-value="" value="" aria-hidden="true">
+    <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>
+    <button type="submit" class="offscreen">Search</button>
+    <button type="button" id="close-header-search" class="close-header-search transparent">
+        <span class="offscreen">Close search</span>
+        <i aria-hidden="true" class="icon-times"></i>
+    </button>
+  </div>
+</form>
+    </header> 
+
+  <!-- Content will go here -->
+  <main id="content">
+      
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
+      <!-- action buttons -->
+      <div class="document-actions">
+        
+
+  
+    
+  
+
+  
+    
+  
+
+  
+
+  <ul class="page-buttons">
+      <li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>Languages</span><i aria-hidden="true" class="icon-language"></i></button>
+
+        <div class="submenu js-submenu" id="languages-menu-submenu">
+          <div class="submenu-column">
+            <ul id="translations">
+              
+                
+                
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../de/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="de" title="German">Deutsch (de)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../es/docs/Web/JavaScript/Referencia/Objetos_globales/Function/bind.html" data-locale="es" title="Spanish">Español (es)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../fr/docs/Web/JavaScript/Reference/Objets_globaux/Function/bind.html" data-locale="fr" title="French">Français (fr)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="ja" title="Japanese">日本語 (ja)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../ko/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="ko" title="Korean">한국어 (ko)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../nl/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="nl" title="Dutch">Nederlands (nl)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="pt-BR" title="Portuguese (Brazilian)">Português (do&nbsp;Brasil) (pt-BR)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="ru" title="Russian">Русский (ru)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../uk/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="uk" title="Ukrainian">Українська (uk)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="zh-CN" title="Chinese (Simplified)">中文 (简体) (zh-CN)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="../../../../../../../zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Function/bind.html" data-locale="zh-TW" title="Chinese (Traditional)">正體中文 (繁體) (zh-TW)</a></bdi></li>
+                
+              
+
+              
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$locales" rel="nofollow" id="translations-add">Add a translation</a></li>
+              
+            </ul>
+          </div>
+        </div>
+      </li>
+      
+      <li class="page-buttons-edit"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$edit" class="button neutral" id="edit-button" rel="nofollow">Edit<i aria-hidden="true" class="icon-pencil"></i></a></li>
+      
+
+        
+
+        <li class="page-buttons-advanced"><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>Advanced</span><i aria-hidden="true" class="icon-cog"></i></button>
+        <div class="submenu js-submenu" id="advanced-menu-submenu">
+          <!-- this page -->
+          <div class="submenu-column">
+            <div class="title">Advanced</div>
+            <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$history" rel="nofollow">History</a></li>
+                
+                
+                
+
+
+                
+
+                
+                
+                
+                <li class="page-print"><a href="#" onclick="return window.print();">Print this article</a></li>
+            </ul>
+          </div>
+        </div>
+  </li></ul>
+      </div>
+
+      <div class="document-title">
+        
+
+        <h1>Function.prototype.bind()</h1>
+      </div>
+    <nav class="crumbs" role="navigation">
+      <ol typeof="BreadcrumbList" vocab="https://schema.org/" aria-label="breadcrumbs">
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/en-US/docs/Web" property="item" typeof="WebPage">
+              <span property="name">Web technology for developers</span>
+            </a>
+            <meta property="position" content="1">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" property="item" typeof="WebPage">
+              <span property="name">JavaScript</span>
+            </a>
+            <meta property="position" content="2">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="../../../Reference.html" property="item" typeof="WebPage">
+              <span property="name">JavaScript reference</span>
+            </a>
+            <meta property="position" content="3">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="../../Global_Objects.html" property="item" typeof="WebPage">
+              <span property="name">Standard built-in objects</span>
+            </a>
+            <meta property="position" content="4">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="../Function.html" property="item" typeof="WebPage">
+              <span property="name">Function</span>
+            </a>
+            <meta property="position" content="5">
+          </li>
+        
+        <li property="itemListElement" typeof="ListItem" class="crumb">
+          <span property="name">Function.prototype.bind()</span>
+        </li>
+      </ol>
+    </nav></div>
+  </div>
+  
+  <div id="toc" class="toc">
+    <div class="center">
+      <div class="toc-head">Jump to:</div>
+        <ol class="toc-links">
+          <li><a href="#Syntax" rel="internal">Syntax</a></li><li><a href="#Description" rel="internal">Description</a></li><li><a href="#Examples" rel="internal">Examples</a></li><li><a href="#Polyfill" rel="internal">Polyfill</a></li><li><a href="#Specifications" rel="internal">Specifications</a></li><li><a href="#Browser_compatibility" rel="internal">Browser compatibility</a></li><li><a href="#See_also" rel="internal">See also</a>
+        </li></ol>
+    </div>
+  </div>
+  
+
+      <div class="center clear">
+      
+
+    <div class="wiki-main-content" id="document-main"><div class="center">
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="wiki-left-present">
+
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+            <!-- center: main article content -->
+            <div id="wiki-content" class="column-main wiki-column text-content">
+
+              
+
+              
+              
+
+              
+
+              
+              
+
+              <!-- just the article content -->
+              <article id="wikiArticle">
+                
+                  
+                    <div></div>
+
+<p>The <code><strong>bind()</strong></code> method creates a new function that, when called, has its <code>this</code> keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.</p>
+
+<div><iframe src="../../../../../../../../interactive-examples.mdn.mozilla.net/pages/js/function-bind.html" class="interactive interactive-js taller" width="100%" frameborder="0" height="250"></iframe></div>
+
+<p class="hidden">The source for this interactive example is stored in a GitHub repository. If you'd like to contribute to the interactive examples project, please clone <a href="https://github.com/mdn/interactive-examples" class="external" rel="noopener">https://github.com/mdn/interactive-examples</a> and send us a pull request.</p>
+
+<a class="dashAnchor" name="//apple_ref/Section/Syntax"></a><h2 id="Syntax">Syntax</h2>
+
+<pre class="syntaxbox"><var>fun</var>.bind(<var>thisArg</var>[, <var>arg1</var>[, <var>arg2</var>[, ...]]])</pre>
+
+<h3 id="Parameters">Parameters</h3>
+
+<dl>
+ <dt><code>thisArg</code></dt>
+ <dd>The value to be passed as the <code>this</code> parameter to the target function when the bound function is called. The value is ignored if the bound function is constructed using the <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a> operator.</dd>
+ <dt><code>arg1, arg2, ...</code></dt>
+ <dd>Arguments to prepend to arguments provided to the bound function when invoking the target function.</dd>
+</dl>
+
+<h3 id="Return_value">Return value</h3>
+
+<p>A copy of the given function with the specified <strong><code>this</code></strong> value and initial arguments.</p>
+
+<a class="dashAnchor" name="//apple_ref/Section/Description"></a><h2 id="Description">Description</h2>
+
+<p>The <strong>bind()</strong> function creates a new <strong>bound function</strong> <strong>(BF)</strong>. A <strong>BF</strong> is an <strong>exotic function object</strong> (a term from <strong>ECMAScript 2015</strong>) that wraps the original function object. Calling a <strong>BF</strong> generally&nbsp;results in the execution of its <strong>wrapped function</strong>.<br>
+ A<strong> BF</strong> has the following internal properties:</p>
+
+<ul>
+ <li><strong>[[BoundTargetFunction]] </strong>- the wrapped function object;</li>
+ <li><strong>[[BoundThis]]</strong> - the value that is always passed as <strong>this</strong> value when calling the wrapped function.</li>
+ <li><strong>[[BoundArguments]]</strong> - a list of values whose elements are used as the first arguments to any call to the wrapped function.</li>
+ <li><strong>[[Call]]</strong> - executes code associated with this object. Invoked via a function call expression. The arguments to the internal method are a <strong>this</strong> value and a list containing the arguments passed to the function by a call expression.</li>
+</ul>
+
+<p>When bound function is called, it calls internal method<strong> [[Call]]</strong> on <strong>[[BoundTargetFunction]], </strong>with following arguments <strong>Call(<em>boundThis</em>, <em>args</em>).</strong> Where, <strong><em>boundThis </em></strong>is <strong>[[BoundThis]]</strong>, <em><strong>args </strong></em>is <strong>[[BoundArguments]]</strong> followed by the arguments passed by the function call.</p>
+
+<p>A bound function may also be constructed using the <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a> operator: doing so acts as though the target function had instead been constructed. The provided <strong><code>this</code></strong> value is ignored, while prepended arguments are provided to the emulated function.</p>
+
+<a class="dashAnchor" name="//apple_ref/Section/Examples"></a><h2 id="Examples">Examples</h2>
+
+<h3 id="Creating_a_bound_function">Creating a bound function</h3>
+
+<p>The simplest use of <code>bind()</code> is to make a function that, no matter how it is called, is called with a particular <strong><code>this</code></strong> value. A common mistake for new JavaScript programmers is to extract a method from an object, then to later call that function and expect it to use the original object as its <code>this</code> (e.g. by using that method in callback-based code). Without special care, however, the original object is usually lost. Creating a bound function from the function, using the original object, neatly solves this problem:</p>
+
+<pre class="brush: js">this.x = 9;    // this refers to global "window" object here in the browser
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+
+module.getX(); // 81
+
+var retrieveX = module.getX;
+retrieveX();   
+// returns 9 - The function gets invoked at the global scope
+
+// Create a new function with 'this' bound to module
+// New programmers might confuse the
+// global var x with module's property x
+var boundGetX = retrieveX.bind(module);
+boundGetX(); // 81
+</pre>
+
+<h3 id="Partially_applied_functions">Partially applied functions</h3>
+
+<p>The next simplest use of <code>bind()</code> is to make a function with pre-specified initial arguments. These arguments (if any) follow the provided <code>this</code> value and are then inserted at the start of the arguments passed to the target function, followed by the arguments passed to the bound function, whenever the bound function is called.</p>
+
+<pre class="brush: js">function list() {
+  return Array.prototype.slice.call(arguments);
+}
+
+var list1 = list(1, 2, 3); // [1, 2, 3]
+
+// Create a function with a preset leading argument
+var leadingThirtysevenList = list.bind(null, 37);
+
+var list2 = leadingThirtysevenList(); 
+// [37]
+
+var list3 = leadingThirtysevenList(1, 2, 3);
+// [37, 1, 2, 3]
+</pre>
+
+<h3 id="With_setTimeout">With <code>setTimeout</code></h3>
+
+<p>By default within <a href="../../../../API/WindowOrWorkerGlobalScope/setTimeout.html" title="Calls a function or executes a code snippet after a specified delay."><code>window.setTimeout()</code></a>, the <code>this</code> keyword will be set to the <a href="../../../../API/Window.html" title="The window object represents a window containing a DOM document; the document property points to the DOM document loaded in that window."><code>window</code></a> (or <code>global</code>) object. When working with class methods that require <code>this</code> to refer to class instances, you may explicitly bind <code>this</code> to the callback function, in order to maintain the instance.</p>
+
+<pre class="brush: js">function LateBloomer() {
+  this.petalCount = Math.floor(Math.random() * 12) + 1;
+}
+
+// Declare bloom after a delay of 1 second
+LateBloomer.prototype.bloom = function() {
+  window.setTimeout(this.declare.bind(this), 1000);
+};
+
+LateBloomer.prototype.declare = function() {
+  console.log('I am a beautiful flower with ' +
+    this.petalCount + ' petals!');
+};
+
+var flower = new LateBloomer();
+flower.bloom();  
+// after 1 second, triggers the 'declare' method</pre>
+
+<h3 id="Bound_functions_used_as_constructors">Bound functions used as constructors</h3>
+
+<div class="warning">
+<p><strong>Warning:</strong> This section demonstrates JavaScript capabilities and documents some edge cases of the <code>bind()</code> method. The methods shown below are not the best way to do things and probably should not be used in any production environment.</p>
+</div>
+
+<p>Bound functions are automatically suitable for use with the <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a> operator to construct new instances created by the target function. When a bound function is used to construct a value, the provided <code>this</code> is ignored. However, provided arguments are still prepended to the constructor call:</p>
+
+<pre class="brush: js">function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+Point.prototype.toString = function() { 
+  return this.x + ',' + this.y; 
+};
+
+var p = new Point(1, 2);
+p.toString(); // '1,2'
+
+// not supported in the polyfill below,
+
+// works fine with native bind:
+
+var YAxisPoint = Point.bind(null, 0/*x*/);
+
+
+var emptyObj = {};
+var YAxisPoint = Point.bind(emptyObj, 0/*x*/);
+
+var axisPoint = new YAxisPoint(5);
+axisPoint.toString(); // '0,5'
+
+axisPoint instanceof Point; // true
+axisPoint instanceof YAxisPoint; // true
+new Point(17, 42) instanceof YAxisPoint; // true
+</pre>
+
+<p>Note that you need do nothing special to create a bound function for use with <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a>. The corollary is that you need do nothing special to create a bound function to be called plainly, even if you would rather require the bound function to only be called using <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a>.</p>
+
+<pre class="brush: js">// Example can be run directly in your JavaScript console
+// ...continuing from above
+
+// Can still be called as a normal function 
+// (although usually this is undesired)
+YAxisPoint(13);
+
+emptyObj.x + ',' + emptyObj.y;
+// &gt;  '0,13'
+</pre>
+
+<p>If you wish to support the use of a bound function only using <a href="../../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a>, or only by calling it, the target function must enforce that restriction.</p>
+
+<h3 id="Creating_shortcuts">Creating shortcuts</h3>
+
+<p><code>bind()</code> is also helpful in cases where you want to create a shortcut to a function which requires a specific <strong><code>this</code></strong> value.</p>
+
+<p>Take <a href="../Array/slice.html" title="The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified."><code>Array.prototype.slice</code></a>, for example, which you want to use for converting an array-like object to a real array. You could create a shortcut like this:</p>
+
+<pre class="brush: js">var slice = Array.prototype.slice;
+
+// ...
+
+slice.apply(arguments);
+</pre>
+
+<p>With <code>bind()</code>, this can be simplified. In the following piece of code, <code>slice</code> is a bound function to the <a href="apply.html" title="The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object)."><code>apply()</code></a> function of <a href="prototype.html" title="The Function.prototype property represents the Function prototype object."><code>Function.prototype</code></a>, with the <strong><code>this</code></strong> value set to the <a href="../Array/slice.html" title="The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified."><code>slice()</code></a> function of <a href="../Array/prototype.html" title="The Array.prototype property represents the prototype for the Array constructor and allows you to add new properties and methods to all Array objects."><code>Array.prototype</code></a>. This means that additional <code>apply()</code> calls can be eliminated:</p>
+
+<pre class="brush: js">// same as "slice" in the previous example
+var unboundSlice = Array.prototype.slice;
+var slice = Function.prototype.apply.bind(unboundSlice);
+
+// ...
+
+slice(arguments);
+</pre>
+
+<a class="dashAnchor" name="//apple_ref/Section/Polyfill"></a><h2 id="Polyfill">Polyfill</h2>
+
+<p>You can partially work around this by inserting the following code at the beginning of your scripts, allowing use of much of the functionality of <code>bind()</code> in implementations that do not natively support it.</p>
+
+<pre class="brush: js">if (!Function.prototype.bind) {
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      // closest thing possible to the ECMAScript 5
+      // internal IsCallable function
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+
+    var aArgs   = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP    = function() {},
+        fBound  = function() {
+          return fToBind.apply(this instanceof fNOP
+                 ? this
+                 : oThis,
+                 aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    if (this.prototype) {
+      // Function.prototype doesn't have a prototype property
+      fNOP.prototype = this.prototype; 
+    }
+    fBound.prototype = new fNOP();
+
+    return fBound;
+  };
+}
+</pre>
+
+<p>Some of the many differences (there may well be others, as this list does not seriously attempt to be exhaustive) between this algorithm and the specified algorithm are:</p>
+
+<ul>
+ <li>The partial implementation relies on <a href="../Array/slice.html" title="The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified."><code>Array.prototype.slice()</code></a>, <a href="../Array/concat.html" title="The concat() method is used to merge two or more arrays. This method does not change the existing arrays, but instead returns a new array."><code>Array.prototype.concat()</code></a>, <a href="call.html" title="The call() method calls a function with a given this value and arguments provided individually."><code>Function.prototype.call()</code></a> and <a href="apply.html" title="The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object)."><code>Function.prototype.apply()</code></a>, built-in methods to have their original values.</li>
+ <li>The partial implementation creates functions that do not have immutable "poison pill" <a href="caller.html" title="The function.caller property returns the function that invoked the specified function. This property is forbidden in strict model due to tail call optimization."><code>caller</code></a> and <code>arguments</code> properties that throw a <a href="../TypeError.html" title="The TypeError object represents an error when a value is not of the expected type."><code>TypeError</code></a> upon get, set, or deletion. (This could be added if the implementation supports <a href="../Object/defineProperty.html" title="The static method Object.defineProperty() defines a new property directly on an object, or modifies an existing property on an object, and returns the object."><code>Object.defineProperty</code></a>, or partially implemented [without throw-on-delete behavior] if the implementation supports the <a href="../Object/__defineGetter__.html" title="The documentation about this has not yet been written; please consider contributing!"><code>__defineGetter__</code></a> and <a href="../Object/__defineSetter__.html" title="The documentation about this has not yet been written; please consider contributing!"><code>__defineSetter__</code></a> extensions.)</li>
+ <li>The partial implementation creates functions that have a <code>prototype</code> property. (Proper bound functions have none.)</li>
+ <li>The partial implementation creates bound functions whose <a href="length.html" title="The length property specifies the number of arguments expected by the function."><code>length</code></a> property does not agree with that mandated by ECMA-262: it creates functions with length 0, while a full implementation, depending on the length of the target function and the number of pre-specified arguments, may return a non-zero length.</li>
+</ul>
+
+<p>If you choose to use this partial implementation, <strong>you must not rely on those cases where behavior deviates from ECMA-262, 5th edition!</strong> With some care, however (and perhaps with additional modification to suit specific needs), this partial implementation may be a reasonable bridge to the time when <code>bind()</code> is widely implemented according to the specification.</p>
+
+<p>Please check <a href="https://github.com/Raynos/function-bind" class="external" rel="noopener">https://github.com/Raynos/function-bind</a> for a more thorough solution!</p>
+
+<a class="dashAnchor" name="//apple_ref/Section/Specifications"></a><h2 id="Specifications">Specifications</h2>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a href="https://www.ecma-international.org/ecma-262/5.1/#sec-15.3.4.5" hreflang="en" lang="en" class="external" rel="noopener">ECMAScript 5.1 (ECMA-262)<br><small lang="en-US">The definition of 'Function.prototype.bind' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td>Initial definition. Implemented in JavaScript 1.8.5.</td>
+  </tr>
+  <tr>
+   <td><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-function.prototype.bind" hreflang="en" lang="en" class="external" rel="noopener">ECMAScript 2015 (6th Edition, ECMA-262)<br><small lang="en-US">The definition of 'Function.prototype.bind' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td><a href="https://tc39.github.io/ecma262/#sec-function.prototype.bind" hreflang="en" lang="en" class="external" rel="noopener">ECMAScript Latest Draft (ECMA-262)<br><small lang="en-US">The definition of 'Function.prototype.bind' in that specification.</small></a></td>
+   <td><span class="spec-Draft">Draft</span></td>
+   <td>&nbsp;</td>
+  </tr>
+ </tbody>
+</table>
+
+<a class="dashAnchor" name="//apple_ref/Section/Browser%20compatibility"></a><h2 id="Browser_compatibility">Browser compatibility</h2>
+
+<div>
+<div class="hidden">The compatibility table on this page is generated from structured data. If you'd like to contribute to the data, please check out <a href="https://github.com/mdn/browser-compat-data" class="external" rel="noopener">https://github.com/mdn/browser-compat-data</a> and send us a pull request.</div>
+
+<p></p><div class="bc-old"><div class="htab">
+    <a id="AutoCompatibilityTable" name="AutoCompatibilityTable"></a>
+    <ul>
+    <li class="selected">
+    <a>Desktop</a>
+    </li>
+    <li>
+    <a>Mobile</a>
+    </li>
+    </ul>
+    </div><div id="compat-desktop"><table class="compat-table"><thead><tr><th>Feature</th><th>Chrome</th><th>Edge</th><th>Firefox</th><th>Internet Explorer</th><th>Opera</th><th>Safari</th></tr></thead><tbody><tr><td><a href="bind.html">Basic support</a></td><td class="full-support">7</td><td class="full-support"><span title="Please update this with the earliest version of support.">
+      Yes</span></td><td class="full-support">4</td><td class="full-support">9</td><td class="full-support">11.6</td><td class="full-support">5.1</td></tr></tbody></table></div><div id="compat-mobile"><table class="compat-table"><thead><tr><th>Feature</th><th>Android webview</th><th>Chrome for Android</th><th>Edge mobile</th><th>Firefox for Android</th><th>Opera Android</th><th>iOS Safari</th><th>Samsung Internet</th></tr></thead><tbody><tr><td><a href="bind.html">Basic support</a></td><td class="full-support">4</td><td class="full-support">1</td><td class="full-support"><span title="Please update this with the earliest version of support.">
+      Yes</span></td><td class="full-support">4</td><td class="full-support">11.5</td><td class="full-support">6</td><td class="unknown-support"><span title="Compatibility unknown; please update this.">
+      ?</span></td></tr></tbody></table></div></div><div class="bc-data hidden"><table class="bc-table bc-table-js"><thead><tr class="bc-platforms"><td></td><th colspan="6" class="bc-platform-desktop"><abbr class="only-icon" title="Desktop"><span>Desktop</span><i class="ic-desktop"></i></abbr></th><th colspan="7" class="bc-platform-mobile"><abbr class="only-icon" title="Mobile"><span>Mobile</span><i class="ic-mobile"></i></abbr></th><th colspan="1" class="bc-platform-server"><abbr class="only-icon" title="Server"><span>Server</span><i class="ic-server"></i></abbr></th></tr><tr class="bc-browsers"><td></td><th class="bc-browser-chrome"><abbr class="only-icon" title="Chrome"><span>Chrome</span><i class="ic-chrome"></i></abbr></th><th class="bc-browser-edge"><abbr class="only-icon" title="Edge"><span>Edge</span><i class="ic-edge"></i></abbr></th><th class="bc-browser-firefox"><abbr class="only-icon" title="Firefox"><span>Firefox</span><i class="ic-firefox"></i></abbr></th><th class="bc-browser-ie"><abbr class="only-icon" title="Internet Explorer"><span>Internet Explorer</span><i class="ic-ie"></i></abbr></th><th class="bc-browser-opera"><abbr class="only-icon" title="Opera"><span>Opera</span><i class="ic-opera"></i></abbr></th><th class="bc-browser-safari"><abbr class="only-icon" title="Safari"><span>Safari</span><i class="ic-safari"></i></abbr></th><th class="bc-browser-webview_android"><abbr class="only-icon" title="Android webview"><span>Android webview</span><i class="ic-webview_android"></i></abbr></th><th class="bc-browser-chrome_android"><abbr class="only-icon" title="Chrome for Android"><span>Chrome for Android</span><i class="ic-chrome_android"></i></abbr></th><th class="bc-browser-edge_mobile"><abbr class="only-icon" title="Edge Mobile"><span>Edge Mobile</span><i class="ic-edge_mobile"></i></abbr></th><th class="bc-browser-firefox_android"><abbr class="only-icon" title="Firefox for Android"><span>Firefox for Android</span><i class="ic-firefox_android"></i></abbr></th><th class="bc-browser-opera_android"><abbr class="only-icon" title="Opera for Android"><span>Opera for Android</span><i class="ic-opera_android"></i></abbr></th><th class="bc-browser-safari_ios"><abbr class="only-icon" title="iOS Safari"><span>iOS Safari</span><i class="ic-safari_ios"></i></abbr></th><th class="bc-browser-samsunginternet_android"><abbr class="only-icon" title="Samsung Internet"><span>Samsung Internet</span><i class="ic-samsunginternet_android"></i></abbr></th><th class="bc-browser-nodejs"><abbr class="only-icon" title="Node.js"><span>Node.js</span><i class="ic-nodejs"></i></abbr></th></tr></thead><tbody><tr><th scope="row">Basic support</th><td class="bc-supports-yes bc-browser-chrome"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              7</td><td class="bc-supports-yes bc-browser-edge"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-firefox"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              4</td><td class="bc-supports-yes bc-browser-ie"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              9</td><td class="bc-supports-yes bc-browser-opera"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              11.6</td><td class="bc-supports-yes bc-browser-safari"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              5.1</td><td class="bc-supports-yes bc-browser-webview_android"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              4</td><td class="bc-supports-yes bc-browser-chrome_android"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              1</td><td class="bc-supports-yes bc-browser-edge_mobile"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-firefox_android"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              4</td><td class="bc-supports-yes bc-browser-opera_android"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              11.5</td><td class="bc-supports-yes bc-browser-safari_ios"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              6</td><td class="bc-supports-unknown bc-browser-samsunginternet_android"><abbr title="Compatibility unknown; please update this.">
+                ?
+              </abbr></td><td class="bc-supports-yes bc-browser-nodejs"><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td></tr></tbody></table><section id="sect1" class="bc-legend"><h3 id="Legend" class="offscreen">Legend</h3><dl><dt><span class="bc-supports-yes bc-supports">
+                <abbr class="bc-level bc-level-yes only-icon" title="Full support">
+                 <span>Full support</span>
+                 &nbsp;
+                </abbr></span></dt><dd>Full support</dd><dt><span class="bc-supports-unknown bc-supports">
+                <abbr class="bc-level bc-level-unknown only-icon" title="Compatibility unknown">
+                 <span>Compatibility unknown</span>
+                 &nbsp;
+                </abbr></span></dt><dd>Compatibility unknown</dd></dl></section></div><p></p>
+</div>
+
+<a class="dashAnchor" name="//apple_ref/Section/See%20also"></a><h2 id="See_also">See also</h2>
+
+<ul>
+ <li><a href="apply.html" title="The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object)."><code>Function.prototype.apply()</code></a></li>
+ <li><a href="call.html" title="The call() method calls a function with a given this value and arguments provided individually."><code>Function.prototype.call()</code></a></li>
+ <li><a href="../../Functions.html" title="Generally speaking, a function is a &quot;subprogram&quot; that can be called by code external (or internal in the case of recursion) to the function. Like the program itself, a function is composed of a sequence of statements called the function body. Values can be passed to a function, and the function will&nbsp;return a value.">Functions</a></li>
+</ul>
+                  
+                
+              </article>
+
+              <!-- contributors -->
+              <div class="wiki-block contributors">
+                <h2 class="offscreen">Document Tags and Contributors</h2>
+                
+                
+  <div class="tag-attach-list contributors-sub">
+    <i aria-hidden="true" class="icon-tags icon-fw"></i>
+    <strong>Tags:</strong>&nbsp;
+    <ul class="tags tags-small">
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/bind" rel="nofollow">bind</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Class" rel="nofollow">Class</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/ECMAScript 2015" rel="nofollow">ECMAScript 2015</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/ECMAScript 5" rel="nofollow">ECMAScript 5</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Function" rel="nofollow">Function</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/JavaScript" rel="nofollow">JavaScript</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/Method" rel="nofollow">Method</a></li>
+      
+        <li><a href="https://developer.mozilla.org/en-US/docs/tag/polyfill" rel="nofollow">polyfill</a></li>
+      
+    </ul>
+  </div>
+
+
+                
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>Contributors to this page:</strong> 
+        <a href="https://developer.mozilla.org/en-US/profiles/wbamberg">wbamberg</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/fscholz">fscholz</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/atavakoli">atavakoli</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/saintstarrow">saintstarrow</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/cssjunkie">cssjunkie</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/aaronArinder">aaronArinder</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/jameshkramer">jameshkramer</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/jaimeschettini">jaimeschettini</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Camiloarguello">Camiloarguello</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kdex">kdex</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Konrud">Konrud</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/rwaldron">rwaldron</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/logeshpaul">logeshpaul</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/iagoeiro">iagoeiro</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/charlie-lk">charlie-lk</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/akinjide">akinjide</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/dawsonbotsford">dawsonbotsford</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/stevemao">stevemao</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/eduardoboucas">eduardoboucas</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/maxehnert">maxehnert</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/rgammans">rgammans</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/iCart">iCart</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/IPri">IPri</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Druzion">Druzion</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/SphinxKnight">SphinxKnight</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/peter.kehl">peter.kehl</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/mingsterism">mingsterism</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kwa">kwa</a>, 
+    
+        <a href="../../../../../../profiles/dommariano.html">dommariano</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/jakubsadura">jakubsadura</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/indiesquidge">indiesquidge</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/uolcano">uolcano</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/naserca">naserca</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/sastrakhan">sastrakhan</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/niaconis">niaconis</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/sam_eaton">sam_eaton</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/br1anchen">br1anchen</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/oshybystyi">oshybystyi</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Bosn">Bosn</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/acconrad">acconrad</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/vIrex">vIrex</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/sethkrasnianski">sethkrasnianski</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Mingun">Mingun</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/ilya_sher">ilya_sher</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/lee101">lee101</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/tickyd">tickyd</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/ryan.w.rowland">ryan.w.rowland</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/joelpurra">joelpurra</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Brettz9">Brettz9</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/ZeD">ZeD</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Gelus">Gelus</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Sheppy">Sheppy</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/rajamony">rajamony</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/juanantonioruz">juanantonioruz</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/techlivezheng">techlivezheng</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/hay">hay</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/yuan">yuan</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Robg1">Robg1</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/trevorh">trevorh</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/stylechen">stylechen</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Ripter">Ripter</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Savetheclocktower">Savetheclocktower</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/ziyunfei">ziyunfei</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/ebidel">ebidel</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/desandro">desandro</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/leobalter">leobalter</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/BYK">BYK</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Marcoos">Marcoos</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/slippyd">slippyd</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/XP1">XP1</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/pimvdb">pimvdb</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/fusionchess">fusionchess</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/dbruant">dbruant</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/miketaylr">miketaylr</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/disnet">disnet</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/myhere">myhere</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/scribu">scribu</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/evilpie">evilpie</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/RickB">RickB</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Shaver">Shaver</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Sevenspade">Sevenspade</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Fatbrain">Fatbrain</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Waldo">Waldo</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/kangax">kangax</a>, 
+    
+        <a href="https://developer.mozilla.org/en-US/profiles/Brendan">Brendan</a>
+    
+                  </div>
+                
+
+                
+                  <div class="contributors-sub">
+                    <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>Last updated by:</strong>
+                    <a href="https://developer.mozilla.org/en-US/profiles/wbamberg">wbamberg</a>,
+                    <time datetime="2018-02-12T08:22:13.885073-08:00">Feb 12, 2018, 8:22:13 AM</time>
+                  </div>
+                
+              </div>
+            </div>
+
+            
+              <!-- quick links and zone subnav strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+                
+                  <!-- crumbs -->
+                  
+  
+    
+  
+                
+
+                
+
+                
+                  <!-- quick links -->
+                  
+  <div class="quick-links" id="quick-links">
+    <div class="quick-links-head">Related Topics</div>
+    <ol><li><strong><a href="../../Global_Objects.html">Standard built-in objects</a></strong></li><li><strong><a href="../Function.html"><code>Function</code></a></strong></li><li data-default-state="open"><a href="#"><strong>Properties</strong></a><ol><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="arguments.html" title="The function.arguments property refers to an an array-like object corresponding to the arguments passed to a function. Use the simple variable arguments instead. This property is forbidden in strict model due to taill call optimization."><code>Function.arguments</code></a></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="arity.html" title="The arity property used to return the number of arguments expected by the function, however, it no longer exists and has been replaced by the Function.prototype.length property."><code>Function.arity</code></a></s></li><li><a href="caller.html" title="The function.caller property returns the function that invoked the specified function. This property is forbidden in strict model due to tail call optimization."><code>Function.caller</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="displayName.html" title="The function.displayName property returns the display name of the function."><code>Function.displayName</code></a></li><li><a href="length.html" title="The length property specifies the number of arguments expected by the function."><code>Function.length</code></a></li><li><a href="name.html" title="A Function object's read-only name property indicates the function's name as specified when it was created, or &quot;anonymous&quot; for functions created anonymously."><code>Function.name</code></a></li><li><a href="prototype.html" title="The Function.prototype property represents the Function prototype object."><code>Function.prototype</code></a></li></ol></li><li data-default-state="open"><a href="#"><strong>Methods</strong></a><ol><li><a href="apply.html" title="The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object)."><code>Function.prototype.apply()</code></a></li><li><em><code>Function.prototype.bind()</code></em></li><li><a href="call.html" title="The call() method calls a function with a given this value and arguments provided individually."><code>Function.prototype.call()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="isGenerator.html" title="The non-standard isGenerator() method used to determine whether or not a function is a generator. It has been removed from Firefox starting with version 58."><code>Function.prototype.isGenerator()</code></a></s></li><li><a href="toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>Function.prototype.toSource()</code></a></li><li><a href="toString.html" title="The toString() method returns a string representing the source code of the function."><code>Function.prototype.toString()</code></a></li></ol></li><li><strong>Inheritance:</strong></li><li><strong><a href="../Object.html"><code>Object</code></a></strong></li><li><a href="#"><strong>Properties</strong></a><ol><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="../Object/count.html" title="The __count__ property used to store the count of enumerable properties on the object, but it has been removed."><code>Object.prototype.__count__</code></a></s></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="../Object/noSuchMethod.html" title="The __noSuchMethod__ property used to reference a function to be executed when a non-existent method is called on an object, but this function is no longer available."><code>Object.prototype.__noSuchMethod__</code></a></s></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="../Object/Parent.html" title="The __parent__ property used to point to an object's context, but it has been removed."><code>Object.prototype.__parent__</code></a></s></li><li><a href="../Object/proto.html" title="The __proto__ property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed."><code>Object.prototype.__proto__</code></a></li><li><a href="../Object/constructor.html" title="Returns a reference to the Object constructor function that created the instance object. Note that the value of this property is a reference to the function itself, not a string containing the function's name. The value is only read-only for primitive values such as&nbsp;1,&nbsp;true and&nbsp;&quot;test&quot;."><code>Object.prototype.constructor</code></a></li></ol></li><li><a href="#"><strong>Methods</strong></a><ol><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="../Object/__defineGetter__.html" title="The __defineGetter__ method binds an object's property to a function to be called when that property is looked up."><code>Object.prototype.__defineGetter__()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="../Object/__defineSetter__.html" title="The __defineSetter__ method binds an object's property to a function to be called when an attempt is made to set that property."><code>Object.prototype.__defineSetter__()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="../Object/__lookupGetter__.html" title="The __lookupGetter__ method returns the function bound as a getter to the specified property."><code>Object.prototype.__lookupGetter__()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="../Object/__lookupSetter__.html" title="The __lookupSetter__ method returns the function bound as a setter to the specified property."><code>Object.prototype.__lookupSetter__()</code></a></li><li><a href="../Object/hasOwnProperty.html" title="The hasOwnProperty() method returns a boolean indicating whether the object has the specified property as own (not inherited) property."><code>Object.prototype.hasOwnProperty()</code></a></li><li><a href="../Object/isPrototypeOf.html" title="The isPrototypeOf() method checks if an object exists in another object's prototype chain."><code>Object.prototype.isPrototypeOf()</code></a></li><li><a href="../Object/propertyIsEnumerable.html" title="The propertyIsEnumerable() method returns a Boolean indicating whether the specified property is enumerable."><code>Object.prototype.propertyIsEnumerable()</code></a></li><li><a href="../Object/toLocaleString.html" title="The toLocaleString() method returns a string representing the object. This method is meant to be overridden by derived objects for locale-specific purposes."><code>Object.prototype.toLocaleString()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="../Object/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>Object.prototype.toSource()</code></a></li><li><a href="../Object/toString.html" title="The toString() method returns a string representing the object."><code>Object.prototype.toString()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="../Object/unwatch.html" title="The unwatch() method removes a watchpoint set with the watch() method."><code>Object.prototype.unwatch()</code></a></s></li><li><a href="../Object/valueOf.html" title="The valueOf() method returns the primitive value of the specified object."><code>Object.prototype.valueOf()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="../Object/watch.html" title="The watch() method watches for a property to be assigned a value and runs a function when that occurs."><code>Object.prototype.watch()</code></a></s></li><li><a href="../Object/setPrototypeOf.html" title="The Object.setPrototypeOf() method sets the prototype (i.e., the internal [[Prototype]] property) of a specified object to another object or null."><code>Object.setPrototypeOf()</code></a></li></ol></li></ol>
+  </div>
+                
+
+                <!-- approvals -->
+                
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+    
+      <div class="newsletter-box">
+        <div class="newsletter">
+    <form id="newsletterForm" class="newsletter-form nodisable" name="newsletter-form" action="https://www.mozilla.org/en-US/newsletter/" method="post">
+        <div class="newsletter-head">
+            <h2 class="newsletter-teaser">Learn the best of web development</h2>
+            <p class="newsletter-description">Get the latest and greatest from MDN delivered straight to your inbox.</p>
+            
+        </div>
+
+        <div class="newsletter-fields">
+            <input type="hidden" id="fmt" name="fmt" value="H">
+            <input type="hidden" id="newsletterNewslettersInput" name="newsletters" value="app-dev">
+            <div id="newsletterErrors" class="newsletter-errors"></div>
+
+            <div id="newsletterEmail" class="form-group newsletter-group-email">
+                <label for="newsletterEmailInput" class="form-label offscreen">E-mail</label>
+                <input type="email" id="newsletterEmailInput" name="email" class="form-input newsletter-input-email" required="" placeholder="you@example.com" size="30">
+            </div>
+
+            <div id="newsletterPrivacy" class="form-group form-group-agree newsletter-group-privacy hidden">
+                <input type="checkbox" id="newsletterPrivacyInput" name="privacy" required="">
+                <label for="newsletterPrivacyInput">
+                I'm okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/privacy/">Privacy Policy</a>.
+                </label>
+            </div>
+            <div id="newsletterSubmit" class="newsletter-group-submit">
+                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">Sign up now</button>
+            </div>
+        </div>
+    </form>
+    <div id="newsletterThanks" class="newsletter-thanks hidden">
+        <h2>Thanks! Please check your inbox to confirm your subscription.</h2>
+        <p>If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.
+        </p>
+    </div>
+    <button id="newsletterHide" type="button" class="only-icon newsletter-hide hidden"><span>Hide Newsletter Sign-up</span><i aria-hidden="true" class="icon-times"></i></button>
+</div>
+      </div>
+    
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$edit" label="Edit page"></menuitem>
+    <menuitem data-action="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$history" label="View page history"></menuitem>
+  </menu>
+
+      </div>
+  </main>
+  <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer"><div class="center"><a href="http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">Function.prototype.bind()</a> by <a href="http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind$history">Mozilla Contributors</a> is licensed under <a href="http://creativecommons.org/licenses/by-sa/2.5/" class="external external-icon">CC-BY-SA 2.5</a>.</div></footer> 
+
+  <!-- site js -->
+  
+    
+    <!--[if lte IE 8]><script async="" type="text/javascript" src=".selectivizr.091e18cf669b.js" charset="utf-8"></script><![endif]-->
+
+    
+    <script type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/jsi18n/en-us/javascript.b28203373cc1.js"></script>
+    <script type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/main.7d60b1e16ebc.js" charset="utf-8"></script>
+    <script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+</script>
+    
+
+  
+
+    <script async="" type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/syntax-prism.js" charset="utf-8"></script><script type="text/javascript" src=".selectivizr.091e18cf669b.js" charset="utf-8"></script><!--[endif]---->
+
+    
+    <script type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/jsi18n/en-us/javascript.b28203373cc1.js"></script>
+    <script type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/main.7d60b1e16ebc.js" charset="utf-8"></script>
+    <script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+</script>
+    
+
+  
+
+    <script async="" type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/wiki.c60705233ffd.js" charset="utf-8" id="wikiscript"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+    <script async="" type="text/javascript" src="../../../../../../../../cdn.mdn.mozilla.net/static/build/js/newsletter.7cd3274169f2.js" charset="utf-8"></script>
+  
+
+
+
+
+<!-- Mirrored from developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 31 Mar 2018 18:19:37 GMT -->
+</body></html>
