@@ -2,14 +2,14 @@ const max = ns => ns.reduce((acc, n) => n > acc ? n : acc,0);
 const sum = items => items.reduce((acc,x) => acc + x, 0);
 const longest = items => max(items.map(i => i.length));
 
-function subdivide(items, n) {
+function subdivide(items, n=1) {
 
     let i = 0;
     let next;
     let result = [];
 
     if (n <= 1) 
-        return items;
+        return [ items ];
 
     while (i < items.length ) {
         next = i + n;
@@ -23,16 +23,21 @@ function subdivide(items, n) {
 
 
 function zipLongest(...seqs) {
+
     let results = [];
 
     for (let i = 0; i < longest(seqs); ++i) {
         let a = [];
         for (let si = 0; si < seqs.length; ++si) {
-            a.push(seqs[si][i] || '');
+            let item = seqs[si][i];
+            if (item)
+                a.push(seqs[si][i]);
         }
         results.push(a);
     }
+
     return results;
+
 }
 
 
@@ -51,28 +56,37 @@ function padRight(s, max) {
 
 } 
 
-function columnize(items) {
+function buildRow(row, columnWidth) {
+    return row
+            .map(item => padRight(item, columnWidth))
+            .join('');
+}
+
+function columnize(items, displayWidth=process.stdout.columns) {
 
     if (!items.length)
         return 'none';
 
     items.sort();
 
-    const longestWord = longest(items) + 1;
-    const width = process.stdout.columns;
-    const wordsPerLine = Math.floor(width/longestWord);
-    const lineCount = Math.ceil(items.length/wordsPerLine);
+    const columnWidth = longest(items) + 1;
+    const nColumns = Math.floor(displayWidth/columnWidth);
+    const nRows = Math.ceil(items.length/nColumns);
+    const grid = subdivide(items, nRows);
+    const transposedGrid = (nRows === 1) ? grid : zipLongest(...grid); 
 
-    // transpose sorted rows into sorted columns
-    const output = zipLongest(...subdivide(items, lineCount))
-            .map(row => {
-                return row
-                        .map(item => padRight(item, longestWord))
-                        .join('')
-            })
-            .join('\n');
+    const output = transposedGrid
+                    .map(row => buildRow(row, columnWidth))
+                    .join('\n');
 
     return '\n' + output;
+
 }
 
-module.exports = exports = { columnize, subdivide, zipLongest, padRight };
+module.exports = exports = { 
+    columnize, 
+    longest, 
+    padRight, 
+    subdivide, 
+    zipLongest, 
+};

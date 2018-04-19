@@ -56,21 +56,22 @@ function formatES(node, query) {
         `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
         `${chalk.green.underline('Own Properties (non-methods):')} ${ columnize(getOwnProperties(node)) }`,
         `${chalk.green.underline('Methods:')} ${ columnize(getMethods(node)) }\n`,
+
     ].join('\n'); 
 }
 
 function formatNodeJS(node, searchToken) {
 
-    const {name, textRaw, type, desc, signatures} = node;
-    const sections = [
+    const { name, textRaw, type, desc, signatures } = node;
+    return [
+
         `${chalk.bgWhite.black(` ${node.type} | ${searchToken} `)}`,
         `${chalk.green.underline('Name:')} ${name}`,
         `${chalk.green.underline('Node.js Object Type:')} ${type}`,
         `${chalk.green.underline('Signature(s):')} ${textRaw} ${formatSignatures(signatures)}`,
         `${chalk.green.underline('Description:')} ${formatDescription(desc)}`,
-    ];
 
-    return sections.join('\n');
+    ].join('\n');
 
 }
 
