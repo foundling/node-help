@@ -1,7 +1,7 @@
 {
   "name": "node-help",
   "version": "2.0.0",
-  "description": "offline Node.js and JavaScript documentation for the Node Repl",
+  "description": "Offline documentation for the Node Repl",
   "main": "bin/node-help",
   "dependencies": {
     "chalk": "^2.3.2",
