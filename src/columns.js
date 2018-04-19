@@ -43,7 +43,7 @@ function padRight(s, max) {
     if (n <= 0) 
         return s;
 
-    while (n-- >= 0) {
+    while (n-- > 0) {
         s += ' ';
     }
 
@@ -51,25 +51,26 @@ function padRight(s, max) {
 
 } 
 
-function columnize(items, sep='  ') {
+function columnize(items) {
 
     items.sort();
 
-    const longestWord = longest(items) + sep.length;
+    const longestWord = longest(items);
     const width = process.stdout.columns;
     const wordsPerLine = Math.floor(width/longestWord);
     const lineCount = Math.ceil(items.length/wordsPerLine);
     const rows = items;
 
-    return zipLongest(...subdivide(items, lineCount))
+    // transpose sorted rows into sorted columns
+    const output = zipLongest(...subdivide(items, lineCount))
             .map(row => {
                 return row
                         .map(item => padRight(item, longestWord))
                         .join('')
             })
             .join('\n');
+
+    return '\n' + output;
 }
 
-module.exports = exports = { 
-    columnize 
-};
+module.exports = exports = { columnize };

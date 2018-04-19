@@ -3,6 +3,7 @@ const path = require('path');
 const util = require('util');
 const striptags = require('striptags');
 const { keys, flatten, decodeHTML, splitBy } = require(path.join(__dirname, './utils'));
+const { columnize } = require(path.join(__dirname, './columns'));
 
 function progInfo(packageInfo) {
 
@@ -34,27 +35,6 @@ function getOwnProperties(o) {
                         .filter(name => typeof o[name] !== 'function');
 }
 
-function columnize(items) {
-    // to be implemented soon.
-}
-
-function sum(items) {
-    return items.reduce((acc,x) => acc + x, 0);
-}
-
-function wrap(props) {
-    const cols = process.stdout.columns;
-    const termWidth = cols < 80 ? cols : 80;
-    const rows = [[]];
-    let len = 0;
-    let rowIndex = 0;
-    for (let i = 0; i < props.length; ++i) {
-        if (sum(rows[rowIndex].map(item => (item + ' ').length)) + props[i].length >= termWidth)
-            rows[++rowIndex] = [];
-        rows[rowIndex].push(props[i]);
-    }
-    return '\n' + rows.map(row => row.join(' ')).join('\n');
-}
 
 function formatES(node, query) {
 
@@ -63,8 +43,8 @@ function formatES(node, query) {
         `${chalk.green.underline('toString:')} '${node.toString()}'`,
         `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
         `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
-        `${chalk.green.underline('Own Properties (non-methods):')} ${ wrap(getOwnProperties(node)) }`,
-        `${chalk.green.underline('Methods:')} ${ wrap(getMethods(node)) }\n`,
+        `${chalk.green.underline('Own Properties (non-methods):')} ${ columnize(getOwnProperties(node)) }`,
+        `${chalk.green.underline('Methods:')} ${ columnize(getMethods(node)) }\n`,
     ].join('\n'); 
 }
 
