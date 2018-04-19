@@ -1,6 +1,27 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const nodeHelp = require(path.resolve(path.join(__dirname, '..', 'src')));
+const { homedir } = require('os');
 
-nodeHelp(process.argv.slice(2));
+const nodeHelp = require(path.join(__dirname, '..', 'src'));
+const updateScript = require(path.join(__dirname,'..','scripts','update'));
+const nodeHelpConfigPath = path.join(homedir(), '.node-help');
+
+nodeHelp();
+
+/*
+
+FIX THIS CONFUSING MESS
+
+const updateFirst = process.argv.includes('--update') || process.argv.includes('-u'); 
+const noRun = process.argv.includes('--no-run') || process.argv.includes('-n');
+
+if (updateFirst) {
+    if (noRun)
+        updateScript(process.exit);
+    updateScript(nodeHelp);
+}
+else {
+    nodeHelp();
+}
+*/
