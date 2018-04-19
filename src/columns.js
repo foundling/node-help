@@ -27,13 +27,17 @@ function zipLongest(...seqs) {
     let results = [];
 
     for (let i = 0; i < longest(seqs); ++i) {
+
         let a = [];
+
         for (let si = 0; si < seqs.length; ++si) {
             let item = seqs[si][i];
             if (item)
                 a.push(seqs[si][i]);
         }
+
         results.push(a);
+
     }
 
     return results;
@@ -57,9 +61,11 @@ function padRight(s, max) {
 } 
 
 function buildRow(row, columnWidth) {
+
     return row
             .map(item => padRight(item, columnWidth))
             .join('');
+
 }
 
 function columnize(items, displayWidth=process.stdout.columns) {
@@ -72,8 +78,12 @@ function columnize(items, displayWidth=process.stdout.columns) {
     const columnWidth = longest(items) + 1;
     const nColumns = Math.floor(displayWidth/columnWidth);
     const nRows = Math.ceil(items.length/nColumns);
+
+    // this accounts for the vertical sorting across columns
     const grid = subdivide(items, nRows);
-    const transposedGrid = (nRows === 1) ? grid : zipLongest(...grid); 
+    const transposedGrid = nRows === 1 ? 
+                           grid : 
+                           zipLongest(...grid); 
 
     const output = transposedGrid
                     .map(row => buildRow(row, columnWidth))
@@ -84,9 +94,11 @@ function columnize(items, displayWidth=process.stdout.columns) {
 }
 
 module.exports = exports = { 
+
     columnize, 
     longest, 
     padRight, 
     subdivide, 
     zipLongest, 
+
 };
