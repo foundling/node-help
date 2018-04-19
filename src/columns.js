@@ -53,13 +53,15 @@ function padRight(s, max) {
 
 function columnize(items) {
 
+    if (!items.length)
+        return 'none';
+
     items.sort();
 
     const longestWord = longest(items) + 1;
     const width = process.stdout.columns;
     const wordsPerLine = Math.floor(width/longestWord);
     const lineCount = Math.ceil(items.length/wordsPerLine);
-    const rows = items;
 
     // transpose sorted rows into sorted columns
     const output = zipLongest(...subdivide(items, lineCount))
@@ -73,4 +75,4 @@ function columnize(items) {
     return '\n' + output;
 }
 
-module.exports = exports = { columnize };
+module.exports = exports = { columnize, subdivide, zipLongest, padRight };

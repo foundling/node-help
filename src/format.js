@@ -37,19 +37,6 @@ function getOwnProperties(o) {
                         .filter(name => typeof o[name] !== 'function');
 }
 
-
-function formatES(node, query) {
-
-    return [
-        `${chalk.red('[ Additional Information ]')}\n`,
-        `${chalk.green.underline('toString:')} '${node.toString()}'`,
-        `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
-        `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
-        `${chalk.green.underline('Own Properties (non-methods):')} ${ columnize(getOwnProperties(node)) }`,
-        `${chalk.green.underline('Methods:')} ${ columnize(getMethods(node)) }\n`,
-    ].join('\n'); 
-}
-
 function formatSignatures(signatures=[]) {
     const signatureArray = flatten(signatures.map(o => o.params.map(p => p.textRaw))).filter(Boolean);
     return signatureArray.length ? '\n' + signatureArray.join('\n') : '';
@@ -57,6 +44,19 @@ function formatSignatures(signatures=[]) {
 
 function formatDescription(desc) {
     return desc.trim().length ? '\n' + striptags(decodeHTML(desc)).trim() : '';
+}
+
+function formatES(node, query) {
+
+    return [
+
+        `${chalk.red('[ Additional Information ]')}\n`,
+        `${chalk.green.underline('toString:')} '${node.toString()}'`,
+        `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
+        `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
+        `${chalk.green.underline('Own Properties (non-methods):')} ${ columnize(getOwnProperties(node)) }`,
+        `${chalk.green.underline('Methods:')} ${ columnize(getMethods(node)) }\n`,
+    ].join('\n'); 
 }
 
 function formatNodeJS(node, searchToken) {
