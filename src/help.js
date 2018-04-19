@@ -22,17 +22,6 @@ function help(searchToken, docs) {
 
 }
 
-function adjustSearchToken(token) {
-    // to account for globals edge-case in api docs
-
-    const toAdjust = ['process'];
-
-    if (toAdjust.includes(token))
-        return capitalize(token);
-
-    return token;
-}
-
 function findAllNames(tree) {
 
     const props = ['modules','methods','classes','globals','properties','miscs'];    
