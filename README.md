@@ -104,39 +104,6 @@ node-help > process?
 
 [ 2 Result(s) for Node.js. ]
 
-global | process 
-Name: process
-Node.js Object Type: global
-Signature(s): process 
-
-Description:
-{Object}
-
-The process object. See the process object section.
-
-ChildProcess | process 
-Name: process
-Node.js Object Type: ChildProcess
-Signature(s): `process` {ChildProcess}  
-
-node-help > process?
-
-[ 2 Result(s) for Node.js. ]
-
- global | process 
-Name: process
-Node.js Object Type: global
-Signature(s): process 
-
-Description:
-{Object}
-
-The process object. See the process object section.
-
-node-help > process?
-
-[ 2 Result(s) for Node.js. ]
-
  global | process 
 Name: process
 Node.js Object Type: global
