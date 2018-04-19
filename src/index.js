@@ -32,13 +32,13 @@ function startProg([JSONupdateMsg, markdownUpdateMsg, pkgText, bannerText, nodeD
     repl.start(JSON.parse(nodeDocs));
 }
 
-function init ({ update, run }) {
+function init ({ update, noRun }) {
 
     let updates = update ? [ updateNodeJSON(), updateNodeMd() ] : [null, null];
-    if (update)
+    if (update) {
+        if (noRun) process.exit(0);
         console.log(chalk.green('updating documentation ... '));
-    if (!run)
-        process.exit(0);
+    }
 
     const data = [ 
         packageJSON, 
