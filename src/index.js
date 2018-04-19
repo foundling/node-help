@@ -17,26 +17,24 @@ const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json
 
 function startProg([JSONupdateMsg, markdownUpdateMsg, pkgText, bannerText, nodeDocs] = args) {
 
-    const updateMessage = [
-        JSONupdateMsg, 
-        markdownUpdateMsg
-    ]
-    .filter(Boolean)
-    .map(msg => chalk.green(msg))
-    .join('\n');
+    const updateMessage = [ JSONupdateMsg, markdownUpdateMsg ]
+                            .filter(Boolean)
+                            .map(msg => chalk.green(msg))
+                            .join('\n');
 
     clear();
+
     console.log(chalk.blue(bannerText));
     console.log(progInfo(JSON.parse(pkgText)),'\n');
     console.log(updateMessage ? updateMessage + '\n' : '');
+
     repl.start(JSON.parse(nodeDocs));
 }
 
-function init ({ update, noRun }) {
+function init({ update }) {
 
-    let updates = update ? [ updateNodeJSON(), updateNodeMd() ] : [null, null];
+    let updates = update ? [ updateNodeJSON(), updateNodeMd() ] : [ null, null ];
     if (update) {
-        if (noRun) process.exit(0);
         console.log(chalk.green('updating documentation ... '));
     }
 

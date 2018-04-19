@@ -13,7 +13,6 @@ ${chalk.green('node-help')} [options]
 ${chalk.blue('Options')}:
   -i, --info        Output Information about node-help and exit
   -u, --update      Manually check for updates to Node.js documentation.
-  -n, --no-run      Don't run node help after checking for updates.
 `;
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
@@ -30,7 +29,6 @@ if (process.argv.includes('--info') || process.argv.includes('-i')) {
 
 const options = {
     update: process.argv.includes('--update') || process.argv.includes('-u'), 
-    noRun: process.argv.includes('--no-run') || process.argv.includes('-n')
 };
 
 nodeHelp(options);
