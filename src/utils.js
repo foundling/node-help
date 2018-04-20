@@ -1,14 +1,13 @@
 const striptags = require('striptags');
+const fs = require('fs');
 const Entities = require('html-entities');
-
+const { promisify } = require('util');
 
 const capitalize = s => s[0].toUpperCase() + s.slice(1).toLowerCase();
+const chop = s => s.slice(0, -1);
 const { decode } = new Entities.AllHtmlEntities();
-const chop = s => s.slice(0,-1);
-
-function flatten(a, depth=1) {
-    return depth <= 0 ? a : flatten(a.reduce((acc, val) => acc.concat(val), []), depth - 1);
-};
+const readFilePromise = promisify(fs.readFile);
+const writeFilePromise = promisify(fs.writeFile);
 
 function clear() {
     'use strict';
@@ -24,6 +23,14 @@ function flagThrown(args, name) {
     return args.some(arg => flags.includes(arg));
 }
 
+function flatten(a, depth=1) {
+    return depth <= 0 ? a : flatten(a.reduce((acc, val) => acc.concat(val), []), depth - 1);
+};
+
+function now() {
+    return new Date().getTime();
+}
+
 module.exports = exports = {
     capitalize,
     chop,
@@ -33,5 +40,8 @@ module.exports = exports = {
     flagThrown,
     flatten,
     keys: Object.keys,
-    striptags
+    now,
+    readFilePromise,
+    striptags,
+    writeFilePromise,
 };
