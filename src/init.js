@@ -1,57 +1,111 @@
 const path = require('path');
-const { readdirPromise, readFilePromise, writeFilePromise, now } = require(path.join(__dirname, 'utils'));
+
+const { 
+
+    now, 
+    readdirPromise, 
+    readFilePromise, 
+    requestPromise, 
+    writeFilePromise, 
+
+} = require(path.join(__dirname, 'utils'));
+const configPath = path.join(__dirname, '..', 'config.json');
+const nodeAPIDocsURL = "https://nodejs.org/api/all.json";
+const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
+const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
+const nodeHelpBannerPath = path.join(__dirname,'banner.txt');
+const oneWeekMS = 1000 * 60 * 60 * 24 * 7;
 const newConfig = () => `{ "lastUpdatedMS": ${ now() }  }`;
+let updateDocs = false;
+
+function main() {
+
+    // problem: check config first
+    const appData = [
+        getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath),
+        getMDDocs(nodeMDDocsDir),
+        getBanner(nodeHelpBannerPath)
+    ];
+
+    getConfig(configPath)
+        .then(console.log);//() => Promise.all(appData));
+}
 
 // if config
 // read config
 //      if cache out of date
-//          update
+//          update docs
 // else
 //      write default config.json to base dir
 
-// read api docs
-// read md docs
-// read config
+// if api docs
+//      read api docs
+//
+// if md paths
+//   read md paths
+// otherwise 
+//  get md files from node
+//  write android apps
+//
 // read banner
 // return them all to app
 
-function getConfig() {
 
-    return readFilePromise(configPath, 'utf8', (err, configString) => {
+function getConfig(configPath) {
 
-        if (err) throw err;
-        return JSON.parse(configString);
-
+    return readFilePromise(configPath, 'utf8',).then((data) => {
+        const config = JSON.parse(data);
+        updateDocs = (now() - config.lastUpdatedMS) > oneWeekMS; 
+        return config;
     })
     .catch(e => {
-
-        if (e.code === 'ENOENT') {
-            return writeFilePromise(configPath, config, 'utf8')
-                .then(() => {
-                    return newConfig();
-                });
-        }
+        if (e.code === 'ENOENT')
+            // no config file, let's write one to disk and return a copy
+            return writeFilePromise(configPath, newConfig(), 'utf8')
+                    .then(() => newConfig());
 
         throw e;
-
     });
 
 }
 
-function listAPIDocs(docsDir) {
-    return readdirPromise(docsDir);
+function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
+    return readFilePromise(nodeAPIDocsPath, 'utf8')
+            .catch(e => {
+                if (e.code !== 'ENOENT')
+                    throw e;
+                return updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
+            });
 }
 
-function getMDDocs(docPaths) {
+function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
+    return requestPromise(nodeAPIDocsURL)
+        .then((resp, body) => {
+           return writeFilePromise(nodeAPIDocsPath, body, 'utf8')
+                    .then(() => 'Node.js JSON docs updated!');
+        });
+}
 
-    return docPaths
-        .map(docPath => readFileSync(docPath, 'utf8'));
+function updateNodeMDDocs(nodeMDDocsDir) {
+    return listMDDocs(nodeMDDocsDir);
+}
 
+function listFiles(docsPath) {
+    return readdirPromise(docsPath).then(docPaths => {
+        return docPaths.filter(p => p.endsWith('.md'));
+    });
+}
+
+function getMDDocs(nodeMDDocsDir) {
+    return listFiles(nodeMDDocsDir)
+            .then(docPaths => {
+                const paths = docPaths.map(docPath => readFileSync(docPath, 'utf8'));
+                return Promise.all(paths);
+            });
 }
 
 function getAPIDocs(APIDocPath) {
     return readFileSync(APIDocPath, 'utf8');
-
 }
 
 // call these in request args
@@ -61,5 +115,10 @@ function writeMDDocs(MDDocs) {
 
 function writeAPIDocs(apiDocTree) {
     return writeFileSync(apiDocTree, MDDocs);
-
 }
+
+function getBanner(bannerPath) {
+    return readFilePromise(bannerPath, 'utf8');
+}
+
+module.exports = exports = { main };
