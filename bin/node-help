@@ -4,8 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const { homedir } = require('os');
-const { progInfo } = require(path.join(__dirname, '..', 'src', 'format'));
+
+const { flagThrown } = require(path.join(__dirname,'..','src','utils'));
+const { progInfo } = require(path.join(__dirname, '..','src','format'));
 const nodeHelp = require(path.join(__dirname, '..', 'src'));
+const args = process.argv.slice(2);
+
+const [ help, info, update ] = ['help', 'info', 'update'].map(flagName => flagThrown(args, flagName));
 
 const helpText = `
 ${chalk.green('node-help')} [options]
@@ -15,20 +20,18 @@ ${chalk.blue('Options')}:
   -u, --update      Manually check for updates to Node.js documentation.
 `;
 
-if (process.argv.includes('--help') || process.argv.includes('-h')) {
+if (help) {
     console.log(helpText);
     process.exit(0);
 }
 
-if (process.argv.includes('--info') || process.argv.includes('-i')) {
+if (info) {
     const pkgJson = fs.readFileSync(path.join(__dirname, '..','package.json'));
     console.log(progInfo(JSON.parse(pkgJson)));
     process.exit(0);
 }
 
 
-const options = {
-    update: process.argv.includes('--update') || process.argv.includes('-u'), 
-};
+const options = { update };
 
 nodeHelp(options);

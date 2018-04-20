@@ -19,12 +19,18 @@ function dedupe(arr) {
     return Array.from(new Set(arr));
 }
 
+function flagThrown(args, name) {
+    let flags = [`-${name[0]}`,`--${name}`];
+    return args.some(arg => flags.includes(arg));
+}
+
 module.exports = exports = {
     capitalize,
     chop,
     clear,
     decodeHTML: decode,
     dedupe,
+    flagThrown,
     flatten,
     keys: Object.keys,
     striptags

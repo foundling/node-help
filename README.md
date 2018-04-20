@@ -1,5 +1,13 @@
 # node-help
 
+### Installation
+
+To install `node-help`, run: 
+
+````
+npm install -g node-help
+````
+
 ### API
 
 + `?`: append to the end of a built-in Node object to get documentation on it
