@@ -9,33 +9,14 @@ const repl = require(path.join(__dirname, 'repl'));
 const { progInfo } = require(path.join(__dirname, 'format'));
 const { clear, readFilePromise } = require(path.join(__dirname, 'utils'));
 const { updateNodeJSON, updateNodeMd, checkConfig } = require(path.join(__dirname, 'update'));
+const { main}  = require(path.join(__dirname, 'init'));
 const packageJSON = path.join(__dirname,'..','package.json');
 const bannerPath = path.join(__dirname, 'banner.txt'); 
 const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json');
 
 function init({ update }) {
 
-    let updates = update ? [ 
-        checkConfig(), 
-        updateNodeJSON(), 
-        updateNodeMd(), 
-    ] : [ null, null, null ];
-
-    if (update)
-        console.log(chalk.green('updating documentation ... '));
-
-    const data = [ 
-        packageJSON, 
-        bannerPath, 
-        nodeDocsJSON 
-    ].map(fpath => readFilePromise(fpath, 'utf8'));
-
-    Promise
-        .all(updates.concat(data))
-        .then(startProg, (e) => { console.log(`error: ${e}`) })
-        .catch(e => { 
-            throw e;
-        }) 
+    return main().then(startProg);
 
 }
 

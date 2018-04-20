@@ -13,23 +13,9 @@ const configPath = path.join(__dirname, '..', 'config.json');
 const nodeAPIDocsURL = "https://nodejs.org/api/all.json";
 const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
 const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
-const nodeHelpBannerPath = path.join(__dirname,'banner.txt');
+const bannerPath = path.join(__dirname,'banner.txt');
 const oneWeekMS = 1000 * 60 * 60 * 24 * 7;
 const newConfig = () => `{ "lastUpdatedMS": ${ now() }  }`;
-let updateDocs = false;
-
-function main() {
-
-    // problem: check config first
-    const appData = [
-        getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath),
-        getMDDocs(nodeMDDocsDir),
-        getBanner(nodeHelpBannerPath)
-    ];
-
-    getConfig(configPath)
-        .then(console.log);//() => Promise.all(appData));
-}
 
 // if config
 // read config
@@ -53,29 +39,27 @@ function main() {
 
 function getConfig(configPath) {
 
-    return readFilePromise(configPath, 'utf8',).then((data) => {
-        const config = JSON.parse(data);
-        updateDocs = (now() - config.lastUpdatedMS) > oneWeekMS; 
-        return config;
-    })
-    .catch(e => {
-        if (e.code === 'ENOENT')
-            // no config file, let's write one to disk and return a copy
-            return writeFilePromise(configPath, newConfig(), 'utf8')
-                    .then(() => newConfig());
+    return readFilePromise(configPath, 'utf8')
+            .then(JSON.parse)
+            .catch(e => {
+                if (e.code === 'ENOENT')
 
-        throw e;
-    });
+                    // no config file, let's write one to disk and return a copy
+                    return writeFilePromise(configPath, newConfig(), 'utf8')
+                            .then(() => newConfig());
+
+                throw e;
+            });
 
 }
 
 function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
     return readFilePromise(nodeAPIDocsPath, 'utf8')
-            .catch(e => {
-                if (e.code !== 'ENOENT')
-                    throw e;
-                return updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
-            });
+        .catch(e => {
+            if (e.code !== 'ENOENT')
+                throw e;
+            return updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
+        });
 }
 
 function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
@@ -117,8 +101,37 @@ function writeAPIDocs(apiDocTree) {
     return writeFileSync(apiDocTree, MDDocs);
 }
 
-function getBanner(bannerPath) {
-    return readFilePromise(bannerPath, 'utf8');
+function getBanner(bPath) {
+    return readFilePromise(bPath, 'utf8');
+}
+
+function main() {
+
+    return getConfig(configPath)
+        .then(config => {
+
+            const updateDocs = now() - config.lastUpdatedMS > oneWeekMS;
+            const banner = getBanner(bannerPath);
+            const apiDocs = updateDocs ? 
+                            updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
+                            getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
+            const mdDocs = updateDocs ? 
+                            updateNodeMDDocs(nodeMDDocsDir) : 
+                            getMDDocs(nodeMDDocsDir);
+
+            return mdDocs.then(console.log);
+            return Promise
+                    .all([
+                        config,
+                        banner,
+                        apiDocs,
+                        mdDocs,
+                    ])
+                    .catch(e => {
+                        throw e;
+                    });
+        });
+
 }
 
 module.exports = exports = { main };
