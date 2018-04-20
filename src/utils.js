@@ -8,6 +8,7 @@ const chop = s => s.slice(0, -1);
 const { decode } = new Entities.AllHtmlEntities();
 const readFilePromise = promisify(fs.readFile);
 const writeFilePromise = promisify(fs.writeFile);
+const readdirPromise = promisify(fs.readdir);
 
 function clear() {
     'use strict';
