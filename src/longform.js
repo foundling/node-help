@@ -19,7 +19,7 @@ marked.setOptions({
 
 function cacheTopicNames() {
 
-    if (topicNames.length)
+    if (topicNames && topicNames.length)
        return;
 
     return readdirPromise(mdDir)
@@ -29,7 +29,7 @@ function cacheTopicNames() {
                             .map(fname => path.basename(fname)
                             .split('.')[0]);
         })
-        .catch(e => { throw e});
+        .catch(e => { throw e });
 
 }
 
@@ -41,16 +41,23 @@ function listArticles() {
     console.log(listBody);
 }
 
+function printMarkdown(content) {
+    const output = marked(stripHTMLComments(content));
+    console.log(`\n\n${output}`);
+}
+
 function renderArticle(topic) {
 
     if (!topicNames.includes(topic)) {
-        console.log(`${chalk.green(`Sorry, ${topic} is not an available topic. Type '.docs' for a list of available topics.`)}`);
-        return;
+
+        const output = chalk.green(`Sorry, ${topic} is not an available topic. Type '.docs' for a list of available topics.`);
+        return console.log(output);
     }
 
     const articlePath = path.join(mdDir, `${topic}.md`);
+
     readFilePromise(articlePath, 'utf8')
-        .then(content => console.log('\n\n' + marked(stripHTMLComments(content))))
+        .then(printMarkdown)
         .catch(err => {
             throw err;
         });
