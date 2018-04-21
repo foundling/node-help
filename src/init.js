@@ -85,7 +85,7 @@ function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
 
 function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
     return requestPromise(nodeAPIDocsURL)
-        .then((resp, body) => {
+        .then(({ body }) => {
             return writeFilePromise(nodeAPIDocsPath, body, 'utf8')
                     .then(() => { 
                         return {

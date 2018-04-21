@@ -16,23 +16,25 @@ const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json
 
 function init({ update }) {
 
-    return main().then(console.log);
+    return main().then(startProg);
 
 }
 
 function startProg([config, banner, apiDocs, MDArticles] = args) {
 
+    /*
     const updateMessages = [ JSONupdateMsg, markdownUpdateMsg ]
                             .filter(Boolean)
                             .map(msg => chalk.green(msg));
+                           */ 
 
     clear();
 
-    console.log(chalk.blue(bannerText));
-    console.log(progInfo(JSON.parse(pkgText)),'\n');
-    console.log(updateMessages.length ? `${ updateMessages.join('\n') }\n` : '');
+    console.log(chalk.blue(banner));
+    //console.log(progInfo(JSON.parse(pkgText)),'\n');
+    //console.log(updateMessages.length ? `${ updateMessages.join('\n') }\n` : '');
 
-    repl.start(JSON.parse(nodeDocs));
+    repl.start(JSON.parse(apiDocs));
 
 }
 
