@@ -14,27 +14,16 @@ const packageJSON = path.join(__dirname,'..','package.json');
 const bannerPath = path.join(__dirname, 'banner.txt'); 
 const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json');
 
-function init({ update }) {
+function init() {
 
-    return main().then(startProg);
+    main().then(startProg);
 
 }
 
 function startProg([config, banner, apiDocs, MDArticles] = args) {
 
-    /*
-    const updateMessages = [ JSONupdateMsg, markdownUpdateMsg ]
-                            .filter(Boolean)
-                            .map(msg => chalk.green(msg));
-                           */ 
-
-    clear();
-
     console.log(chalk.blue(banner));
-    //console.log(progInfo(JSON.parse(pkgText)),'\n');
-    //console.log(updateMessages.length ? `${ updateMessages.join('\n') }\n` : '');
-
-    repl.start(JSON.parse(apiDocs));
+    repl.start(JSON.parse(apiDocs.docs));
 
 }
 

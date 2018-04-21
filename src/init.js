@@ -13,6 +13,7 @@ const {
 
 const configPath = path.join(__dirname, '..', 'config.json');
 const nodeAPIDocsURL = "https://nodejs.org/api/all.json";
+const nodeAPIDocsBase = "https://nodejs.org/api";
 const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
 const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
 const bannerPath = path.join(__dirname,'banner.txt');
@@ -31,7 +32,7 @@ function main() {
                             updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
                             getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
             const mdDocs = updateDocs ? 
-                            updateNodeMDDocs(nodeMDDocsDir) : 
+                            updateNodeMDDocs(nodeMDDocsDir, nodeAPIDocsBase) : 
                             getMDDocs(nodeMDDocsDir);
 
             return Promise
@@ -103,15 +104,9 @@ function listMDFiles(docsPath) {
     });
 }
 
-function updateNodeMDDocs(callback) {
-
-    const opts = { 
-        uri: 'https://nodejs.org/api', 
-        transform: cheerio.load
-    };
+function updateNodeMDDocs(outputDir) {
 
     return requestPromise('https://nodejs.org/api').then(({body}) => {
-
     
             const $ = cheerio.load(body);
             const docPaths = $('a[class*="nav-"]')
@@ -119,17 +114,17 @@ function updateNodeMDDocs(callback) {
                     .filter((index, href) => href.endsWith('.html'))
                     .map((index, href) => href.replace('.html','.md'))
                     .get();
-
+ 
             // docpaths => request promises
             const docReqs = docPaths
-                                .map(docPath => `${nodeAPIDocsURL}/${docPath}`)
+                                .map(docPath => `${ nodeAPIDocsBase }/${ docPath }`)
                                 .map(url => requestPromise(url));
 
             // resolve promises into html strings, 
             return Promise.all(docReqs)
                 .then(responses => {
                     const docs = responses.map(r => r.body);
-                    const docWrites = docs.map((doc, index) => writeFilePromise(docPaths[index], doc, 'utf8'));
+                    const docWrites = docs.map((doc, index) => writeFilePromise(`${outputDir}/${docPaths[index]}`, doc, 'utf8'));
                     return Promise.all(docWrites)
                         .then(() => {
                             return {
