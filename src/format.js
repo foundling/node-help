@@ -54,8 +54,8 @@ function formatES(node, query) {
         `${chalk.green.underline('toString:')} '${node.toString()}'`,
         `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
         `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
-        `${chalk.green.underline('local properties (non-methods):')}\n${ columnize(getOwnProperties(node)) }\n`,
-        `${chalk.green.underline('local methods:')}${ columnize(getMethods(node)) }\n`,
+        `${chalk.green.underline('local properties (non-methods):')} ${ columnize(getOwnProperties(node)) }\n`,
+        `${chalk.green.underline('local methods:')} ${ columnize(getMethods(node)) }\n`,
 
     ].join('\n'); 
 
