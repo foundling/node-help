@@ -5,7 +5,12 @@ const path = require('path');
 const { promisify } = require('util');
 const request = require('request');
 
-const { now, writeFilePromise, readFilePromise } = require(path.join(__dirname, '..','src','utils'));
+const { 
+    now, 
+    writeFilePromise, 
+    readFilePromise 
+} = require(path.join(__dirname, '..','src','utils'));
+
 const mdOutputPath = path.join(__dirname, '..','src','docs','node','md');
 const JSONOutputPath = path.join(__dirname,'..','src','docs','node');
 const nodeAPIUrl = 'https://nodejs.org/api';

@@ -11,6 +11,7 @@
     "marked-terminal": "^2.0.0",
     "repl.history": "^0.1.4",
     "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "strip-html-comments": "^1.0.0",
     "striptags": "^3.1.1",
     "touch": "^3.1.0"

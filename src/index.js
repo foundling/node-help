@@ -16,11 +16,11 @@ const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json
 
 function init({ update }) {
 
-    return main().then(startProg);
+    return main().then(console.log);
 
 }
 
-function startProg([checkConfig, JSONupdateMsg, markdownUpdateMsg, pkgText, bannerText, nodeDocs] = args) {
+function startProg([config, banner, apiDocs, MDArticles] = args) {
 
     const updateMessages = [ JSONupdateMsg, markdownUpdateMsg ]
                             .filter(Boolean)

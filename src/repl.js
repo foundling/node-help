@@ -6,7 +6,7 @@ const vm = require('vm');
 const { homedir } = require('os');
 
 const { help } = require('./help');
-const { listArticles, renderArticle } = require('./longform');
+const { listArticles, renderArticle, cacheTopicNames } = require('./longform');
 const { striptags, chop  } = require(path.join(__dirname, 'utils'));
 
 function mkEval(dataTree) {
@@ -19,7 +19,7 @@ function mkEval(dataTree) {
         let tokens = cmd.trim().split(' ');
         let helpTokens = tokens.filter(t => t.endsWith('?'));
         let buildHelp = token => help(chop(token), dataTree);
-        let output;
+        let output; // if this remains undefined, it won't be logged because of repl options
 
         if (helpTokens.length) 
             console.log(helpTokens.map(buildHelp).join('\n'));
@@ -33,6 +33,8 @@ function mkEval(dataTree) {
 }
 
 function start(dataTree) {
+
+    cacheTopicNames();
 
     const historyFile = path.join(homedir(),'.node_repl_history');
 

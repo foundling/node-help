@@ -1,35 +1,41 @@
 const chalk = require('chalk');
 const path = require('path');
-const os = require('os');
-const util = require('util');
-const fs = require('fs');
+
+const {
+    readFilePromise,
+    readdirPromise
+} = require(path.join(__dirname, 'utils'));
+
 const marked = require('marked');
 const TerminalRenderer = require('marked-terminal');
 const stripHTMLComments = require('strip-html-comments');
 const mdDir = path.join(__dirname,'..','src','docs','node','md'); 
-const readFile = util.promisify(fs.readFile); 
-let articleNames;
 
-function init() {
+let topicNames;
 
-    marked.setOptions({
-        renderer: new TerminalRenderer()
-    });
+marked.setOptions({
+    renderer: new TerminalRenderer()
+});
 
-    fs.readdir(mdDir, readArticleNames);
+function cacheTopicNames() {
 
-}
+    if (topicNames.length)
+       return;
 
-function readArticleNames(err, files) {
-    if (err) throw err;
-    articleNames = files
-        .filter(fname => fname.endsWith('.md'))
-        .map(fname => path.basename(fname).split('.')[0]);
+    return readdirPromise(mdDir)
+        .then(files => {
+            topicNames = files
+                            .filter(fname => fname.endsWith('.md'))
+                            .map(fname => path.basename(fname)
+                            .split('.')[0]);
+        })
+        .catch(e => { throw e});
+
 }
 
 function listArticles() {
     const listHeader = `${chalk.red('available Node.js docs')}`; 
-    const listBody = articleNames.map(name => `+ ${chalk.green(name)}`).join('\n');
+    const listBody = topicNames.map(name => `+ ${chalk.green(name)}`).join('\n');
 
     console.log(listHeader);
     console.log(listBody);
@@ -37,15 +43,21 @@ function listArticles() {
 
 function renderArticle(topic) {
 
-    if (!articleNames.includes(topic))
-        return console.log(`${chalk.green(`Sorry, ${topic} is not an available topic! Type '.longform' for a list of available topics.`)}`);
+    if (!topicNames.includes(topic)) {
+        console.log(`${chalk.green(`Sorry, ${topic} is not an available topic. Type '.docs' for a list of available topics.`)}`);
+        return;
+    }
 
     const articlePath = path.join(mdDir, `${topic}.md`);
-    fs.readFile(articlePath, 'utf8', (err, content) => {
-        if (err) throw err;
-        console.log('\n\n' + marked(stripHTMLComments(content)));
-    });
+    readFilePromise(articlePath, 'utf8')
+        .then(content => console.log('\n\n' + marked(stripHTMLComments(content))))
+        .catch(err => {
+            throw err;
+        });
 }
 
-init();
-module.exports = exports = { listArticles, renderArticle };
+module.exports = exports = { 
+    listArticles, 
+    renderArticle, 
+    cacheTopicNames 
+};

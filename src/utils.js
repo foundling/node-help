@@ -2,13 +2,13 @@ const striptags = require('striptags');
 const fs = require('fs');
 const Entities = require('html-entities');
 const { promisify } = require('util');
-
 const capitalize = s => s[0].toUpperCase() + s.slice(1).toLowerCase();
 const chop = s => s.slice(0, -1);
 const { decode } = new Entities.AllHtmlEntities();
 const readFilePromise = promisify(fs.readFile);
 const writeFilePromise = promisify(fs.writeFile);
 const readdirPromise = promisify(fs.readdir);
+const requestPromise = promisify(require('request'));
 
 function clear() {
     'use strict';
@@ -42,6 +42,8 @@ module.exports = exports = {
     flatten,
     keys: Object.keys,
     now,
+    readdirPromise,
+    requestPromise,
     readFilePromise,
     striptags,
     writeFilePromise,
