@@ -5,3 +5,4 @@ config.json
 src/docs/node/node-all.json
 src/docs/node
 .DS_Store
+todo.txt
