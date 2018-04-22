@@ -4,80 +4,89 @@ const path = require('path');
 
 const { 
 
+    flagThrown,
+    mkdirpPromise,
     now, 
     readdirPromise, 
     readFilePromise, 
     requestPromise, 
     writeFilePromise, 
-    mkdirpPromise
 
 } = require(path.join(__dirname, 'utils'));
 
-const configPath = path.join(__dirname, '..', 'config.json');
-const nodeDocsBase = "https://nodejs.org/api";
-const nodeAPIDocsURL = "https://nodejs.org/api/all.json";
-const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
-const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
-const bannerPath = path.join(__dirname,'banner.txt');
-const docsPath = path.join(__dirname,'docs','node','md');
-const oneWeekMS = 1000 * 60 * 60 * 24 * 7;
-const newConfig = () => `{ "lastUpdatedMS": ${ now() }  }`;
+const CONFIG_PATH = path.join(__dirname, '..', 'config.json');
+const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
+const NODE_DOCS_BASE_URL = "https://nodejs.org/api";
+const NODE_API_JSON_URL = "https://nodejs.org/api/all.json";
+const NODE_API_JSON_PATH = path.join(__dirname,'docs','node','node-all.json');
+const NODE_API_MD_DIR = path.join(__dirname,'docs','node','md');
+const BANNER_PATH = path.join(__dirname,'banner.txt');
+const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
+const newConfig = () => {
+    const conf = {
+        LAST_UPDATED_MS: now(),
+        PROMPT: 'node-help > '
+    };
+    return JSON.stringify(conf);
+}; 
 
-function main({ update }) {
+function main() {
 
-    return makeDocDirs(docsPath).then(() => {
-        return getConfig(configPath)
-            .then(({ isNew, config }) => {
-
-                const updateDocs = now() - config.lastUpdatedMS > oneWeekMS || isNew || update;
-
-                const pkgJson = readFilePromise(path.join(__dirname,'..','package.json')).then(JSON.parse);
-                const banner = getBanner(bannerPath);
-                const apiDocs = updateDocs ? 
-                                updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
-                                getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
-                const mdDocs = updateDocs ? 
-                                updateNodeMDDocs(nodeMDDocsDir, nodeDocsBase) : 
-                                getMDDocs(nodeMDDocsDir);
-
-                return Promise
-                        .all([
-                            config,
-                            pkgJson,
-                            banner,
-                            apiDocs,
-                            mdDocs,
-                        ])
-                        .catch(e => { throw e; });
-            });
-    });
+    return mkdirpPromise(NODE_API_MD_DIR)
+            .then(() => getConfig(CONFIG_PATH)
+                         .then(config => collectInitData(config, checkForUpdate(process.argv))));
 
 }
 
-
-function makeDocDirs(dirpath) {
-    return mkdirpPromise(dirpath);
+function checkForUpdate(args) {
+    const appArgs = args.slice(2);
+    return flagThrown(appArgs, 'update');
 }
 
-function getConfig(configPath) {
+function collectInitData({ isNew, config }, updateDocs) {
 
-    return readFilePromise(configPath, 'utf8')
+    // turn bin arg parse stuff into a module, parse args when needed
+    const updateNeeded = isNew || updateDocs || now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
+    const pkgJson = readFilePromise(PACKAGE_JSON_PATH).then(JSON.parse);
+    const banner = getBanner(BANNER_PATH);
+    const apiDocs = updateNeeded ? 
+                    updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) : 
+                    getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH);
+    const mdDocs = updateNeeded ? 
+                    updateNodeMDDocs(NODE_API_MD_DIR, NODE_DOCS_BASE_URL) : 
+                    getMDDocs(NODE_API_MD_DIR);
+
+    return Promise
+            .all([
+                config,
+                pkgJson,
+                banner,
+                apiDocs,
+                mdDocs,
+            ])
+            .catch(e => { throw e; });
+}
+
+
+function getConfig(CONFIG_PATH) {
+
+    return readFilePromise(CONFIG_PATH, 'utf8')
         .then(data => {
             return { 
                 isNew: false, 
-                config: JSON.parse 
+                config: JSON.parse(data) 
             };
         })
         .catch(e => {
             if (e.code !== 'ENOENT')
                 throw e;
 
-            // no config file, let's write one to disk and return a copy
-            return writeFilePromise(configPath, newConfig(), 'utf8')
+            let config = newConfig();
+            return writeFilePromise(CONFIG_PATH, JSON.stringify(config), 'utf8')
                 .then(() => {
                     return {
-                        config: newConfig(),
-                        isNew: true
+                        isNew: true,
+                        config
                     }
                 });
         });
@@ -86,8 +95,8 @@ function getConfig(configPath) {
 
 /* NODE API JSON DOC TREE */
 
-function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
-    return readFilePromise(nodeAPIDocsPath, 'utf8')
+function getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
+    return readFilePromise(NODE_API_JSON_PATH, 'utf8')
         .then(docs => {
             return {
                 isNew: false,
@@ -97,15 +106,15 @@ function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
         .catch(e => {
             if (e.code !== 'ENOENT')
                 throw e;
-            return updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
+            return updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH);
         });
 }
 
-function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
+function updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
     console.log(chalk.green('updating node API documentation ... '));
-    return requestPromise(nodeAPIDocsURL)
+    return requestPromise(NODE_API_JSON_URL)
         .then(({ body }) => {
-            return writeFilePromise(nodeAPIDocsPath, body, 'utf8')
+            return writeFilePromise(NODE_API_JSON_PATH, body, 'utf8')
                     .then(() => { 
                         console.log(chalk.green('node API documentation updated'));
                         return {
@@ -117,15 +126,15 @@ function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
 }
 
 /* NODE MARKDOWN DOCS */
-function listMDFiles(docsPath) {
-    return readdirPromise(docsPath).then(docPaths => {
+function listMDFiles(NODE_API_MD_DIR) {
+    return readdirPromise(NODE_API_MD_DIR).then(docPaths => {
         return docPaths.filter(p => p.endsWith('.md'));
     });
 }
 
-function updateNodeMDDocs(outputDir, nodeDocsBase) {
+function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
 
-    return requestPromise(nodeDocsBase).then(({body}) => {
+    return requestPromise(NODE_DOCS_BASE_URL).then(({body}) => {
     
             const $ = cheerio.load(body);
             const docPaths = $('a[class*="nav-"]')
@@ -136,7 +145,7 @@ function updateNodeMDDocs(outputDir, nodeDocsBase) {
  
             // docpaths => request promises
             const docReqs = docPaths
-                                .map(docPath => `${ nodeDocsBase }/${ docPath }`)
+                                .map(docPath => `${ NODE_DOCS_BASE_URL }/${ docPath }`)
                                 .map(url => requestPromise(url));
 
             // resolve promises into html strings, 
@@ -157,11 +166,11 @@ function updateNodeMDDocs(outputDir, nodeDocsBase) {
     });
 }
 
-function getMDDocs(nodeMDDocsDir) {
-    return listMDFiles(nodeMDDocsDir)
+function getMDDocs(NODE_API_MD_DIR) {
+    return listMDFiles(NODE_API_MD_DIR)
             .then(docPaths => {
                 const docReads = docPaths
-                    .map(docPath => path.join(nodeMDDocsDir, docPath))
+                    .map(docPath => path.join(NODE_API_MD_DIR, docPath))
                     .map(fullPath => readFilePromise(fullPath, 'utf8'));
                 return Promise.all(docReads);
             })

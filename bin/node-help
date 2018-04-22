@@ -10,8 +10,6 @@ const { progInfo } = require(path.join(__dirname, '..','src','format'));
 const nodeHelp = require(path.join(__dirname, '..', 'src'));
 const args = process.argv.slice(2);
 
-const [ help, info, update ] = ['help', 'info', 'update'].map(flagName => flagThrown(args, flagName));
-
 const helpText = `
 ${chalk.green('node-help')} [options]
 
@@ -20,15 +18,16 @@ ${chalk.blue('Options')}:
   -u, --update      Manually check for updates to Node.js documentation.
 `;
 
-if (help) {
+if (flagThrown(args, 'help')) {
     console.log(helpText);
     process.exit(0);
 }
 
-if (info) {
+if (flagThrown(args, 'info')) {
     const pkgJson = fs.readFileSync(path.join(__dirname, '..','package.json'));
     console.log(progInfo(JSON.parse(pkgJson)));
     process.exit(0);
 }
 
-nodeHelp({ update });
+// we check for 'update' flag inside init module
+nodeHelp();

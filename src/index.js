@@ -12,9 +12,9 @@ const { main }  = require(path.join(__dirname, 'init'));
 const bannerPath = path.join(__dirname, 'banner.txt'); 
 const nodeDocsJSON = path.join(__dirname,'..','src','docs','node','node-all.json');
 
-function init({ update }) {
+function init() {
 
-    main({ update }).then(startProg);
+    main().then(startProg);
 
 }
 
