@@ -14,8 +14,8 @@ const {
 } = require(path.join(__dirname, 'utils'));
 
 const configPath = path.join(__dirname, '..', 'config.json');
+const nodeDocsBase = "https://nodejs.org/api";
 const nodeAPIDocsURL = "https://nodejs.org/api/all.json";
-const nodeAPIDocsBase = "https://nodejs.org/api";
 const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
 const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
 const bannerPath = path.join(__dirname,'banner.txt');
@@ -37,7 +37,7 @@ function main({ update }) {
                                 updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
                                 getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
                 const mdDocs = updateDocs ? 
-                                updateNodeMDDocs(nodeMDDocsDir, nodeAPIDocsBase) : 
+                                updateNodeMDDocs(nodeMDDocsDir, nodeDocsBase) : 
                                 getMDDocs(nodeMDDocsDir);
 
                 return Promise
@@ -123,9 +123,9 @@ function listMDFiles(docsPath) {
     });
 }
 
-function updateNodeMDDocs(outputDir) {
+function updateNodeMDDocs(outputDir, nodeDocsBase) {
 
-    return requestPromise('https://nodejs.org/api').then(({body}) => {
+    return requestPromise(nodeDocsBase).then(({body}) => {
     
             const $ = cheerio.load(body);
             const docPaths = $('a[class*="nav-"]')
@@ -136,7 +136,7 @@ function updateNodeMDDocs(outputDir) {
  
             // docpaths => request promises
             const docReqs = docPaths
-                                .map(docPath => `${ nodeAPIDocsBase }/${ docPath }`)
+                                .map(docPath => `${ nodeDocsBase }/${ docPath }`)
                                 .map(url => requestPromise(url));
 
             // resolve promises into html strings, 
@@ -160,8 +160,13 @@ function updateNodeMDDocs(outputDir) {
 function getMDDocs(nodeMDDocsDir) {
     return listMDFiles(nodeMDDocsDir)
             .then(docPaths => {
-                const docReads = docPaths.map(docPath => readFilePromise(docPath, 'utf8'));
+                const docReads = docPaths
+                    .map(docPath => path.join(nodeMDDocsDir, docPath))
+                    .map(fullPath => readFilePromise(fullPath, 'utf8'));
                 return Promise.all(docReads);
+            })
+            .catch(e => {
+                throw e;
             });
 }
 
