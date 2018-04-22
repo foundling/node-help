@@ -6,20 +6,23 @@ const { keys, flatten, decodeHTML, splitBy } = require(path.join(__dirname, './u
 const { columnize } = require(path.join(__dirname, './columns'));
 
 function progInfo(packageInfo) {
+    
+    /* print program info from package.json */
 
     const info = {
-        ' node version ': process.version,
+        ' Node.js version ': process.version,
         ' node-help version ': packageInfo.version,
-        ' github ': chalk.green(packageInfo.repository.url),
-        ' author ': chalk.green(packageInfo.author),
-        ' license ': chalk.green(packageInfo.license)
+        ' Github ': chalk.green(packageInfo.repository.url),
+        ' Author ': chalk.green(packageInfo.author),
+        ' License ': chalk.green(packageInfo.license)
     };
 
-    return Object.keys(info).map(k => {
+    return keys(info).map(k => {
         const prop = k;
         const value = info[k];
         return `${chalk.bgWhite.black(prop)} ${chalk.black(value)}`;
-    }).join('\n');
+    })
+    .join('\n');
 
 }
 
