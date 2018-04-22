@@ -77,6 +77,12 @@ function getConfig(configPath) {
 
 function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
     return readFilePromise(nodeAPIDocsPath, 'utf8')
+        .then(docs => {
+            return {
+                isNew: false,
+                docs
+            };
+        })
         .catch(e => {
             if (e.code !== 'ENOENT')
                 throw e;
