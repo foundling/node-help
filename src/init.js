@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const chalk = require('chalk');
 const path = require('path');
 
 const { 
@@ -101,10 +102,12 @@ function getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
 }
 
 function updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) {
+    console.log(chalk.green('updating node API documentation ... '));
     return requestPromise(nodeAPIDocsURL)
         .then(({ body }) => {
             return writeFilePromise(nodeAPIDocsPath, body, 'utf8')
                     .then(() => { 
+                        console.log(chalk.green('node API documentation updated'));
                         return {
                             docs: body, 
                             msg: 'Node.js JSON docs updated!'
@@ -137,12 +140,14 @@ function updateNodeMDDocs(outputDir) {
                                 .map(url => requestPromise(url));
 
             // resolve promises into html strings, 
+            console.log(chalk.green('updating longform documentation ... '));
             return Promise.all(docReqs)
                 .then(responses => {
                     const docs = responses.map(r => r.body);
                     const docWrites = docs.map((doc, index) => writeFilePromise(`${outputDir}/${docPaths[index]}`, doc, 'utf8'));
                     return Promise.all(docWrites)
                         .then(() => {
+                            console.log(chalk.green('longform documentation updated!'));
                             return {
                                 docs,
                                 msg: 'Node.js longform docs updated!',
