@@ -31,7 +31,4 @@ if (info) {
     process.exit(0);
 }
 
-
-const options = { update };
-
-nodeHelp(options);
+nodeHelp({ update });

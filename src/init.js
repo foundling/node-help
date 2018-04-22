@@ -20,13 +20,14 @@ const bannerPath = path.join(__dirname,'banner.txt');
 const oneWeekMS = 1000 * 60 * 60 * 24 * 7;
 const newConfig = () => `{ "lastUpdatedMS": ${ now() }  }`;
 
-function main() {
+function main({ update }) {
 
     return getConfig(configPath)
         .then(({ isNew, config }) => {
 
-            const updateDocs = now() - config.lastUpdatedMS > oneWeekMS || isNew;
+            const updateDocs = now() - config.lastUpdatedMS > oneWeekMS || isNew || update;
 
+            const pkgJson = readFilePromise(path.join(__dirname,'..','package.json')).then(JSON.parse);
             const banner = getBanner(bannerPath);
             const apiDocs = updateDocs ? 
                             updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
@@ -38,6 +39,7 @@ function main() {
             return Promise
                     .all([
                         config,
+                        pkgJson,
                         banner,
                         apiDocs,
                         mdDocs,
