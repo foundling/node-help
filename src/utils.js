@@ -9,6 +9,7 @@ const readFilePromise = promisify(fs.readFile);
 const writeFilePromise = promisify(fs.writeFile);
 const readdirPromise = promisify(fs.readdir);
 const requestPromise = promisify(require('request'));
+const mkdirpPromise = promisify(require('mkdirp'));
 
 function clear() {
     'use strict';
@@ -41,6 +42,7 @@ module.exports = exports = {
     flagThrown,
     flatten,
     keys: Object.keys,
+    mkdirpPromise,
     now,
     readdirPromise,
     requestPromise,

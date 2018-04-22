@@ -8,6 +8,7 @@ const {
     readFilePromise, 
     requestPromise, 
     writeFilePromise, 
+    mkdirpPromise
 
 } = require(path.join(__dirname, 'utils'));
 
@@ -17,38 +18,45 @@ const nodeAPIDocsBase = "https://nodejs.org/api";
 const nodeAPIDocsPath = path.join(__dirname,'docs','node','node-all.json');
 const nodeMDDocsDir = path.join(__dirname,'docs','node','md');
 const bannerPath = path.join(__dirname,'banner.txt');
+const docsPath = path.join(__dirname,'docs','node','md');
 const oneWeekMS = 1000 * 60 * 60 * 24 * 7;
 const newConfig = () => `{ "lastUpdatedMS": ${ now() }  }`;
 
 function main({ update }) {
 
-    return getConfig(configPath)
-        .then(({ isNew, config }) => {
+    return makeDocDirs(docsPath).then(() => {
+        return getConfig(configPath)
+            .then(({ isNew, config }) => {
 
-            const updateDocs = now() - config.lastUpdatedMS > oneWeekMS || isNew || update;
+                const updateDocs = now() - config.lastUpdatedMS > oneWeekMS || isNew || update;
 
-            const pkgJson = readFilePromise(path.join(__dirname,'..','package.json')).then(JSON.parse);
-            const banner = getBanner(bannerPath);
-            const apiDocs = updateDocs ? 
-                            updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
-                            getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
-            const mdDocs = updateDocs ? 
-                            updateNodeMDDocs(nodeMDDocsDir, nodeAPIDocsBase) : 
-                            getMDDocs(nodeMDDocsDir);
+                const pkgJson = readFilePromise(path.join(__dirname,'..','package.json')).then(JSON.parse);
+                const banner = getBanner(bannerPath);
+                const apiDocs = updateDocs ? 
+                                updateNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath) : 
+                                getNodeAPIDocs(nodeAPIDocsURL, nodeAPIDocsPath);
+                const mdDocs = updateDocs ? 
+                                updateNodeMDDocs(nodeMDDocsDir, nodeAPIDocsBase) : 
+                                getMDDocs(nodeMDDocsDir);
 
-            return Promise
-                    .all([
-                        config,
-                        pkgJson,
-                        banner,
-                        apiDocs,
-                        mdDocs,
-                    ])
-                    .catch(e => { throw e; });
-        });
+                return Promise
+                        .all([
+                            config,
+                            pkgJson,
+                            banner,
+                            apiDocs,
+                            mdDocs,
+                        ])
+                        .catch(e => { throw e; });
+            });
+    });
 
 }
 
+
+function makeDocDirs(dirpath) {
+    return mkdirpPromise(dirpath);
+}
 
 function getConfig(configPath) {
 

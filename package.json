@@ -9,6 +9,7 @@
     "html-entities": "^1.2.1",
     "marked": "^0.3.19",
     "marked-terminal": "^2.0.0",
+    "mkdirp": "^0.5.1",
     "repl.history": "^0.1.4",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
