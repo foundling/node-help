@@ -2,8 +2,13 @@ const chalk = require('chalk');
 const path = require('path');
 const util = require('util');
 const striptags = require('striptags');
-const { keys, flatten, decodeHTML, splitBy } = require(path.join(__dirname, './utils'));
 const { columnize } = require(path.join(__dirname, './columns'));
+const { 
+    decodeHTML, 
+    flatten, 
+    keys, 
+    splitBy 
+} = require(path.join(__dirname, './utils'));
 
 function progInfo(packageInfo) {
     
@@ -17,12 +22,13 @@ function progInfo(packageInfo) {
         ' License ': chalk.green(packageInfo.license)
     };
 
-    return keys(info).map(k => {
-        const prop = k;
-        const value = info[k];
-        return `${chalk.bgWhite.black(prop)} ${chalk.black(value)}`;
-    })
-    .join('\n');
+    return keys(info)
+        .map(k => {
+            const prop = k;
+            const value = info[k];
+            return `${chalk.bgWhite.black(prop)} ${chalk.black(value)}`;
+        })
+        .join('\n');
 
 }
 

@@ -2,6 +2,18 @@ const cheerio = require('cheerio');
 const chalk = require('chalk');
 const path = require('path');
 
+const {
+
+    CONFIG_PATH, 
+    PACKAGE_JSON_PATH, 
+    NODE_DOCS_BASE_URL, 
+    NODE_API_JSON_URL,
+    NODE_API_JSON_PATH, 
+    NODE_API_MD_DIR,
+    BANNER_PATH 
+
+} = require(path.join(__dirname, 'appPaths'));
+
 const { 
 
     flagThrown,
@@ -14,21 +26,7 @@ const {
 
 } = require(path.join(__dirname, 'utils'));
 
-const CONFIG_PATH = path.join(__dirname, '..', 'config.json');
-const PACKAGE_JSON_PATH = path.join(__dirname, '..', 'package.json');
-const NODE_DOCS_BASE_URL = "https://nodejs.org/api";
-const NODE_API_JSON_URL = "https://nodejs.org/api/all.json";
-const NODE_API_JSON_PATH = path.join(__dirname,'docs','node','node-all.json');
-const NODE_API_MD_DIR = path.join(__dirname,'docs','node','md');
-const BANNER_PATH = path.join(__dirname,'banner.txt');
 const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
-const newConfig = () => {
-    const conf = {
-        LAST_UPDATED_MS: now(),
-        PROMPT: 'node-help > '
-    };
-    return JSON.stringify(conf);
-}; 
 
 function main() {
 
@@ -37,6 +35,14 @@ function main() {
                          .then(config => collectInitData(config, checkForUpdate(process.argv))));
 
 }
+
+function newConfig() {
+    const conf = {
+        LAST_UPDATED_MS: now(),
+        PROMPT: 'node-help > '
+    };
+    return JSON.stringify(conf);
+}; 
 
 function checkForUpdate(args) {
     const appArgs = args.slice(2);

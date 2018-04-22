@@ -1,10 +1,12 @@
-const striptags = require('striptags');
-const fs = require('fs');
 const Entities = require('html-entities');
+const fs = require('fs');
 const { promisify } = require('util');
+const striptags = require('striptags');
+
 const capitalize = s => s[0].toUpperCase() + s.slice(1).toLowerCase();
 const chop = s => s.slice(0, -1);
 const { decode } = new Entities.AllHtmlEntities();
+
 const readFilePromise = promisify(fs.readFile);
 const writeFilePromise = promisify(fs.writeFile);
 const readdirPromise = promisify(fs.readdir);

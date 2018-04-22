@@ -6,8 +6,17 @@ const vm = require('vm');
 const { homedir } = require('os');
 
 const { help } = require('./help');
-const { listArticles, renderArticle, cacheTopicNames } = require('./longform');
-const { striptags, chop  } = require(path.join(__dirname, 'utils'));
+const { 
+
+    listArticles, 
+    renderArticle, 
+    cacheTopicNames 
+
+} = require(path.join(__dirname,'./longform'));
+const { 
+    striptags, 
+    chop  
+} = require(path.join(__dirname, 'utils'));
 
 function mkEval(dataTree) {
 
@@ -35,9 +44,7 @@ function mkEval(dataTree) {
 function start(dataTree) {
 
     cacheTopicNames();
-
     const historyFile = path.join(homedir(),'.node_repl_history');
-
     const nr = repl.start({ 
         prompt: 'node-help > ', 
         eval: mkEval(dataTree), 
@@ -58,8 +65,6 @@ function start(dataTree) {
     });
 
     replHistory(nr, historyFile);
-
-
 
 }
 

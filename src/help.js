@@ -1,10 +1,18 @@
-const fs = require('fs');
 const chalk = require('chalk');
-const vm = require('vm');
 const path = require('path');
-const util = require('util');
-const { formatES, formatNodeJS, summary } = require(path.join(__dirname, 'format'));
-const { dedupe, flatten, capitalize } = require(path.join(__dirname, 'utils'));
+const vm = require('vm');
+
+const { 
+    formatES, 
+    formatNodeJS, 
+    summary 
+} = require(path.join(__dirname, 'format'));
+
+const { 
+    capitalize, 
+    dedupe, 
+    flatten
+} = require(path.join(__dirname, 'utils'));
 
 function help(searchToken, docs) {
 
