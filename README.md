@@ -175,4 +175,4 @@ node-help >
 
 ### Contributions
 
-See [Contributing](#contributing). The search algorithm for `node-help` is not perfect so there will be bugs.  Please feel free to raise issues on the [github issues page](https://github.com/foundling/node-help/issues).
+See [Contributing](https://github.com/foundling/node-help/blob/master/CONTRIBUTING.md). The search algorithm for `node-help` is not perfect so there will be bugs.  Please feel free to raise issues on the [github issues page](https://github.com/foundling/node-help/issues).
