@@ -39,6 +39,8 @@
     "documentation",
     "repl"
   ],
-  "author": "Alex Ramsdell",
+  "author": {
+      "name": "Alex Ramsdell"
+  },
   "license": "MIT"
 }
