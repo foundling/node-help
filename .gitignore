@@ -1,2 +1,5 @@
 node_modules
 experiments
+.eslintrc.js
+config.json
+src/docs/node/{node-all.json,md/*}
