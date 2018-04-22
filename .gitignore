@@ -3,5 +3,5 @@ experiments
 .eslintrc.js
 config.json
 src/docs/node/node-all.json
-src/docs/node/md
+src/docs/node
 .DS_Store
