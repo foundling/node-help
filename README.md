@@ -38,7 +38,7 @@ npm install -g node-help
 
 ### Level of Support
 
-At present documentation is only available for Node.js 8.11.1+. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
+At present documentation is only available for Node.js 9.11.1. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
 
 ### Usage 
 
