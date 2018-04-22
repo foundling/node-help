@@ -2,7 +2,7 @@
   "name": "node-help",
   "version": "2.0.0",
   "description": "Offline documentation for the Node Repl",
-  "main": "bin/node-help",
+  "main": "./bin/node-help",
   "dependencies": {
     "chalk": "^2.3.2",
     "cheerio": "^1.0.0-rc.2",
@@ -27,6 +27,9 @@
   "repository": {
     "type": "git",
     "url": "github.com/foundling/node-help"
+  },
+  "engines": {
+      "node": ">=8.11.1"
   },
   "keywords": [
     "node.js",
