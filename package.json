@@ -31,6 +31,9 @@
     "type": "git",
     "url": "github.com/foundling/node-help"
   },
+  "bugs": {
+    "url": "https://github.com/foundling/node-help/issues"
+  },
   "engines": {
       "node": ">=8.11.1"
   },
