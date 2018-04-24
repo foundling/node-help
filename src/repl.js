@@ -55,7 +55,6 @@ function start(dataTree) {
     nr.defineCommand('docs',  {
         help: 'list available longform Node docs with `.docs` or read one with `.docs <topic>`.',
         action(topic) {
-            this.clearBufferedCommand();
             if (!topic)
                 console.log(listArticles())
             else
