@@ -43,7 +43,7 @@ function now() {
 }
 
 function updateConfig(configPath, data) {
-    return writeFilePromise(JSON.stringify(data, null, 2), configPath, 'utf8');
+    return writeFilePromise(configPath, JSON.stringify(data, null, 2), 'utf8');
 }
 
 
