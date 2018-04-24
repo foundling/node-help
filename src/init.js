@@ -28,6 +28,8 @@ const {
 
 } = require(path.join(__dirname, 'utils'));
 
+const MAJOR_VERSION = getNodeMajorVersion(process.version);
+
 const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
 
 function updateDocVersions() {
@@ -36,11 +38,10 @@ function updateDocVersions() {
     getConfig(CONFIG_PATH)
         .then(({config, isNew}) => {
 
-            const majorVersion = getNodeMajorVersion(process.version);
-            if (config.VERSIONS.includes(majorVersion))
+            if (config.VERSIONS.includes(MAJOR_VERSION))
                 return;
 
-            config.VERSIONS.push(majorVersion);
+            config.VERSIONS.push(MAJOR_VERSION);
             updateConfig(CONFIG_PATH, config);
 
         });
@@ -73,7 +74,7 @@ function newConfig() {
 function collectInitData(configObj, flags) {
 
     const { config, isNew } = configObj;
-    const noDocsForThisVersion = !config.VERSIONS.includes(getNodeMajorVersion(process.version));
+    const noDocsForThisVersion = !config.VERSIONS.includes(MAJOR_VERSION);
 
     const updateNeeded = isNew || 
                          noDocsForThisVersion || 
@@ -155,12 +156,12 @@ function getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
 }
 
 function updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
-    console.log(chalk.green('Updating node API documentation ... '));
+    console.log(chalk.green(`• Updating node API documentation for Node ${ MAJOR_VERSION } ... `));
     return requestPromise(NODE_API_JSON_URL)
         .then(({ body }) => {
             return writeFilePromise(NODE_API_JSON_PATH, body, 'utf8')
                     .then(() => { 
-                        console.log(chalk.green('node API documentation updated'));
+                        console.log(chalk.green(`• Node API documentation updated for Node ${ MAJOR_VERSION }!`));
 
                         updateDocVersions();
 
@@ -196,7 +197,7 @@ function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
                                 .map(url => requestPromise(url));
 
             // resolve promises into html strings, 
-            console.log(chalk.green('updating longform documentation ... '));
+            console.log(chalk.green(`• Updating longform documentation for Node ${ MAJOR_VERSION } ... `));
             return Promise.all(docReqs)
                 .then(responses => {
                     const docs = responses.map(r => r.body);
@@ -206,7 +207,7 @@ function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
 
                             updateDocVersions();
 
-                            console.log(chalk.green('longform documentation updated!'));
+                            console.log(chalk.green(`• Longform documentation updated for Node ${ MAJOR_VERSION }!`));
                             return {
                                 docs,
                                 msg: 'Node.js longform docs updated!',
