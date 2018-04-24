@@ -25,7 +25,8 @@
   },
   "scripts": {
     "test": "tape ./test/*test.js | colortape",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "node-help --update --no-run"
   },
   "repository": {
     "type": "git",

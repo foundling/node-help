@@ -18,6 +18,9 @@ ${chalk.blue('Options')}:
   -u, --update      Manually check for updates to Node.js documentation.
 `;
 
+// intercept if help, version or info flags thrown
+// checks for 'update' and 'norun' flags are inside init module
+
 if (flagThrown(args, 'help')) {
     console.log(helpText);
     process.exit(0);
@@ -36,6 +39,4 @@ if (flagThrown(args, 'info')) {
     process.exit(0);
 }
 
-// we check for 'update' flag inside init module
-clear();
 nodeHelp();

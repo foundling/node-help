@@ -49,8 +49,17 @@ function updateDocVersions() {
 function main() {
 
     return mkdirpPromise(NODE_API_MD_DIR)
-            .then(() => getConfig(CONFIG_PATH)
-                         .then(config => collectInitData(config, checkForUpdate(process.argv))));
+            .then(() => {
+                return getConfig(CONFIG_PATH)
+                         .then(config => {
+                             const appArgs = process.argv.slice(2);
+                             const cliFlags = {
+                                update: flagThrown(appArgs, 'update'),
+                                noRun: flagThrown(appArgs, 'no-run')
+                             };
+                             return collectInitData(config, cliFlags);
+                         });
+            });
 }
 
 function newConfig() {
@@ -61,19 +70,29 @@ function newConfig() {
     };
 }; 
 
-function checkForUpdate(args) {
-    const appArgs = args.slice(2);
-    return flagThrown(appArgs, 'update');
-}
+function collectInitData(configObj, flags) {
 
-function collectInitData({ config, isNew }, updateFlag) {
+    const { config, isNew } = configObj;
+    const noDocsForThisVersion = !config.VERSIONS.includes(getNodeMajorVersion(process.version));
 
-    const docVersion = getNodeMajorVersion(process.version);
-    const docVersionDownloaded = config.VERSIONS.includes(docVersion);
-
-    const updateNeeded = isNew || !docVersionDownloaded || updateFlag || now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
+    const updateNeeded = isNew || 
+                         !noDocsForThisVersion || 
+                         flags.update || 
+                         now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
     const pkgJson = readFilePromise(PACKAGE_JSON_PATH).then(JSON.parse);
     const banner = getBanner(BANNER_PATH);
+
+    if (flags.update && flags.noRun) {
+        return Promise
+            .all([
+                updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH),
+                updateNodeMDDocs(NODE_API_MD_DIR, NODE_DOCS_BASE_URL) 
+            ])
+            .then(() => { 
+                process.exit(0) 
+            });
+    }
+
     const apiDocs = updateNeeded ? 
                     updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) : 
                     getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH);
