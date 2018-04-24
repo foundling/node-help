@@ -76,7 +76,7 @@ function collectInitData(configObj, flags) {
     const noDocsForThisVersion = !config.VERSIONS.includes(getNodeMajorVersion(process.version));
 
     const updateNeeded = isNew || 
-                         !noDocsForThisVersion || 
+                         noDocsForThisVersion || 
                          flags.update || 
                          now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
     const pkgJson = readFilePromise(PACKAGE_JSON_PATH).then(JSON.parse);
