@@ -14,6 +14,7 @@ const {
 
 } = require(path.join(__dirname,'./longform'));
 const { 
+    clear,
     striptags, 
     chop  
 } = require(path.join(__dirname, 'utils'));

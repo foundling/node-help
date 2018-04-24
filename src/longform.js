@@ -6,10 +6,15 @@ const {
     readdirPromise
 } = require(path.join(__dirname, 'utils'));
 
+const { 
+
+    NODE_API_MD_DIR 
+
+} = require(path.join(__dirname, 'appPaths'));
+
 const marked = require('marked');
 const TerminalRenderer = require('marked-terminal');
 const stripHTMLComments = require('strip-html-comments');
-const mdDir = path.join(__dirname,'..','src','docs','node','md'); 
 
 let topicNames;
 
@@ -22,7 +27,7 @@ function cacheTopicNames() {
     if (topicNames && topicNames.length)
        return;
 
-    return readdirPromise(mdDir)
+    return readdirPromise(NODE_API_MD_DIR) 
         .then(files => {
             topicNames = files
                             .filter(fname => fname.endsWith('.md'))
@@ -54,7 +59,7 @@ function renderArticle(topic) {
         return console.log(output);
     }
 
-    const articlePath = path.join(mdDir, `${topic}.md`);
+    const articlePath = path.join(NODE_API_MD_DIR, `${topic}.md`);
 
     readFilePromise(articlePath, 'utf8')
         .then(printMarkdown)

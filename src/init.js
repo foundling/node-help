@@ -18,30 +18,47 @@ const {
 
     flagThrown,
     mkdirpPromise,
-    now, 
-    readdirPromise, 
-    readFilePromise, 
-    requestPromise, 
-    writeFilePromise, 
+    now,
+    getNodeMajorVersion,
+    readdirPromise,
+    readFilePromise,
+    requestPromise,
+    updateConfig,
+    writeFilePromise
 
 } = require(path.join(__dirname, 'utils'));
 
 const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
+
+function updateDocVersions() {
+
+    // now that we've updated API docs, update config with updated versions  
+    getConfig(CONFIG_PATH)
+        .then(({config, isNew}) => {
+
+            const majorVersion = getNodeMajorVersion(process.version);
+            if (config.VERSIONS.includes(majorVersion))
+                return;
+
+            config.VERSIONS.push(majorVersion);
+            updateConfig(CONFIG_PATH, config);
+
+        });
+}
 
 function main() {
 
     return mkdirpPromise(NODE_API_MD_DIR)
             .then(() => getConfig(CONFIG_PATH)
                          .then(config => collectInitData(config, checkForUpdate(process.argv))));
-
 }
 
 function newConfig() {
-    const conf = {
+    return {
         LAST_UPDATED_MS: now(),
-        PROMPT: 'node-help > '
+        PROMPT: 'node-help > ',
+        VERSIONS: [],
     };
-    return JSON.stringify(conf);
 }; 
 
 function checkForUpdate(args) {
@@ -49,10 +66,12 @@ function checkForUpdate(args) {
     return flagThrown(appArgs, 'update');
 }
 
-function collectInitData({ isNew, config }, updateDocs) {
+function collectInitData({ config, isNew }, updateFlag) {
 
-    // turn bin arg parse stuff into a module, parse args when needed
-    const updateNeeded = isNew || updateDocs || now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
+    const docVersion = getNodeMajorVersion(process.version);
+    const docVersionDownloaded = config.VERSIONS.includes(docVersion);
+
+    const updateNeeded = isNew || !docVersionDownloaded || updateFlag || now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
     const pkgJson = readFilePromise(PACKAGE_JSON_PATH).then(JSON.parse);
     const banner = getBanner(BANNER_PATH);
     const apiDocs = updateNeeded ? 
@@ -62,6 +81,7 @@ function collectInitData({ isNew, config }, updateDocs) {
                     updateNodeMDDocs(NODE_API_MD_DIR, NODE_DOCS_BASE_URL) : 
                     getMDDocs(NODE_API_MD_DIR);
 
+    // data for application
     return Promise
             .all([
                 config,
@@ -69,8 +89,7 @@ function collectInitData({ isNew, config }, updateDocs) {
                 banner,
                 apiDocs,
                 mdDocs,
-            ])
-            .catch(e => { throw e; });
+            ]);
 }
 
 
@@ -117,12 +136,15 @@ function getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
 }
 
 function updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
-    console.log(chalk.green('updating node API documentation ... '));
+    console.log(chalk.green('Updating node API documentation ... '));
     return requestPromise(NODE_API_JSON_URL)
         .then(({ body }) => {
             return writeFilePromise(NODE_API_JSON_PATH, body, 'utf8')
                     .then(() => { 
                         console.log(chalk.green('node API documentation updated'));
+
+                        updateDocVersions();
+
                         return {
                             docs: body, 
                             msg: 'Node.js JSON docs updated!'
@@ -162,6 +184,9 @@ function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
                     const docWrites = docs.map((doc, index) => writeFilePromise(`${outputDir}/${docPaths[index]}`, doc, 'utf8'));
                     return Promise.all(docWrites)
                         .then(() => {
+
+                            updateDocVersions();
+
                             console.log(chalk.green('longform documentation updated!'));
                             return {
                                 docs,
@@ -178,6 +203,7 @@ function getMDDocs(NODE_API_MD_DIR) {
                 const docReads = docPaths
                     .map(docPath => path.join(NODE_API_MD_DIR, docPath))
                     .map(fullPath => readFilePromise(fullPath, 'utf8'));
+
                 return Promise.all(docReads);
             })
             .catch(e => {

@@ -7,11 +7,13 @@ const { main }  = require(path.join(__dirname, 'init'));
 
 function init() {
 
-    main().then(startProg);
+    main()
+        .then(startProg);
 
 }
 
 function startProg([config, pkgJson, banner, apiDocs, MDArticles] = args) {
+
 
     console.log(chalk.blue(banner));
     console.log(progInfo(pkgJson));

@@ -12,11 +12,18 @@ const writeFilePromise = promisify(fs.writeFile);
 const readdirPromise = promisify(fs.readdir);
 const requestPromise = promisify(require('request'));
 const mkdirpPromise = promisify(require('mkdirp'));
+const existsPromise = fs.exists;
 
 function clear() {
     'use strict';
     process.stdout.write('\x1Bc');
 }
+
+function getNodeMajorVersion(versionString) {
+    const [ major, minor, patch ] = versionString.split('.'); 
+    return major;
+};
+
 
 function dedupe(arr) {
     return Array.from(new Set(arr));
@@ -35,14 +42,21 @@ function now() {
     return new Date().getTime();
 }
 
+function updateConfig(configPath, data) {
+    return writeFilePromise(JSON.stringify(data, null, 2), configPath, 'utf8');
+}
+
+
 module.exports = exports = {
     capitalize,
     chop,
     clear,
     decodeHTML: decode,
     dedupe,
+    existsPromise,
     flagThrown,
     flatten,
+    getNodeMajorVersion,
     keys: Object.keys,
     mkdirpPromise,
     now,
@@ -50,5 +64,6 @@ module.exports = exports = {
     requestPromise,
     readFilePromise,
     striptags,
+    updateConfig,
     writeFilePromise,
 };
