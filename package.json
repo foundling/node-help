@@ -4,7 +4,7 @@
   "description": "Offline documentation for the Node Repl",
   "main": "./bin/node-help",
   "bin": {
-      "node-help": "./bin/node-help"
+    "node-help": "./bin/node-help"
   },
   "dependencies": {
     "chalk": "^2.3.2",
@@ -36,7 +36,7 @@
     "url": "https://github.com/foundling/node-help/issues"
   },
   "engines": {
-      "node": ">=8.11.1"
+    "node": ">=8.11.1"
   },
   "keywords": [
     "node.js",
@@ -44,7 +44,7 @@
     "repl"
   ],
   "author": {
-      "name": "Alex Ramsdell"
+    "name": "Alex Ramsdell"
   },
   "license": "MIT"
 }
