@@ -1,5 +1,7 @@
 # node-help
 
+[![Known Vulnerabilities](https://snyk.io/test/github/foundling/node-help/badge.svg?targetFile=package.json)](https://snyk.io/test/github/foundling/node-help?targetFile=package.json)
+
 ### Installation
 
 To install `node-help`, run: 
