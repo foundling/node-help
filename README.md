@@ -2,6 +2,8 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/foundling/node-help/badge.svg?targetFile=package.json)](https://snyk.io/test/github/foundling/node-help?targetFile=package.json)
 
+Offline documentation for your Node REPL.
+
 ### Installation
 
 To install `node-help`, run: 
