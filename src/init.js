@@ -29,7 +29,6 @@ const {
 } = require(path.join(__dirname, 'utils'));
 
 const MAJOR_VERSION = getNodeMajorVersion(process.version);
-const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
 
 function updateDocVersions() {
 
@@ -37,10 +36,9 @@ function updateDocVersions() {
     getConfig(CONFIG_PATH)
         .then(({config, isNew}) => {
 
-            if (config.VERSIONS.includes(MAJOR_VERSION))
-                return;
-
+            config.LAST_UPDATED_MS = now();
             config.VERSIONS.push(MAJOR_VERSION);
+
             updateConfig(CONFIG_PATH, config);
 
         });
@@ -65,10 +63,15 @@ function init() {
 function newConfig() {
     return {
         LAST_UPDATED_MS: now(),
-        PROMPT: 'node-help > ',
+        PROMPT: '',
         VERSIONS: [],
     };
 }; 
+
+function oneWeekHasPassed(dateNowMS, dateCachedMS) {
+    const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
+    return (dateNowMS - dateCachedMS) > ONE_WEEK_MS;
+}
 
 function collectInitData(configObj, flags) {
 
@@ -78,7 +81,8 @@ function collectInitData(configObj, flags) {
     const updateNeeded = isNew || 
                          noDocsForThisVersion || 
                          flags.update || 
-                         now() - config.LAST_UPDATED_MS > ONE_WEEK_MS;
+                         oneWeekHasPassed(now(), config.LAST_UPDATED_MS); 
+
     const pkgJson = readFilePromise(PACKAGE_JSON_PATH).then(JSON.parse);
     const banner = getBanner(BANNER_PATH);
 
@@ -155,13 +159,16 @@ function getNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
 }
 
 function updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
+
     console.log(chalk.green(`• Updating node API documentation for Node ${ MAJOR_VERSION } ... `));
+
     return requestPromise(NODE_API_JSON_URL)
         .then(({ body }) => {
+
             return writeFilePromise(NODE_API_JSON_PATH, body, 'utf8')
                     .then(() => { 
-                        console.log(chalk.green(`• Node API documentation updated for Node ${ MAJOR_VERSION }!`));
 
+                        console.log(chalk.green(`• Node API documentation updated for Node ${ MAJOR_VERSION }!`));
                         updateDocVersions();
 
                         return {
@@ -169,6 +176,7 @@ function updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) {
                             msg: 'Node.js JSON docs updated!'
                         };
                     });
+
         });
 }
 
@@ -205,8 +213,8 @@ function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
                         .then(() => {
 
                             updateDocVersions();
-
                             console.log(chalk.green(`• Longform documentation updated for Node ${ MAJOR_VERSION }!`));
+
                             return {
                                 docs,
                                 msg: 'Node.js longform docs updated!',

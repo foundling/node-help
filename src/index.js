@@ -16,7 +16,7 @@ function startProg([config, pkgJson, banner, apiDocs, mdArticles] = args) {
 
     console.log(chalk.blue(banner));
     console.log(progInfo(pkgJson));
-    repl.start(JSON.parse(apiDocs.docs));
+    repl.start(JSON.parse(apiDocs.docs), { prompt: config.PROMPT });
 
 }
 

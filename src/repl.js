@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const path = require('path');
 const repl = require('repl');
 const replHistory = require('repl.history');
@@ -39,12 +40,13 @@ function mkEval(dataTree) {
 
 }
 
-function start(dataTree) {
+function start(dataTree, options) {
 
     cacheTopicNames();
+
     const historyFile = path.join(homedir(),'.node_repl_history');
     const nr = repl.start({ 
-        prompt: 'node-help > ', 
+        prompt: options.prompt || `${ chalk.green('node-help') } > `,
         eval: mkEval(dataTree), 
         ignoreUndefined: true, 
         useGlobal: true,
