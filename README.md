@@ -2,6 +2,7 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/foundling/node-help/badge.svg?targetFile=package.json)](https://snyk.io/test/github/foundling/node-help?targetFile=package.json)
 [![Build Status](https://travis-ci.org/foundling/node-help.svg?branch=master)](https://travis-ci.org/foundling/node-help)
+[![Coverage Status](https://coveralls.io/repos/github/foundling/node-help/badge.svg?branch=master)](https://coveralls.io/github/foundling/node-help?branch=master)
 
 Offline documentation for your Node REPL.
 

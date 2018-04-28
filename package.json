@@ -25,7 +25,8 @@
   },
   "scripts": {
     "test": "tape ./test/*test.js | colortape",
-    "postinstall": "node-help --update --no-run"
+    "postinstall": "node-help --update --no-run",
+    "coverage": "istanbul cover tape ./test/*test.js"
   },
   "repository": {
     "type": "git",
