@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "colortape": "^0.1.2",
+    "del": "^3.0.0",
     "tape": "^4.9.0"
   },
   "scripts": {
