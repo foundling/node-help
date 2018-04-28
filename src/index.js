@@ -5,7 +5,7 @@ const repl = require(path.join(__dirname, 'repl'));
 const { progInfo } = require(path.join(__dirname, 'format'));
 const { init }  = require(path.join(__dirname, 'init'));
 
-function init() {
+function main() {
 
     init()
         .then(startProg);
@@ -20,4 +20,4 @@ function startProg([config, pkgJson, banner, apiDocs, mdArticles] = args) {
 
 }
 
-module.exports = exports = init;
+module.exports = exports = main;
