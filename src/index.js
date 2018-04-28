@@ -4,9 +4,11 @@ const chalk = require('chalk');
 const repl = require(path.join(__dirname, 'repl')); 
 const { progInfo } = require(path.join(__dirname, 'format'));
 const { init }  = require(path.join(__dirname, 'init'));
+const { clear } = require(path.join(__dirname, 'utils'));
 
 function main() {
 
+    clear();
     init()
         .then(startProg);
 
