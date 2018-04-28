@@ -58,7 +58,10 @@ test('lookup token (?)', function(t) {
                 t.equal(result.length > 0, true);
             }
             catch (e) {
-                t.equal(true, true);
+                if (e instanceof SyntaxError)
+                    t.pass();
+                else
+                    t.fail();
             }
         }
 
