@@ -29,7 +29,6 @@ const {
 } = require(path.join(__dirname, 'utils'));
 
 const MAJOR_VERSION = getNodeMajorVersion(process.version);
-
 const ONE_WEEK_MS = 1000 * 60 * 60 * 24 * 7;
 
 function updateDocVersions() {
@@ -244,4 +243,7 @@ function getBanner(bPath) {
     return readFilePromise(bPath, 'utf8');
 }
 
-module.exports = exports = { main };
+module.exports = exports = { 
+    main,
+    updateNodeAPIDocs
+};

@@ -6,6 +6,7 @@ const vm = require('vm');
 const { homedir } = require('os');
 
 const { help } = require('./help');
+const { clear, striptags, chop } = require(path.join(__dirname, 'utils'));
 const { 
 
     listArticles, 
@@ -13,11 +14,7 @@ const {
     cacheTopicNames 
 
 } = require(path.join(__dirname,'./longform'));
-const { 
-    clear,
-    striptags, 
-    chop  
-} = require(path.join(__dirname, 'utils'));
+
 
 function mkEval(dataTree) {
 
