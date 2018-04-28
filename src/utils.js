@@ -19,12 +19,6 @@ function clear() {
     process.stdout.write('\x1Bc');
 }
 
-function getNodeMajorVersion(versionString) {
-    const [ major, minor, patch ] = versionString.split('.'); 
-    return major;
-};
-
-
 function dedupe(arr) {
     return Array.from(new Set(arr));
 }
@@ -36,6 +30,16 @@ function flagThrown(args, name) {
 
 function flatten(a, depth=1) {
     return depth <= 0 ? a : flatten(a.reduce((acc, val) => acc.concat(val), []), depth - 1);
+};
+
+function getNodeMajorVersion(versionString) {
+    const [ major, minor, patch ] = versionString.split('.'); 
+    return major;
+};
+
+function getNodeDocsBaseURL(versionString) {
+    const major = getNodeMajorVersion(versionString);
+    return `https://nodejs.org/dist/latest-${ major }.x/docs/api`;
 };
 
 function now() {
@@ -57,6 +61,7 @@ module.exports = exports = {
     flagThrown,
     flatten,
     getNodeMajorVersion,
+    getNodeDocsBaseURL,
     keys: Object.keys,
     mkdirpPromise,
     now,
