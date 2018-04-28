@@ -10,6 +10,7 @@ const {
     splitBy 
 } = require(path.join(__dirname, './utils'));
 
+
 function progInfo(packageInfo) {
     
     /* print program info from package.json */
@@ -57,13 +58,20 @@ function formatDescription(desc) {
 
 function formatES(node, query) {
 
+
+    if (!node)
+        return [
+            `${ chalk.red('[ Additional Information ]') }`,
+            `${ chalk.red('not found') }\n`
+        ].join('\n');
+
     return [
 
-        `${chalk.red('[ Additional Information ]')}\n`,
+        `\n${chalk.red('[ Additional Information ]')}\n`,
         `${chalk.green.underline('toString:')} '${node.toString()}'`,
         `${chalk.green.underline('valueOf:')} '${node.valueOf()}'`,
         `${chalk.green.underline('Constructor:')} ${ node.constructor.name }`,
-        `${chalk.green.underline('local properties (non-methods):')} ${ columnize(getOwnProperties(node)) }\n`,
+        `${chalk.green.underline('local properties (non-methods):')} ${ columnize(getOwnProperties(node)) }`,
         `${chalk.green.underline('local methods:')} ${ columnize(getMethods(node)) }\n`,
 
     ].join('\n'); 
@@ -75,7 +83,7 @@ function formatNodeJS(node, searchToken) {
     const { name, textRaw, type, desc, signatures } = node;
     return [
 
-        `${chalk.bgWhite.black(` ${node.type} | ${searchToken} `)}`,
+        `\n${chalk.bgWhite.black(` ${node.type} | ${searchToken} `)}\n`,
         `${chalk.green.underline('Name:')} ${name}`,
         `${chalk.green.underline('Node.js Object Type:')} ${type}`,
         `${chalk.green.underline('Signature(s):')} ${textRaw} ${formatSignatures(signatures)}\n`,
