@@ -1,23 +1,30 @@
 const fs = require('fs');
 const test = require('tape');
 const path = require('path'); 
-const { find, findAllNames } = require(path.join(__dirname,'..','src','help'));
-const { keys, flatten } = require(path.join(__dirname,'..','src','utils'));
-const docsPath = path.join(__dirname,'..','src','docs','node','node-all.json');
+const { NODE_API_JSON_PATH  } = require(path.join(__dirname, '..', 'src', 'appPaths'));
+const { help, find, findAllNames } = require(path.join(__dirname, '..', 'src', 'help'));
+const { updateNodeAPIDocs } = require(path.join(__dirname, '..', 'src', 'init'));
+const { 
+    flatten, 
+    getNodeMajorVersion, 
+    keys 
+} = require(path.join(__dirname, '..', 'src', 'utils'));
 
 
-test('lookup', function(t) {
+test('lookup token (?)', function(t) {
 
-    t.plan(1);
+    t.plan(3);
 
-    fs.readFile(docsPath, 'utf8', (err, data) => {
-        if (err) throw err;
+    fs.readFile(NODE_API_JSON_PATH, 'utf8', (err, data) => {
+        if (err && err.code !== 'ENOENT') 
+            throw err;
 
         const docs = JSON.parse(data);
-        const names = findAllNames(docs);
-        const deduped = Array.from(new Set(names)); 
 
-        t.equal(Array.isArray(deduped), true); 
+        t.equal(!!help('process', docs).length, true);
+        t.equal(!!help('process.stdin', docs).length, true);
+        t.equal(!!help('process.stdin.server', docs).length, true);
+
         t.end();
 
     });
