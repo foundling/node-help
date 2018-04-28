@@ -245,5 +245,6 @@ function getBanner(bPath) {
 
 module.exports = exports = { 
     main,
-    updateNodeAPIDocs
+    updateNodeAPIDocs,
+    updateNodeMDDocs
 };
