@@ -22,19 +22,6 @@ const {
 } = require(path.join(__dirname, '..', 'src', 'appPaths'));
 
 
-test('installation test setup - remove config and docs dir if they exist', function(t) {
-
-    t.plan(1);
-    del([CONFIG_PATH, NODE_DOCS_BASE_DIR], {force: true})
-        .then(() => {
-            t.pass();
-        })
-        .catch(e => { 
-            throw e 
-        });
-
-});
-
 test('node-help docs installation', function(t) {
 
     t.plan(1);
