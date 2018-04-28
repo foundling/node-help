@@ -6,6 +6,7 @@ const NODE_DOCS_BASE_URL = getNodeDocsBaseURL(process.version);
 const NODE_API_JSON_URL = `${NODE_DOCS_BASE_URL}/all.json`;
 const NODE_API_JSON_PATH = path.join(__dirname, 'docs', 'node', MAJOR_VERSION, 'all.json');
 const NODE_API_MD_DIR = path.join(__dirname, 'docs', 'node', MAJOR_VERSION, 'md');
+const NODE_DOCS_BASE_DIR = path.join(__dirname, 'docs', 'node', MAJOR_VERSION); 
 
 module.exports = exports = {
     
@@ -14,6 +15,7 @@ module.exports = exports = {
     NODE_API_JSON_URL,
 
     // local doc paths
+    NODE_DOCS_BASE_DIR,
     NODE_API_JSON_PATH,
     NODE_API_MD_DIR,
 
