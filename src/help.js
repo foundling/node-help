@@ -24,7 +24,7 @@ function help(searchToken, docs) {
 
     const ESDocString = formatES(vm.runInThisContext(searchToken), searchToken);
     const resultsSummary = summary(nodeJSDocStrings.length) 
-    const mergedDocStrings = [resultsSummary, nodeJSDocStrings.join('\n\n'), ESDocString].join('\n\n');
+    const mergedDocStrings = [resultsSummary, nodeJSDocStrings.join('\n'), ESDocString].join('\n');
 
     return mergedDocStrings;
 
