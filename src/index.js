@@ -3,17 +3,16 @@ const chalk = require('chalk');
 
 const repl = require(path.join(__dirname, 'repl')); 
 const { progInfo } = require(path.join(__dirname, 'format'));
-const { main }  = require(path.join(__dirname, 'init'));
+const { init }  = require(path.join(__dirname, 'init'));
 
 function init() {
 
-    main()
+    init()
         .then(startProg);
 
 }
 
-function startProg([config, pkgJson, banner, apiDocs, MDArticles] = args) {
-
+function startProg([config, pkgJson, banner, apiDocs, mdArticles] = args) {
 
     console.log(chalk.blue(banner));
     console.log(progInfo(pkgJson));

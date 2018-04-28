@@ -46,7 +46,7 @@ function updateDocVersions() {
         });
 }
 
-function main() {
+function init() {
 
     return mkdirpPromise(NODE_API_MD_DIR)
             .then(() => {
@@ -244,7 +244,7 @@ function getBanner(bPath) {
 }
 
 module.exports = exports = { 
-    main,
+    init,
     updateNodeAPIDocs,
     updateNodeMDDocs
 };
