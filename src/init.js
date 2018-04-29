@@ -189,7 +189,7 @@ function listMDFiles(NODE_API_MD_DIR) {
 
 function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
 
-    return requestPromise(NODE_DOCS_BASE_URL).then(({body}) => {
+    return requestPromise(NODE_DOCS_BASE_URL).then(({ body }) => {
     
             const $ = cheerio.load(body);
             const docPaths = $('a[class*="nav-"]')
@@ -198,13 +198,12 @@ function updateNodeMDDocs(outputDir, NODE_DOCS_BASE_URL) {
                     .map((index, href) => href.replace('.html','.md'))
                     .get();
  
-            // docpaths => request promises
             const docReqs = docPaths
                                 .map(docPath => `${ NODE_DOCS_BASE_URL }/${ docPath }`)
                                 .map(url => requestPromise(url));
 
-            // resolve promises into html strings, 
             console.log(chalk.green(`• Updating longform documentation for Node ${ MAJOR_VERSION } ... `));
+
             return Promise.all(docReqs)
                 .then(responses => {
                     const docs = responses.map(r => r.body);
