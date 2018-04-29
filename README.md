@@ -32,7 +32,7 @@ npm install -g node-help
 
 ### Features
 
-`node-help` is a standalone command-line REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
+`node-help` is a custom Node.js REPL inspired by iPython that lets you append a question mark to any valid JavaScript token to get information about it.
 
 - Documentation for un-aliased built-in lookups, e.g. `node-help > process.env?`.
 - Basic Native JavaScript introspection support displaying objects' valueOf(), toString(), method and property values.
@@ -43,7 +43,7 @@ npm install -g node-help
 
 ### Level of Support
 
-At present documentation is only available for Node.js 8.11.1 LTS and the latest stable release, 9.11.1. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
+At present documentation is available for Node v8, v9 and 10. Native JavaScript documentation is coming soon, but there is rudimentary introspection for Native JavaScript objects (See the 'additional information' section of the output for any given search query'). 
 
 ### Usage 
 
