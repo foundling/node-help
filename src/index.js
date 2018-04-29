@@ -8,7 +8,6 @@ const { clear } = require(path.join(__dirname, 'utils'));
 
 function main() {
 
-    clear();
     init()
         .then(startProg);
 

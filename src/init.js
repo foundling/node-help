@@ -16,6 +16,7 @@ const {
 
 const { 
 
+    clear,
     flagThrown,
     mkdirpPromise,
     now,
@@ -96,6 +97,8 @@ function collectInitData(configObj, flags) {
                 process.exit(0) 
             });
     }
+    else
+        clear();
 
     const apiDocs = updateNeeded ? 
                     updateNodeAPIDocs(NODE_API_JSON_URL, NODE_API_JSON_PATH) : 

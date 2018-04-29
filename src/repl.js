@@ -7,7 +7,7 @@ const vm = require('vm');
 const { homedir } = require('os');
 
 const { help } = require('./help');
-const { striptags, chop } = require(path.join(__dirname, 'utils'));
+const { flagThrown, striptags, chop } = require(path.join(__dirname, 'utils'));
 const { 
 
     listArticles, 
