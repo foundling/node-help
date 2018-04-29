@@ -43,28 +43,28 @@ test('lookup token (?)', function(t) {
 
 
     fs.readFile(NODE_API_JSON_PATH, 'utf8', (err, data) => {
-        if (err && err.code !== 'ENOENT') 
-            throw err;
+        if (err) throw err;
+
+        t.plan(1);
 
         const docs = JSON.parse(data);
         const names = dedupe(findAllNames(docs));
-
-        t.plan(names.length);
-
+        let totalResults = 0;
         let result;
+
         for (let i = 0; i < names.length; ++i) {
             try {
                 result = help(`'${names[i]}'`, docs);
-                t.equal(result.length > 0, true);
+                if (result.length > 0) 
+                    totalResults += 1;
             }
             catch (e) {
                 if (e instanceof SyntaxError)
-                    t.pass();
-                else
-                    t.fail();
+                    totalResults += 1;
             }
         }
 
+        t.equal(totalResults, names.length);
         t.end();
 
     });
