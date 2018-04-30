@@ -5,6 +5,8 @@
 
 Offline documentation for your Node REPL.
 
+[Quick Demo](https://github.com/foundling/node-help/blob/master/media/node-help-run-through.gif)
+
 ### Installation
 
 To install `node-help`, run: 
