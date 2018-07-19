@@ -5,12 +5,23 @@
 
 Offline documentation for your Node REPL.
 
-### Installation
+### Installing, Uninstalling and Updating `node-help`
 
 To install `node-help`, run: 
 
 ````
 npm install -g node-help
+````
+
+To uninstall `node-help`, run: 
+
+````
+npm uninstall -g node-help
+````
+
+To update `node-help` to the latest published version, run:
+````
+npm update -g node-help
 ````
 
 ### API
