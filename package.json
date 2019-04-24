@@ -1,6 +1,6 @@
 {
   "name": "node-help",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Offline documentation for the Node Repl",
   "main": "./bin/node-help",
   "bin": {
