@@ -17,7 +17,8 @@
     "request": "^2.87.0",
     "strip-html-comments": "^1.0.0",
     "striptags": "^3.1.1",
-    "touch": "^3.1.0"
+    "touch": "^3.1.0",
+    "snyk": "^1.192.0"
   },
   "devDependencies": {
     "colortape": "^0.1.2",
@@ -25,7 +26,9 @@
   },
   "scripts": {
     "test": "tape ./test/*test.js | colortape",
-    "postinstall": "node-help --update --no-run"
+    "postinstall": "node-help --update --no-run",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -45,5 +48,6 @@
   "author": {
     "name": "Alex Ramsdell"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "snyk": true
 }
