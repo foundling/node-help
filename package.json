@@ -16,7 +16,7 @@
     "repl.history": "^0.1.4",
     "request": "^2.87.0",
     "strip-html-comments": "^1.0.0",
-    "striptags": "^3.1.1",
+    "striptags": "^3.2.0",
     "touch": "^3.1.0"
   },
   "devDependencies": {
