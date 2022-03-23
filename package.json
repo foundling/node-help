@@ -12,7 +12,7 @@
     "html-entities": "^1.2.1",
     "marked": "^0.6.2",
     "marked-terminal": "^2.0.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^0.5.2",
     "repl.history": "^0.1.4",
     "request": "^2.87.0",
     "strip-html-comments": "^1.0.0",
